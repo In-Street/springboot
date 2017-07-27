@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/gradle_api/gradle_api.iml" filepath="$PROJECT_DIR$/gradle_api/gradle_api.iml" group="gradle_api" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_api/gradle_api_main.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_api/gradle_api_main.iml" group="gradle_api" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_api/gradle_api_test.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_api/gradle_api_test.iml" group="gradle_api" />
+      <module fileurl="file://$PROJECT_DIR$/gradle_dao/gradle_dao.iml" filepath="$PROJECT_DIR$/gradle_dao/gradle_dao.iml" group="gradle_dao" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_dao/gradle_dao_main.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_dao/gradle_dao_main.iml" group="gradle_dao" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_dao/gradle_dao_test.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_dao/gradle_dao_test.iml" group="gradle_dao" />
+      <module fileurl="file://$PROJECT_DIR$/gradle_java.iml" filepath="$PROJECT_DIR$/gradle_java.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gradle_util/gradle_util.iml" filepath="$PROJECT_DIR$/gradle_util/gradle_util.iml" group="gradle_util" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_util/gradle_util_main.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_util/gradle_util_main.iml" group="gradle_util" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_util/gradle_util_test.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_util/gradle_util_test.iml" group="gradle_util" />
+      <module fileurl="file://$PROJECT_DIR$/gralde_base/gralde_base.iml" filepath="$PROJECT_DIR$/gralde_base/gralde_base.iml" group="gralde_base" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gralde_base/gralde_base_main.iml" filepath="$PROJECT_DIR$/.idea/modules/gralde_base/gralde_base_main.iml" group="gralde_base" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gralde_base/gralde_base_test.iml" filepath="$PROJECT_DIR$/.idea/modules/gralde_base/gralde_base_test.iml" group="gralde_base" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="createEmptyContentRootDirectories" value="true" />
+        <option name="distributionType" value="LOCAL" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleHome" value="$PROJECT_DIR$/../../../soft/gradle/gradle-3.5.1-all/gradle-3.5.1" />
+        <option name="gradleJvm" value="1.8" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/gradle_api" />
+            <option value="$PROJECT_DIR$/gradle_dao" />
+            <option value="$PROJECT_DIR$/gradle_util" />
+            <option value="$PROJECT_DIR$/gralde_base" />
+          </set>
+        </option>
+        <option name="useAutoImport" value="true" />
+        <option name="myModules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/gradle_api" />
+            <option value="$PROJECT_DIR$/gradle_dao" />
+            <option value="$PROJECT_DIR$/gradle_util" />
+            <option value="$PROJECT_DIR$/gralde_base" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

@@ -1,0 +1,10 @@
+{
+  "groups": [{
+    "name": "hikari.datasource.primary",
+    "type": "javax.sql.DataSource",
+    "sourceType": "cyf.gradle.dao.configuration.PrimaryDataSourceConfiguration",
+    "sourceMethod": "primaryDataSource()"
+  }],
+  "properties": [],
+  "hints": []
+}

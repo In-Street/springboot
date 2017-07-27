@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="gradle_api_main" target="1.8" />
+      <module name="gradle_api_test" target="1.8" />
+      <module name="gradle_dao_main" target="1.8" />
+      <module name="gradle_dao_test" target="1.8" />
+      <module name="gradle_util_main" target="1.8" />
+      <module name="gradle_util_test" target="1.8" />
+      <module name="gralde_base_main" target="1.8" />
+      <module name="gralde_base_test" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
