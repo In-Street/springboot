@@ -191,4 +191,5 @@
 		<include refid="Update_By_Example_Where_Clause" />
 	  </if>
   </update>
+  <cache type="cyf.gradle.dao.cache.MyBatisRedisCache" />
 </mapper>

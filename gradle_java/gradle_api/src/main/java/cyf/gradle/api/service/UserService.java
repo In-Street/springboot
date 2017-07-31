@@ -21,9 +21,17 @@ public class UserService {
 
     public Response save(){
         User user = new User();
-        user.setUsername("yu");
-        user.setPwd("yu");
+        user.setUsername("taylor");
+        user.setPwd("taylor");
         userMapper.insertSelective(user);
+        return new Response();
+    }
+
+    public Response select(){
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        criteria.andIdEqualTo(4);
+        userMapper.selectByExample(example);
         return new Response();
     }
 }
