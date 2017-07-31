@@ -5,7 +5,6 @@ import lombok.Getter;
 import java.io.Serializable;
 
 /**
- * @author zhuruisong on 2017/1/11
  * @since 1.0
  */
 public class PageInDto implements Serializable{

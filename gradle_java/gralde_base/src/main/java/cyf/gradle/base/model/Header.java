@@ -5,7 +5,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * @author zhuruisong on 2017/2/10
  * @since 1.0
  */
 @Setter

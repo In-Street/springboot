@@ -3,7 +3,6 @@ package cyf.gradle.base.enums;
 import lombok.Getter;
 
 /**
- * @author zhuruisong on 2017/1/5
  * @since 1.0
  */
 @Getter

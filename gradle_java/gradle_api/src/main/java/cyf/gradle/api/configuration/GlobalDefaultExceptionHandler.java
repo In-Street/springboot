@@ -13,7 +13,6 @@ import java.io.IOException;
 
 /**
  * ControllerAdvice  控制层的切面 捕获异常
- * @author zhuruisong on 2017-05-24 14:10:03
  *
  */
 @ControllerAdvice

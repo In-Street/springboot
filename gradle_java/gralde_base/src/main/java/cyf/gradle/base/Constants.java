@@ -1,7 +1,6 @@
 package cyf.gradle.base;
 
 /**
- * @author zhuruisong on 2017/3/28
  * @since 1.0
  */
 public interface Constants {

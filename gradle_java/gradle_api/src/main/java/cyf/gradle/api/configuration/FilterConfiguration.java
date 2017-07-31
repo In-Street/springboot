@@ -15,7 +15,6 @@ import java.util.Enumeration;
 
 /**
  * 过滤器配置类
- * @author zhuruisong on 2017/3/31
  * @since 1.0
  */
 @Configuration
