@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.List;
+
 /**
  * Created by cheng on 2017/7/10.
  */
@@ -19,7 +21,7 @@ public class UserService {
     UserMapper userMapper;
 
 
-    public Response save(){
+    public Response save() {
         User user = new User();
         user.setUsername("taylor");
         user.setPwd("taylor");
@@ -27,11 +29,27 @@ public class UserService {
         return new Response();
     }
 
-    public Response select(){
+    public Response select() {
         UserExample example = new UserExample();
         UserExample.Criteria criteria = example.createCriteria();
         criteria.andIdEqualTo(4);
-        userMapper.selectByExample(example);
+        List<User> list = userMapper.selectByExample(example);
+        return new Response(list);
+    }
+
+    public Response select1() {
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        criteria.andIdEqualTo(2);
+        List<User> list = userMapper.selectByExample(example);
+        return new Response(list);
+    }
+
+    public Response update() {
+        User user = new User();
+        user.setId(4);
+        user.setPwd("CANDICE");
+        userMapper.updateByPrimaryKeySelective(user);
         return new Response();
     }
 }

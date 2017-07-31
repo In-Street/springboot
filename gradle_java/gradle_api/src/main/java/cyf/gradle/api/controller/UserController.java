@@ -42,11 +42,31 @@ public class UserController {
         return new Response();
     }
 
+
+    // 会先到MyBatisRedis - redis 中，getObject() 查看是否有缓存，如果有不执行数据库操作 否则执行sql语句并且 putObject() 加入redis缓存
     @RequestMapping(value = "/select", method = {RequestMethod.POST, RequestMethod.GET})
     public Response select() {
 
-        userService.select();
+
+
+        return  userService.select();
+    }
+
+    //先执行 clear() ，然后执行sql 操作数据库
+    @RequestMapping(value = "/update", method = {RequestMethod.POST, RequestMethod.GET})
+    public Response update() {
+
+        userService.update();
         System.out.println();
         return new Response();
+    }
+
+    //查询时条件不一样 也会 进行缓存添加
+    @RequestMapping(value = "/select1", method = {RequestMethod.POST, RequestMethod.GET})
+    public Response select1() {
+
+
+
+        return  userService.select1();
     }
 }
