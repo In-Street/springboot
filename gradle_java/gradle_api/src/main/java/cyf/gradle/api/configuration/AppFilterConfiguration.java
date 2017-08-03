@@ -29,14 +29,21 @@ import cyf.gradle.base.model.Header;
  * 过滤器配置类
  * @since 1.0
  */
-//@Configuration
+@Configuration
 @Slf4j
 public class AppFilterConfiguration {
 
-    //@Autowired
+    @Autowired
     private StringRedisTemplate redisTemplate;
 
-   // @Bean
+    /**
+     * 刚开始启动项目不运行 doFilterInternal() 方法，直接到 registration.addUrlPatterns ，访问controller 时 执行
+     *
+     * 仅执行 doFilterInternal()
+     *
+     * @return
+     */
+    @Bean
     public FilterRegistrationBean headerFilterRegistration(){
         FilterRegistrationBean registration = new FilterRegistrationBean();
         Filter filter = new OncePerRequestFilter() {
@@ -74,7 +81,8 @@ public class AppFilterConfiguration {
                 LocalData.HEADER.remove();
             }
         };
-        registration.addUrlPatterns("/v1/*","/app/*");
+//        registration.addUrlPatterns("/v1/*","/app/*");
+        registration.addUrlPatterns("/user/*");
         registration.setFilter(filter);
         registration.setName("headerFilterRegistration");
         registration.setOrder(1);
