@@ -21,7 +21,7 @@ import javax.servlet.MultipartConfigElement;
         scanBasePackages = {"cyf.gradle.api", "cyf.gradle.dao"}
 )
 //排除mongo自动配置
-@EnableAutoConfiguration(exclude={MongoAutoConfiguration.class})
+//@EnableAutoConfiguration(exclude={MongoAutoConfiguration.class})
 public class ApiApplication {
 
     public static void main(String[] args) {
