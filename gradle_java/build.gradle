@@ -70,6 +70,9 @@ subprojects {
 
         compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '1.5.3.RELEASE'
 
+//        compile group: 'org.springframework.boot', name: 'spring-boot-autoconfigure', version: '1.5.4.RELEASE'
+
+
 
         //compile 'org.springframework.boot:spring-boot-starter-freemarker'
 
