@@ -70,7 +70,9 @@ subprojects {
 
         compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '1.5.3.RELEASE'
 
-//        compile group: 'org.springframework.boot', name: 'spring-boot-autoconfigure', version: '1.5.4.RELEASE'
+        compile group: 'org.apache.shiro', name: 'shiro-spring', version: '1.4.0'
+
+        compile group: 'net.sourceforge.nekohtml', name: 'nekohtml', version: '1.9.22'
 
 
 
@@ -97,6 +99,7 @@ project(':gradle_api') {
         compile project(':gradle_dao')
         compile project(':gradle_util')
         compile project(':gralde_base')
+        compile project(':gradle_shiro')
     }
 }
 
@@ -109,6 +112,14 @@ project(':gradle_schedule') {
 
 project(':gradle_mail') {
     dependencies {
+        compile project(':gradle_util')
+        compile project(':gralde_base')
+    }
+}
+
+project(':gradle_shiro') {
+    dependencies {
+        compile project(':gradle_dao')
         compile project(':gradle_util')
         compile project(':gralde_base')
     }

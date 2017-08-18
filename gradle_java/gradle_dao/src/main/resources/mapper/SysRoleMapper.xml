@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cyf.gradle.dao.mapper.UserMapper">
-  <resultMap id="BaseResultMap" type="cyf.gradle.dao.model.User">
+<mapper namespace="cyf.gradle.dao.mapper.SysRoleMapper">
+  <resultMap id="BaseResultMap" type="cyf.gradle.dao.model.SysRole">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="username" jdbcType="VARCHAR" property="username" />
-    <result column="pwd" jdbcType="VARCHAR" property="pwd" />
+    <result column="role" jdbcType="VARCHAR" property="role" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="availiable" jdbcType="BIT" property="availiable" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -65,15 +66,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, username, pwd
+    id, role, description, availiable
   </sql>
-  <select id="selectByExample" parameterType="cyf.gradle.dao.model.UserExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="cyf.gradle.dao.model.SysRoleExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from t_user
+    from t_sys_role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -92,65 +93,76 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from t_user
+    from t_sys_role
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from t_user
+    delete from t_sys_role
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="cyf.gradle.dao.model.UserExample">
-    delete from t_user
+  <delete id="deleteByExample" parameterType="cyf.gradle.dao.model.SysRoleExample">
+    delete from t_sys_role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="cyf.gradle.dao.model.User">
+  <insert id="insert" parameterType="cyf.gradle.dao.model.SysRole">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into t_user (username, pwd)
-    values (#{username,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR})
+    insert into t_sys_role (role, description, availiable
+      )
+    values (#{role,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{availiable,jdbcType=BIT}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="cyf.gradle.dao.model.User">
+  <insert id="insertSelective" parameterType="cyf.gradle.dao.model.SysRole">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into t_user
+    insert into t_sys_role
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="username != null">
-        username,
+      <if test="role != null">
+        role,
       </if>
-      <if test="pwd != null">
-        pwd,
+      <if test="description != null">
+        description,
+      </if>
+      <if test="availiable != null">
+        availiable,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="username != null">
-        #{username,jdbcType=VARCHAR},
+      <if test="role != null">
+        #{role,jdbcType=VARCHAR},
       </if>
-      <if test="pwd != null">
-        #{pwd,jdbcType=VARCHAR},
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="availiable != null">
+        #{availiable,jdbcType=BIT},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="cyf.gradle.dao.model.UserExample" resultType="java.lang.Long">
-    select count(*) from t_user
+  <select id="countByExample" parameterType="cyf.gradle.dao.model.SysRoleExample" resultType="java.lang.Long">
+    select count(*) from t_sys_role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update t_user
+    update t_sys_role
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.username != null">
-        username = #{record.username,jdbcType=VARCHAR},
+      <if test="record.role != null">
+        role = #{record.role,jdbcType=VARCHAR},
       </if>
-      <if test="record.pwd != null">
-        pwd = #{record.pwd,jdbcType=VARCHAR},
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.availiable != null">
+        availiable = #{record.availiable,jdbcType=BIT},
       </if>
     </set>
     <if test="_parameter != null">
@@ -158,38 +170,42 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update t_user
+    update t_sys_role
     set id = #{record.id,jdbcType=INTEGER},
-      username = #{record.username,jdbcType=VARCHAR},
-      pwd = #{record.pwd,jdbcType=VARCHAR}
+      role = #{record.role,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      availiable = #{record.availiable,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="cyf.gradle.dao.model.User">
-    update t_user
+  <update id="updateByPrimaryKeySelective" parameterType="cyf.gradle.dao.model.SysRole">
+    update t_sys_role
     <set>
-      <if test="username != null">
-        username = #{username,jdbcType=VARCHAR},
+      <if test="role != null">
+        role = #{role,jdbcType=VARCHAR},
       </if>
-      <if test="pwd != null">
-        pwd = #{pwd,jdbcType=VARCHAR},
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="availiable != null">
+        availiable = #{availiable,jdbcType=BIT},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cyf.gradle.dao.model.User">
-    update t_user
-    set username = #{username,jdbcType=VARCHAR},
-      pwd = #{pwd,jdbcType=VARCHAR}
+  <update id="updateByPrimaryKey" parameterType="cyf.gradle.dao.model.SysRole">
+    update t_sys_role
+    set role = #{role,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      availiable = #{availiable,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="selfPlusMinus">
-    update t_user
+    update t_sys_role
  	  set ${columnName} = ${columnName} ${operator}  ${count} 
 	  <if test="_parameter != null">
 		<include refid="Update_By_Example_Where_Clause" />
 	  </if>
   </update>
-  <!--<cache type="cyf.gradle.dao.cache.MyBatisRedisCache" />-->
 </mapper>

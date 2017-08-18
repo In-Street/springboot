@@ -5,4 +5,5 @@ include 'gradle_util'
 include 'gralde_base'
 include 'gradle_schedule'
 include 'gradle_mail'
+include 'gradle_shiro'
 

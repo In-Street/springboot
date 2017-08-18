@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cyf.gradle.dao.mapper.UserMapper">
-  <resultMap id="BaseResultMap" type="cyf.gradle.dao.model.User">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="username" jdbcType="VARCHAR" property="username" />
-    <result column="pwd" jdbcType="VARCHAR" property="pwd" />
+<mapper namespace="cyf.gradle.dao.mapper.SysUserRoleMapper">
+  <resultMap id="BaseResultMap" type="cyf.gradle.dao.model.SysUserRole">
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -65,15 +64,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, username, pwd
+    uid, role_id
   </sql>
-  <select id="selectByExample" parameterType="cyf.gradle.dao.model.UserExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="cyf.gradle.dao.model.SysUserRoleExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from t_user
+    from t_sys_user_role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -89,68 +88,49 @@
       </if>
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_user
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from t_user
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <delete id="deleteByExample" parameterType="cyf.gradle.dao.model.UserExample">
-    delete from t_user
+  <delete id="deleteByExample" parameterType="cyf.gradle.dao.model.SysUserRoleExample">
+    delete from t_sys_user_role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="cyf.gradle.dao.model.User">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into t_user (username, pwd)
-    values (#{username,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="cyf.gradle.dao.model.SysUserRole">
+    insert into t_sys_user_role (uid, role_id)
+    values (#{uid,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="cyf.gradle.dao.model.User">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into t_user
+  <insert id="insertSelective" parameterType="cyf.gradle.dao.model.SysUserRole">
+    insert into t_sys_user_role
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="username != null">
-        username,
+      <if test="uid != null">
+        uid,
       </if>
-      <if test="pwd != null">
-        pwd,
+      <if test="roleId != null">
+        role_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="username != null">
-        #{username,jdbcType=VARCHAR},
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
       </if>
-      <if test="pwd != null">
-        #{pwd,jdbcType=VARCHAR},
+      <if test="roleId != null">
+        #{roleId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="cyf.gradle.dao.model.UserExample" resultType="java.lang.Long">
-    select count(*) from t_user
+  <select id="countByExample" parameterType="cyf.gradle.dao.model.SysUserRoleExample" resultType="java.lang.Long">
+    select count(*) from t_sys_user_role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update t_user
+    update t_sys_user_role
     <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=INTEGER},
+      <if test="record.uid != null">
+        uid = #{record.uid,jdbcType=INTEGER},
       </if>
-      <if test="record.username != null">
-        username = #{record.username,jdbcType=VARCHAR},
-      </if>
-      <if test="record.pwd != null">
-        pwd = #{record.pwd,jdbcType=VARCHAR},
+      <if test="record.roleId != null">
+        role_id = #{record.roleId,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null">
@@ -158,38 +138,18 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update t_user
-    set id = #{record.id,jdbcType=INTEGER},
-      username = #{record.username,jdbcType=VARCHAR},
-      pwd = #{record.pwd,jdbcType=VARCHAR}
+    update t_sys_user_role
+    set uid = #{record.uid,jdbcType=INTEGER},
+      role_id = #{record.roleId,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="cyf.gradle.dao.model.User">
-    update t_user
-    <set>
-      <if test="username != null">
-        username = #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="pwd != null">
-        pwd = #{pwd,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cyf.gradle.dao.model.User">
-    update t_user
-    set username = #{username,jdbcType=VARCHAR},
-      pwd = #{pwd,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
   <update id="selfPlusMinus">
-    update t_user
+    update t_sys_user_role
  	  set ${columnName} = ${columnName} ${operator}  ${count} 
 	  <if test="_parameter != null">
 		<include refid="Update_By_Example_Where_Clause" />
 	  </if>
   </update>
-  <!--<cache type="cyf.gradle.dao.cache.MyBatisRedisCache" />-->
 </mapper>
