@@ -5,6 +5,7 @@ import cyf.gradle.api.service.UserService;
 import cyf.gradle.base.model.Response;
 import cyf.gradle.dao.mongodb.PrimaryMongoObject;
 import cyf.gradle.dao.mongodb.PrimaryMongoRepository;
+import org.apache.commons.lang3.time.FastDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,7 +46,10 @@ public class UserController {
 
         //字符串转Date
         try {
+
             Date date = DateFormat.getDateInstance().parse("2017-07-29");
+            String format = FastDateFormat.getInstance().format(new Date());
+
             System.out.println(date);
         } catch (ParseException e) {
             e.printStackTrace();

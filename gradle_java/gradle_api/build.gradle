@@ -1,3 +1,6 @@
 bootRepackage {
     mainClass = 'cyf.gradle.api.ApiApplication'
 }
+dependencies{
+    compile group: 'org.jodd', name: 'jodd-core', version: '3.9.1'
+}

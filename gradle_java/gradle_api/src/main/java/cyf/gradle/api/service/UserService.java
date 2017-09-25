@@ -52,4 +52,5 @@ public class UserService {
         userMapper.updateByPrimaryKeySelective(user);
         return new Response();
     }
+
 }

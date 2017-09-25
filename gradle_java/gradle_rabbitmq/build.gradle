@@ -1,0 +1,7 @@
+bootRepackage{
+    mainClass = ''
+}
+dependencies{
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-amqp', version: '1.5.2.RELEASE'
+
+}
