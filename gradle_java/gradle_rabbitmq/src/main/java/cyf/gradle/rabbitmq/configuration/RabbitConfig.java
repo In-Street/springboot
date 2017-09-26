@@ -27,7 +27,7 @@ public class RabbitConfig {
         return new Queue("secondqueue");
     }
 
-    //刚开始以为传输对象错误
+    //刚开始以为传输对象错误是因为转换错误，不是这个原因
     /* @Bean
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
         RabbitTemplate template = new RabbitTemplate(connectionFactory);

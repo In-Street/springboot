@@ -13,12 +13,12 @@ import org.springframework.stereotype.Component;
  **/
 @Component
 @RabbitListener(queues = "secondqueue")
-public class SecondReceiver {
+public class ThirdReceiver {
 
 
     @RabbitHandler
     public void process(User user) {
-        System.out.println("second Receiver  : " + user);
+        System.out.println("third Receiver  : " + user);
     }
 
 

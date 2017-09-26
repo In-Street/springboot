@@ -12,15 +12,20 @@ import org.springframework.stereotype.Component;
  * @create 2017-09-18 16:55
  **/
 @Component
-@RabbitListener(queues = "secondqueue")
-public class SecondReceiver {
 
+public class ExchangeReceiver {
 
-    @RabbitHandler
-    public void process(User user) {
-        System.out.println("second Receiver  : " + user);
+    @RabbitListener(queues = "topic.message")
+//    @RabbitHandler
+    public void process(String context) {
+        System.out.println("exchange_Receiver_1  : " + context);
     }
 
 
+    @RabbitListener(queues = "topic.messages")
+//    @RabbitHandler
+    public void process2(String context) {
+        System.out.println("exchange_Receiver_2  : " + context);
+    }
 
 }
