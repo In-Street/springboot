@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * @create 2017-09-18 16:46
  **/
 @Component
-public class ExchangeSender {
+public class TopicExchangeSender {
 
     @Autowired
     private AmqpTemplate rabbitTemplate;

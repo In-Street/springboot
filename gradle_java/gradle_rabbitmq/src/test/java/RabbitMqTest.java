@@ -1,11 +1,12 @@
 import cyf.gradle.rabbitmq.MqApplication;
-import cyf.gradle.rabbitmq.controller.ExchangeReceiver;
-import cyf.gradle.rabbitmq.controller.ExchangeSender;
+import cyf.gradle.rabbitmq.controller.FanoutSender;
+import cyf.gradle.rabbitmq.controller.TopicExchangeSender;
 import cyf.gradle.rabbitmq.controller.FirstSender;
 import cyf.gradle.rabbitmq.controller.SecondSender;
 import cyf.gradle.rabbitmq.modal.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.amqp.core.FanoutExchange;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -25,7 +26,10 @@ public class RabbitMqTest {
     private SecondSender secondSender;
 
     @Autowired
-    private ExchangeSender exchangeSender;
+    private TopicExchangeSender exchangeSender;
+
+    @Autowired
+    private FanoutSender fanoutSender;
 
     @Test
     public void first() {
@@ -48,5 +52,11 @@ public class RabbitMqTest {
         //匹配到topic.# 和 topic.message  结果两个接受者: exchange_Receiver_2  : exchange_Sender_1 chengyufei, exchange_Receiver_1  : exchange_Sender_1 chengyufei
         exchangeSender.send();
 
+    }
+
+    @Test
+    public void fanout() {
+        //所有的 队列都会接受到消息 ，指定规则也会忽略
+        fanoutSender.send();
     }
 }

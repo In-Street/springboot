@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Cheng Yufei
  * @create 2017-09-18 16:40
  *
+ topic 是RabbitMQ中最灵活的一种方式，可以根据routing_key自由的绑定不同的队列
 Topic Exchange 转发消息主要是根据通配符。 在这种交换机下，队列和交换机的绑定会定义一种路由模式，
 那么，通配符就要在这种路由模式和路由键之间匹配后交换机才能转发消息。
 在这种交换机模式下：
