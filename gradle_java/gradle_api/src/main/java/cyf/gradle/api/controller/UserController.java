@@ -2,12 +2,18 @@ package cyf.gradle.api.controller;
 
 import cyf.gradle.api.service.MongoService;
 import cyf.gradle.api.service.UserService;
+import cyf.gradle.base.Constants;
+import cyf.gradle.base.model.Header;
+import cyf.gradle.base.model.LocalData;
 import cyf.gradle.base.model.Response;
+import cyf.gradle.dao.model.User;
 import cyf.gradle.dao.mongodb.PrimaryMongoObject;
 import cyf.gradle.dao.mongodb.PrimaryMongoRepository;
+import cyf.gradle.util.FastJsonUtils;
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,11 +40,12 @@ public class UserController {
     @Autowired
     MongoTemplate mongoTemplate;
 
-
+    @Autowired
+    StringRedisTemplate redisTemplate;
 
     @RequestMapping(value = "/save", method = {RequestMethod.POST, RequestMethod.GET})
     public Response save() {
-        //   userService.save();
+        userService.save();
 
         // 获取当前方法名
         String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
@@ -64,8 +71,7 @@ public class UserController {
     public Response select() {
 
 
-
-        return  userService.select();
+        return userService.select();
     }
 
     //先执行 clear() ，然后执行sql 操作数据库
@@ -81,7 +87,16 @@ public class UserController {
     @RequestMapping(value = "/select1", method = {RequestMethod.POST, RequestMethod.GET})
     public Response select1() {
 
-        return  userService.select1();
+        Header header = LocalData.HEADER.get();
+        Integer uid = header.getUid();
+        return new Response(userService.select1());
+    }
+
+    @RequestMapping(value = "/save1", method = {RequestMethod.POST, RequestMethod.GET})
+    public Response save1() {
+        User user = userService.select1().get(0);
+        redisTemplate.opsForValue().set(Constants.USER_LOGIN_KEY + "451DAE598CB14AB4B21BB19F113F9293",FastJsonUtils.toJSONString(user));
+        return new Response();
     }
 
 

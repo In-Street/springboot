@@ -23,8 +23,8 @@ public class UserService {
 
     public Response save() {
         User user = new User();
-        user.setUsername("taylor");
-        user.setPwd("taylor");
+        user.setUsername("swift");
+        user.setPwd("swift");
         userMapper.insertSelective(user);
         return new Response();
     }
@@ -32,17 +32,17 @@ public class UserService {
     public Response select() {
         UserExample example = new UserExample();
         UserExample.Criteria criteria = example.createCriteria();
-        criteria.andIdEqualTo(4);
+        criteria.andIdEqualTo(5);
         List<User> list = userMapper.selectByExample(example);
         return new Response(list);
     }
 
-    public Response select1() {
+    public  List<User> select1() {
         UserExample example = new UserExample();
         UserExample.Criteria criteria = example.createCriteria();
-        criteria.andIdEqualTo(2);
+        criteria.andIdEqualTo(6);
         List<User> list = userMapper.selectByExample(example);
-        return new Response(list);
+        return list;
     }
 
     public Response update() {

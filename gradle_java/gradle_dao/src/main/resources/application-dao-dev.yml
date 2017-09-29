@@ -71,6 +71,10 @@ mongodb:
     port: 27017
     database: cyfdb
     uri: mongodb://127.0.0.1:27017/cyfdb
+
+
+
+
 #
 #ali.oss.endpoint: "http://oss-cn-shanghai.aliyuncs.com"
 #

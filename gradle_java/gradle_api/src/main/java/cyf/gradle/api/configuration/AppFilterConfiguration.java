@@ -5,6 +5,7 @@ import cyf.gradle.base.Constants;
 import cyf.gradle.base.enums.RespStatusEnum;
 import cyf.gradle.base.model.LocalData;
 import cyf.gradle.base.model.Response;
+import cyf.gradle.dao.model.User;
 import cyf.gradle.util.FastJsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -157,8 +158,8 @@ public class AppFilterConfiguration {
                     if(StringUtils.isNotBlank(userJson)){
                         LocalData.USER_JSON.set(userJson);
                         log.info("用户信息已设置,{}", userJson);
-                       /* DsmUser dsmUser = FastJsonUtils.toBean(userJson, DsmUser.class);
-                        header.setUid(dsmUser.getUid());*/
+                        User dsmUser = FastJsonUtils.toBean(userJson, User.class);
+                        header.setUid(dsmUser.getId());
                     }
                 }
 
@@ -168,6 +169,7 @@ public class AppFilterConfiguration {
 
                 LocalData.USER_JSON.remove();
                 LocalData.HEADER.remove();
+                System.out.println();
             }
         };
 //        registration.addUrlPatterns("/v1/*","/app/*");
@@ -183,7 +185,7 @@ public class AppFilterConfiguration {
      * 必须登陆
      * @return FilterRegistrationBean
      */
-  //  @Bean
+  @Bean
     public FilterRegistrationBean apploginFilterRegistration() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
         Filter filter = new OncePerRequestFilter() {
@@ -209,7 +211,7 @@ public class AppFilterConfiguration {
 
         registration.setFilter(filter);
 
-        //点赞 评论 上传用户头像
+
         String[] urlPattern = new String[]{
                 "/v1/user/publish/*",
                 "/v1/comment/add/*",
