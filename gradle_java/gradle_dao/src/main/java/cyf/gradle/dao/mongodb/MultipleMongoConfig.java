@@ -13,6 +13,14 @@ import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 
 /**
  * 多数据源
+ * 读取对应的配置信息并且构造对应的MongoTemplate
+ *
+ * 避免spring操作时不知道使用哪个出现 NoUniqueBeanDefinitionException.
+ * 注解	       备注
+   @Primary	   优先方案，被注解的实现，优先被注入
+   @Qualifier  先声明后使用，相当于多个实现起多个不同的名字，注入时候告诉我你要注入哪个
+ *
+ *
  *
  * @author Cheng Yufei
  * @create 2017-08-07 18:43
@@ -24,17 +32,17 @@ public class MultipleMongoConfig {
     private MultipleMongoProperties mongoProperties;
 
     @Primary
-    @Bean(name = PrimaryMongoConfig.MONGO_TEMPLATE)
+    @Bean
     public MongoTemplate primaryMongoTemplate() throws Exception {
         System.out.println();
         return new MongoTemplate(primaryFactory(this.mongoProperties.getPrimary()));
     }
 
-  /*  @Bean
-    @Qualifier(SecondaryMongoConfig.MONGO_TEMPLATE)
-    public MongoTemplate secondaryMongoTemplate() throws Exception {
-        return new MongoTemplate(secondaryFactory(this.mongoProperties.getSecondary()));
-    }*/
+    @Bean
+    public MongoTemplate secondMongoTemplate() throws Exception {
+        System.out.println();
+        return new MongoTemplate(secondFactory(this.mongoProperties.getSecond()));
+    }
 
     @Bean
     @Primary
@@ -45,15 +53,10 @@ public class MultipleMongoConfig {
     }
 
     @Bean
-//    @Primary
-    public MongoClient MongoClient(MongoProperties mongo) {
+    public MongoDbFactory secondFactory(MongoProperties mongo) throws Exception {
         System.out.println();
-        mongo = this.mongoProperties.getPrimary();
-        return new MongoClient(mongo.getHost(), mongo.getPort());
-    }
-    /*@Bean
-    public MongoDbFactory secondaryFactory(MongoProperties mongo) throws Exception {
         return new SimpleMongoDbFactory(new MongoClient(mongo.getHost(), mongo.getPort()),
                 mongo.getDatabase());
-    }*/
+    }
+
 }

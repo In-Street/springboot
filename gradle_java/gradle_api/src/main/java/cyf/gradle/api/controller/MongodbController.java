@@ -66,4 +66,14 @@ public class MongodbController {
         }
         return new Response(list);
     }
+
+    @RequestMapping(value = "/mongodbSaveSecond", method = {RequestMethod.POST, RequestMethod.GET})
+    public Response mongodbSaveSecond(@RequestParam String introduction) {
+        System.out.println();
+        // this.primaryRepository.save(new PrimaryMongoObject(null,"测试2save()"));
+//        mongoTemplate.insert(new PrimaryMongoObject(null,"测试2save()"));
+        mongoService.insertSecond(introduction);
+        return new Response();
+    }
+
 }

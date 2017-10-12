@@ -1,22 +1,17 @@
 package cyf.gradle.api.controller;
 
-import cyf.gradle.api.service.MongoService;
 import cyf.gradle.api.service.UserService;
 import cyf.gradle.base.Constants;
 import cyf.gradle.base.model.Header;
 import cyf.gradle.base.model.LocalData;
 import cyf.gradle.base.model.Response;
 import cyf.gradle.dao.model.User;
-import cyf.gradle.dao.mongodb.PrimaryMongoObject;
-import cyf.gradle.dao.mongodb.PrimaryMongoRepository;
 import cyf.gradle.util.FastJsonUtils;
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.DateFormat;
@@ -34,11 +29,6 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @Autowired
-    PrimaryMongoRepository primaryRepository;
-
-    @Autowired
-    MongoTemplate mongoTemplate;
 
     @Autowired
     StringRedisTemplate redisTemplate;
