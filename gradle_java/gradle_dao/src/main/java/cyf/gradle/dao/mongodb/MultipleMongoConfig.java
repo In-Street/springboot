@@ -31,6 +31,7 @@ public class MultipleMongoConfig {
     @Autowired
     private MultipleMongoProperties mongoProperties;
 
+    //两个template中有一个得有@Primary注解，Service注入template时按名称注入@Resource，factory同样
     @Primary
     @Bean
     public MongoTemplate primaryMongoTemplate() throws Exception {

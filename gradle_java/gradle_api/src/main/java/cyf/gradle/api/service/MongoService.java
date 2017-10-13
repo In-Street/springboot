@@ -1,13 +1,9 @@
 package cyf.gradle.api.service;
 
-import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
-import com.mongodb.MongoClient;
-import com.mongodb.client.MongoDatabase;
 import cyf.gradle.dao.mongodb.PrimaryMongoObject;
 import cyf.gradle.dao.mongodb.SecondMongoObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -16,7 +12,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
