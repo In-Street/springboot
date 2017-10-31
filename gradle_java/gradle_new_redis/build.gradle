@@ -1,0 +1,7 @@
+bootRepackage {
+    mainClass = "cyf.gradle.newredis.NewRedisApplication"
+
+}
+dependencies{
+
+}
