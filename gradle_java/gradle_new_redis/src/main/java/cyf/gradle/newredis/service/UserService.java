@@ -13,8 +13,10 @@ import java.time.LocalDateTime;
 @Service
 public class UserService {
 
+
+
     @Cacheable(value = "userCache",keyGenerator = "wiseKeyGenerator")
-    public User getUser(Integer id,String username,String pwd) {
+    public User getUserS(Integer id,String username,String pwd) {
         System.out.println("无缓存时候执行-调用数据库时间："+ LocalDateTime.now());
         return new User(id,username,pwd);
     }
