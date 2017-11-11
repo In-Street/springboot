@@ -15,7 +15,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "localCollection")
+@Document(collection = "cyfdb_second_coll")
 public class SecondMongoObject {
 
     @Id

@@ -18,7 +18,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 //@Document(collection = "first_mongo")
 
 //一定要注意collection 的选择，否则 数据 存错地方
-@Document(collection = "cyfdb")
+@Document(collection = "cyf_collections")
 public class PrimaryMongoObject {
 
     @Id

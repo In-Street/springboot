@@ -54,7 +54,7 @@ hikari:
 #redis连接
 spring:
   redis:
-    host: 127.0.0.1
+    host: 39.106.118.71
     password:
     pool:
       max-active: 300
@@ -67,15 +67,15 @@ spring:
 #mongodb:
 mongodb:
   primary:
-    host: 127.0.0.1
+    host: 39.106.118.71
     port: 27017
     database: cyfdb
-    uri: mongodb://127.0.0.1:27017/cyfdb
+    uri: mongodb://39.106.118.71:27017/cyfdb
   second:
-     host: 127.0.0.1
+     host: 39.106.118.71
      port: 27017
      database: local
-     uri: mongodb://127.0.0.1:27017/local
+     uri: mongodb://39.106.118.71:27017/cyfdb_second
 
 
 
