@@ -5,6 +5,7 @@
     <property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}/spring.log}"/>
     <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
 
+<!--
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <File>D:/topvideo-api.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -15,7 +16,8 @@
             <pattern>${FILE_LOG_PATTERN}</pattern>
         </layout>
     </appender>
-    
+-->
+
 <!--    <appender name="FILE_PRE" class="ch.qos.logback.core.FileAppender">
         <File>D:/topvideo-api-pre.log</File>
         <layout class="ch.qos.logback.classic.PatternLayout">
