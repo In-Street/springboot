@@ -8,4 +8,5 @@ include 'gradle_mail'
 include 'gradle_shiro'
 include 'gradle_rabbitmq'
 include 'gradle_new_redis'
+include 'gradle_search'
 

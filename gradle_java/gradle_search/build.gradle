@@ -1,0 +1,9 @@
+bootRepackage{
+    mainClass= 'cyf.gradle.search.SearchApplication'
+}
+
+dependencies {
+    compile "org.springframework.boot:spring-boot-starter-data-elasticsearch"
+    compile "io.searchbox:jest"
+    compile 'com.sun.jna:jna:3.0.9'
+}
