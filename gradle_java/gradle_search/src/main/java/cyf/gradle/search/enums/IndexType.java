@@ -8,9 +8,8 @@ import java.util.Objects;
 public enum IndexType {
 
 
-    album("smallbronze","album"),
-    user("smallbronze","user"),
-    topic("smallbronze","topic"),
+    kerr("miranda","kerr"),
+
     ;
 
     private String index;
@@ -22,15 +21,19 @@ public enum IndexType {
         this.type = type;
     }
 
-    public static IndexType get(String type) {
+    public IndexType get(String type) {
 
         if (null != type) {
-            for (IndexType status : IndexType.values()) {
-                if (Objects.equals(type, status.getType())) {
-                    return status;
+            IndexType[] values = IndexType.values();
+            for (IndexType value : values) {
+                if (type.equals(value.getType())) {
+                    return value;
                 }
             }
         }
         return null;
     }
 }
+
+
+

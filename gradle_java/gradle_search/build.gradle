@@ -6,4 +6,5 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-data-elasticsearch"
     compile "io.searchbox:jest"
     compile 'com.sun.jna:jna:3.0.9'
+    compile group: 'org.elasticsearch.client', name: 'transport', version: '5.1.1'
 }

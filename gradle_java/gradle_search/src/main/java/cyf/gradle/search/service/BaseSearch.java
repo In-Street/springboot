@@ -2,12 +2,16 @@ package cyf.gradle.search.service;
 
 import com.google.gson.Gson;
 import cyf.gradle.search.enums.IndexType;
-import cyf.gradle.search.plugin.DeleteByQuery;
 import cyf.gradle.util.FastJsonUtils;
 import io.searchbox.client.JestClient;
 import io.searchbox.client.JestResult;
-import io.searchbox.core.*;
+import io.searchbox.core.Bulk;
+import io.searchbox.core.BulkResult;
+import io.searchbox.core.Delete;
+import io.searchbox.core.DocumentResult;
+import io.searchbox.core.Index;
 import lombok.extern.slf4j.Slf4j;
+import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -27,6 +31,9 @@ public class BaseSearch  {
 
     @Autowired
     private JestClient jestClient;
+
+    /*@Autowired
+    private TransportClient transportClient;*/
 
 
     public DocumentResult add(Object object, String id, String index, String type) throws IOException {
@@ -69,7 +76,7 @@ public class BaseSearch  {
     public JestResult deleteByIds(List ids, String index, String type) throws IOException {
         BoolQueryBuilder boolQueryBuilder = QueryBuilders
                 .boolQuery()
-                .must(index.equals(IndexType.user.getIndex())&& type.equals(IndexType.user.getType())? QueryBuilders.termsQuery("uid", ids):QueryBuilders.termsQuery("id", ids));
+                .must(QueryBuilders.termsQuery("id", ids));
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder().query(boolQueryBuilder);
 
         cyf.gradle.search.plugin.DeleteByQuery  deleteByQuery = new cyf.gradle.search.plugin.DeleteByQuery
