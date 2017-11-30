@@ -76,34 +76,10 @@ public class AppFilterConfiguration {
                     String allowOrigin = "http://m.daishumovie.com";
                     String referer = request.getHeader("referer");
                     if (referer != null) {
-                        if (referer.contains("http://m.lanhaimian.com")) {
-                            allowOrigin = "http://m.lanhaimian.com";
-                        } else if(referer.contains("http://m.pre.lanhaimian.com")){
-                            allowOrigin = "http://m.pre.lanhaimian.com";
-                        } else if(referer.contains("https://m.lanhaimian.com")){
-                            allowOrigin = "https://m.lanhaimian.com";
-                        } else if(referer.contains("http://mpre.lanhaimian.com")){
-                            allowOrigin = "http://mpre.lanhaimian.com";
-                        } else if (referer.contains("http://m.daishumovie.com")) {
-                            allowOrigin = "http://m.daishumovie.com";
-                        } else if (referer.contains("http://m.daishumovie.cn")) {
-                            allowOrigin = "http://m.daishumovie.cn";
-                        } else if (referer.contains("http://m.movie.com")) {
-                            allowOrigin = "http://m.movie.com";
-                        } else if (referer.contains("http://daishumovie.f3322.net")) {
-                            allowOrigin = "http://daishumovie.f3322.net";
-                        } else if (referer.contains("localhost")) {
+                        if (referer.contains("http://39.106.118.71")) {
+                            allowOrigin = "http://39.106.118.71";
+                        }else if (referer.contains("localhost")) {
                             allowOrigin = "http://localhost:8080";
-                        } else if (referer.contains("192.168")) {
-                            allowOrigin = "http://192.168.1.200";
-                        } else if (referer.contains("http://101.200.127.174:8083")) {
-                            allowOrigin = "http://101.200.127.174:8083";
-                        } else if (referer.contains("http://m1.movie.com:8080")) {
-                            allowOrigin = "http://m1.movie.com:8080";
-                        } else if (referer.contains("http://m2.movie.com:8080")) {
-                            allowOrigin = "http://m2.movie.com:8080";
-                        } else if (referer.contains("http://47.93.113.202:8080")) {
-                            allowOrigin = "http://47.93.113.202:8080";
                         }
                     }
                     response.addHeader("Access-Control-Allow-Origin", allowOrigin);

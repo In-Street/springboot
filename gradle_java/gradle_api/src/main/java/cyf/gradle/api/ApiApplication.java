@@ -1,9 +1,7 @@
 package cyf.gradle.api;
 
 import org.springframework.beans.factory.support.DefaultBeanNameGenerator;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;

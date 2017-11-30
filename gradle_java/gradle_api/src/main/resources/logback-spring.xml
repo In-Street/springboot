@@ -5,18 +5,16 @@
     <property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}/spring.log}"/>
     <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
 
-<!--
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>D:/topvideo-api.log</File>
+        <File>D:/gradle-java-api.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>D:/topvideo-api-%d{yyyy-MM-dd}.log</FileNamePattern>
+            <FileNamePattern>D:/gradle-java-api-%d{yyyy-MM-dd}.log</FileNamePattern>
             <MaxHistory>2</MaxHistory>
         </rollingPolicy>
         <layout class="ch.qos.logback.classic.PatternLayout">
             <pattern>${FILE_LOG_PATTERN}</pattern>
         </layout>
     </appender>
--->
 
 <!--    <appender name="FILE_PRE" class="ch.qos.logback.core.FileAppender">
         <File>D:/topvideo-api-pre.log</File>
