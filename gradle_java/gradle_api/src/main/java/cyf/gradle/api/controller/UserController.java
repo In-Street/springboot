@@ -7,6 +7,7 @@ import cyf.gradle.base.model.LocalData;
 import cyf.gradle.base.model.Response;
 import cyf.gradle.dao.model.User;
 import cyf.gradle.util.FastJsonUtils;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by cheng on 2017/7/10.
@@ -28,7 +28,6 @@ public class UserController {
 
     @Autowired
     UserService userService;
-
 
     @Autowired
     StringRedisTemplate redisTemplate;
@@ -57,6 +56,7 @@ public class UserController {
 
 
     // 会先到MyBatisRedis - redis 中，getObject() 查看是否有缓存，如果有不执行数据库操作 否则执行sql语句并且 putObject() 加入redis缓存
+    @ApiOperation(value="根据UID获取用户", notes="根据url的id来获取用户详细信息")
     @RequestMapping(value = "/select", method = {RequestMethod.POST, RequestMethod.GET})
     public Response select() {
 

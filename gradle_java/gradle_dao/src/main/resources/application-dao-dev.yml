@@ -55,7 +55,7 @@ hikari:
 spring:
   redis:
     host: 39.106.118.71
-    password:
+    password: 68A61C323A3452544C4AEF6296D8BD95A61B8C8FA8AC0C07BEA1D176847909C6
     pool:
       max-active: 300
       max-idle: 200

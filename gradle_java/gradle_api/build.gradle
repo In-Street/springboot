@@ -3,4 +3,9 @@ bootRepackage {
 }
 dependencies{
     compile group: 'org.jodd', name: 'jodd-core', version: '3.9.1'
+    compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.2.2'
+
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.2.2'
+
+
 }
