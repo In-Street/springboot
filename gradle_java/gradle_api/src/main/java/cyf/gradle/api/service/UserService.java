@@ -21,18 +21,17 @@ public class UserService {
     UserMapper userMapper;
 
 
-    public Response save() {
-        User user = new User();
-        user.setUsername("swift");
-        user.setPwd("swift");
+    public Response save(User user) {
         userMapper.insertSelective(user);
         return new Response();
     }
 
-    public Response select() {
+
+    public Response select(Integer uid,String username) {
         UserExample example = new UserExample();
-        UserExample.Criteria criteria = example.createCriteria();
-        criteria.andIdEqualTo(5);
+        example.createCriteria()
+        .andIdEqualTo(uid);
+        example.or().andUsernameLike("%"+username+"%");
         List<User> list = userMapper.selectByExample(example);
         return new Response(list);
     }

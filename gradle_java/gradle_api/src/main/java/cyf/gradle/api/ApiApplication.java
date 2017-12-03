@@ -1,14 +1,12 @@
 package cyf.gradle.api;
 
 import org.springframework.beans.factory.support.DefaultBeanNameGenerator;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.servlet.MultipartConfigElement;
 
@@ -29,6 +27,8 @@ public class ApiApplication {
                 //类名重复bean的处理
                 .beanNameGenerator(new DefaultBeanNameGenerator())
                 .run(args);
+
+
     }
 
     @Bean
@@ -43,12 +43,11 @@ public class ApiApplication {
         factory.setMaxRequestSize("-1");
         return factory.createMultipartConfig();
     }
-
 //    @Bean
 //    public CommonsMultipartResolver multipartResolver(){
 //        CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();
 //        commonsMultipartResolver.setMaxUploadSize(52428800);//50m
 //        return commonsMultipartResolver;
-//    }
 
+//    }
 }

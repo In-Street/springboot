@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ import java.util.List;
  **/
 @RestController
 @RequestMapping("/mongo")
+@ApiIgnore
 public class MongodbController {
 
     @Autowired
@@ -28,7 +30,7 @@ public class MongodbController {
     @RequestMapping(value = "/mongodbSave", method = {RequestMethod.POST, RequestMethod.GET})
     public Response mongodbSave(@RequestParam String name) {
         System.out.println();
-        // this.primaryRepository.save(new PrimaryMongoObject(null,"测试2save()"));
+        // this.primaryRepository.save(new PrimaryMongoObject(null,"测试2save()"));  优化
 //        mongoTemplate.insert(new PrimaryMongoObject(null,"测试2save()"));
         mongoService.insert(name);
         return new Response();

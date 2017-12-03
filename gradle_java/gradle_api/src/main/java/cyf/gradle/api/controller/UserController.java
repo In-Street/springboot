@@ -7,13 +7,17 @@ import cyf.gradle.base.model.LocalData;
 import cyf.gradle.base.model.Response;
 import cyf.gradle.dao.model.User;
 import cyf.gradle.util.FastJsonUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -24,6 +28,8 @@ import java.util.Date;
  */
 @RestController
 @RequestMapping("/user")
+@Slf4j
+@Api(value = "用户模块")
 public class UserController {
 
     @Autowired
@@ -32,9 +38,9 @@ public class UserController {
     @Autowired
     StringRedisTemplate redisTemplate;
 
+    @ApiIgnore
     @RequestMapping(value = "/save", method = {RequestMethod.POST, RequestMethod.GET})
     public Response save() {
-        userService.save();
 
         // 获取当前方法名
         String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
@@ -54,18 +60,35 @@ public class UserController {
         return new Response();
     }
 
+    @ApiOperation(value = "存储用户")
+    @RequestMapping(value = "/saveUser",method = RequestMethod.POST)
+    @ApiImplicitParam(name = "user",value = "用户实体",paramType = "body",dataType = "User",required = true)
+    public Response saveUser(@RequestBody User user) {
+
+        userService.save(user);
+
+        return new Response();
+    }
+
 
     // 会先到MyBatisRedis - redis 中，getObject() 查看是否有缓存，如果有不执行数据库操作 否则执行sql语句并且 putObject() 加入redis缓存
-    @ApiOperation(value="根据UID获取用户", notes="根据url的id来获取用户详细信息")
-    @RequestMapping(value = "/select", method = {RequestMethod.POST, RequestMethod.GET})
-    public Response select() {
+    @ApiOperation(value="根据UID获取用户", notes="根据url的id来获取信息")
+    @RequestMapping(value = "/select/{uid}", method = { RequestMethod.GET})
+//    @ApiImplicitParam(name = "uid",value = "用户ID",paramType = "path",dataType = "int",required = true)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "uid",value = "用户ID",paramType = "path",dataType = "int",required = true ),
+            @ApiImplicitParam(name = "appId",value = "appId",paramType = "header",dataType = "string",required = false),
+            @ApiImplicitParam(name = "username",value = "用户名",paramType = "query",dataType = "string",required = true),
+    })
+    public Response select(@PathVariable  Integer uid,@RequestHeader(required = false) String appId,@RequestParam String username) {
 
-
-        return userService.select();
+        log.debug(String.format("参数 appId :【%s】",appId));
+        return userService.select(uid,username);
     }
 
     //先执行 clear() ，然后执行sql 操作数据库
     @RequestMapping(value = "/update", method = {RequestMethod.POST, RequestMethod.GET})
+    @ApiIgnore
     public Response update() {
 
         userService.update();
@@ -75,6 +98,7 @@ public class UserController {
 
     //查询时条件不一样 也会 进行缓存添加
     @RequestMapping(value = "/select1", method = {RequestMethod.POST, RequestMethod.GET})
+    @ApiIgnore
     public Response select1() {
 
         Header header = LocalData.HEADER.get();
@@ -83,6 +107,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/save1", method = {RequestMethod.POST, RequestMethod.GET})
+    @ApiIgnore
     public Response save1() {
         User user = userService.select1().get(0);
         redisTemplate.opsForValue().set(Constants.USER_LOGIN_KEY + "451DAE598CB14AB4B21BB19F113F9293",FastJsonUtils.toJSONString(user));

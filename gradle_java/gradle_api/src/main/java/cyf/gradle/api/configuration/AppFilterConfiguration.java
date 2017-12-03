@@ -79,7 +79,9 @@ public class AppFilterConfiguration {
                         if (referer.contains("http://39.106.118.71")) {
                             allowOrigin = "http://39.106.118.71";
                         }else if (referer.contains("localhost")) {
-                            allowOrigin = "http://localhost:8080";
+                            allowOrigin = "http://localhost:8090";
+                        }else if (referer.contains("127.0.0.1")) {
+                            allowOrigin = "http://127.0.0.1:8090";
                         }
                     }
                     response.addHeader("Access-Control-Allow-Origin", allowOrigin);
