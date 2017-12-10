@@ -183,7 +183,6 @@ public class AppFilterConfiguration {
                 }
 
                 filterChain.doFilter(request,response);
-
             }
         };
 
@@ -196,7 +195,7 @@ public class AppFilterConfiguration {
                 "/v1/comment/del/*",
                 "/v1/user/uploadAvatar",
                 "/v1/user/uploadVideo",
-                "/v1/user/modify",
+//                "/user/select/*",
         };
         registration.setEnabled(true);
         registration.addUrlPatterns(urlPattern);

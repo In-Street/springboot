@@ -36,18 +36,28 @@ public class UserService {
         return new Response(list);
     }
 
-    public  List<User> select1() {
+    public  List<User> select1(int id) {
         UserExample example = new UserExample();
         UserExample.Criteria criteria = example.createCriteria();
-        criteria.andIdEqualTo(6);
+        criteria.andIdEqualTo(id);
+        List<User> list = userMapper.selectByExample(example);
+        return list;
+    }
+    public  List<User> select2(String name) {
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+//        criteria.andUsernameEqualTo(name);
+//        criteria.andUsernameLike("%" + name + "%");
+        criteria.andPwdEqualTo(name);
         List<User> list = userMapper.selectByExample(example);
         return list;
     }
 
-    public Response update() {
+
+    public Response update(int id,String pwd) {
         User user = new User();
-        user.setId(4);
-        user.setPwd("CANDICE");
+        user.setId(id);
+        user.setPwd(pwd);
         userMapper.updateByPrimaryKeySelective(user);
         return new Response();
     }

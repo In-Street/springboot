@@ -86,29 +86,39 @@ public class UserController {
     }
 
     //先执行 clear() ，然后执行sql 操作数据库
-    @RequestMapping(value = "/update", method = {RequestMethod.POST, RequestMethod.GET})
+    @RequestMapping(value = "/update/{id}/{pwd}", method = {RequestMethod.POST, RequestMethod.GET})
     @ApiIgnore
-    public Response update() {
+    public Response update(@PathVariable int id,@PathVariable String pwd) {
 
-        userService.update();
+        userService.update(id,pwd);
         System.out.println();
         return new Response();
     }
 
     //查询时条件不一样 也会 进行缓存添加
-    @RequestMapping(value = "/select1", method = {RequestMethod.POST, RequestMethod.GET})
+    @RequestMapping(value = "/select1/{id}", method = {RequestMethod.POST, RequestMethod.GET})
     @ApiIgnore
-    public Response select1() {
+    public Response select1(@PathVariable int id) {
 
         Header header = LocalData.HEADER.get();
         Integer uid = header.getUid();
-        return new Response(userService.select1());
+        return new Response(userService.select1(id));
     }
 
-    @RequestMapping(value = "/save1", method = {RequestMethod.POST, RequestMethod.GET})
+    //查询时条件不一样 也会 进行缓存添加
+    @RequestMapping(value = "/select2/{name}", method = {RequestMethod.POST, RequestMethod.GET})
     @ApiIgnore
-    public Response save1() {
-        User user = userService.select1().get(0);
+    public Response select1(@PathVariable String name) {
+
+        Header header = LocalData.HEADER.get();
+        Integer uid = header.getUid();
+        return new Response(userService.select2(name));
+    }
+
+    @RequestMapping(value = "/save1/{id}", method = {RequestMethod.POST, RequestMethod.GET})
+    @ApiIgnore
+    public Response save1(@PathVariable int id) {
+        User user = userService.select1(id).get(0);
         redisTemplate.opsForValue().set(Constants.USER_LOGIN_KEY + "451DAE598CB14AB4B21BB19F113F9293",FastJsonUtils.toJSONString(user));
         return new Response();
     }
