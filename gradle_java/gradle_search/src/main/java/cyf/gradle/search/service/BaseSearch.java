@@ -16,12 +16,15 @@ import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
 
 /**
+ *
+ * Foundation
  * @author Cheng Yufei
  * @create 2017-11-01 10:58
  **/
@@ -32,8 +35,7 @@ public class BaseSearch  {
     @Autowired
     private JestClient jestClient;
 
-    /*@Autowired
-    private TransportClient transportClient;*/
+
 
 
     public DocumentResult add(Object object, String id, String index, String type) throws IOException {

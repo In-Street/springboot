@@ -47,7 +47,6 @@ public class UserController {
 
         //字符串转Date
         try {
-
             Date date = DateFormat.getDateInstance().parse("2017-07-29");
             String format = FastDateFormat.getInstance().format(new Date());
 

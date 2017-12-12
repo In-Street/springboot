@@ -2,7 +2,9 @@
 buildscript {
     ext {
         lombok="1.16.12"
-        springBootVersion = '1.4.5.RELEASE'
+//        springBootVersion = '1.4.5.RELEASE'
+        springBootVersion = '1.5.8.RELEASE'
+
     }
     repositories {
        /* mavenLocal()
@@ -64,7 +66,7 @@ subprojects {
         compile  "com.google.guava:guava:20.0"
         compile "commons-io:commons-io:2.5"
         compile "org.apache.commons:commons-lang3:3.5"
-//        testCompileOnly "org.projectlombok:lombok:${lombok}"
+
         testCompile "org.springframework.boot:spring-boot-starter-test"
 
         compile 'org.springframework.boot:spring-boot-starter-data-redis'
@@ -93,7 +95,7 @@ project(':gradle_api') {
         compile project(':gradle_dao')
         compile project(':gradle_util')
         compile project(':gralde_base')
-        compile project(':gradle_shiro')
+//        compile project(':gradle_shiro')
     }
 }
 
@@ -120,6 +122,12 @@ project(':gradle_shiro') {
 }
 
 project(':gradle_search') {
+    dependencies {
+        compile project(':gradle_util')
+        compile project(':gralde_base')
+    }
+}
+project(':gradle_search_new') {
     dependencies {
         compile project(':gradle_util')
         compile project(':gralde_base')
