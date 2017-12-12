@@ -21,7 +21,8 @@ public class BaseController {
 
     @RequestMapping(value = "/add")
     public Response add() throws IOException {
-        String node = transService.getNode();
+//        String node = transService.getNode();
+        String node = "";
         return new Response(node);
 
     }

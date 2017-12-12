@@ -3,7 +3,7 @@ buildscript {
     ext {
         lombok="1.16.12"
 //        springBootVersion = '1.4.5.RELEASE'
-        springBootVersion = '1.5.8.RELEASE'
+        springBootVersion = '1.5.9.RELEASE'
 
     }
     repositories {

@@ -55,7 +55,7 @@ public class SearchTransService {
         return transportClient;
     }
 
-    public boolean allTopicIntoEngine() {
+   /* public boolean allTopicIntoEngine() {
         int batchSize = 100;
         SbTopic topic = new SbTopic();
 //        topic.setPageCnt(batchSize);
@@ -157,6 +157,6 @@ public class SearchTransService {
 
         });
         return jsonConfig;
-    }
+    }*/
 
 }
