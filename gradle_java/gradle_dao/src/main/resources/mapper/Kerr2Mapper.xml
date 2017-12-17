@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cyf.gradle.dao.mapper.SysRoleMapper">
-  <resultMap id="BaseResultMap" type="cyf.gradle.dao.model.SysRole">
+<mapper namespace="cyf.gradle.dao.mapper.Kerr2Mapper">
+  <resultMap id="BaseResultMap" type="cyf.gradle.dao.model.Kerr2">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="role" jdbcType="VARCHAR" property="role" />
-    <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="available" jdbcType="BIT" property="available" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="publishtime" jdbcType="TIMESTAMP" property="publishtime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -66,15 +65,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, role, description, available
+    id, title, publishtime
   </sql>
-  <select id="selectByExample" parameterType="cyf.gradle.dao.model.SysRoleExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="cyf.gradle.dao.model.Kerr2Example" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from t_sys_role
+    from kerr_2
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -93,76 +92,65 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from t_sys_role
+    from kerr_2
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from t_sys_role
+    delete from kerr_2
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="cyf.gradle.dao.model.SysRoleExample">
-    delete from t_sys_role
+  <delete id="deleteByExample" parameterType="cyf.gradle.dao.model.Kerr2Example">
+    delete from kerr_2
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="cyf.gradle.dao.model.SysRole">
+  <insert id="insert" parameterType="cyf.gradle.dao.model.Kerr2">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into t_sys_role (role, description, available
-      )
-    values (#{role,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{available,jdbcType=BIT}
-      )
+    insert into kerr_2 (title, publishtime)
+    values (#{title,jdbcType=VARCHAR}, #{publishtime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="cyf.gradle.dao.model.SysRole">
+  <insert id="insertSelective" parameterType="cyf.gradle.dao.model.Kerr2">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into t_sys_role
+    insert into kerr_2
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="role != null">
-        role,
+      <if test="title != null">
+        title,
       </if>
-      <if test="description != null">
-        description,
-      </if>
-      <if test="available != null">
-        available,
+      <if test="publishtime != null">
+        publishtime,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="role != null">
-        #{role,jdbcType=VARCHAR},
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
       </if>
-      <if test="description != null">
-        #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="available != null">
-        #{available,jdbcType=BIT},
+      <if test="publishtime != null">
+        #{publishtime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="cyf.gradle.dao.model.SysRoleExample" resultType="java.lang.Long">
-    select count(*) from t_sys_role
+  <select id="countByExample" parameterType="cyf.gradle.dao.model.Kerr2Example" resultType="java.lang.Long">
+    select count(*) from kerr_2
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update t_sys_role
+    update kerr_2
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.role != null">
-        role = #{record.role,jdbcType=VARCHAR},
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
       </if>
-      <if test="record.description != null">
-        description = #{record.description,jdbcType=VARCHAR},
-      </if>
-      <if test="record.available != null">
-        available = #{record.available,jdbcType=BIT},
+      <if test="record.publishtime != null">
+        publishtime = #{record.publishtime,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null">
@@ -170,39 +158,34 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update t_sys_role
+    update kerr_2
     set id = #{record.id,jdbcType=INTEGER},
-      role = #{record.role,jdbcType=VARCHAR},
-      description = #{record.description,jdbcType=VARCHAR},
-      available = #{record.available,jdbcType=BIT}
+      title = #{record.title,jdbcType=VARCHAR},
+      publishtime = #{record.publishtime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="cyf.gradle.dao.model.SysRole">
-    update t_sys_role
+  <update id="updateByPrimaryKeySelective" parameterType="cyf.gradle.dao.model.Kerr2">
+    update kerr_2
     <set>
-      <if test="role != null">
-        role = #{role,jdbcType=VARCHAR},
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
       </if>
-      <if test="description != null">
-        description = #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="available != null">
-        available = #{available,jdbcType=BIT},
+      <if test="publishtime != null">
+        publishtime = #{publishtime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cyf.gradle.dao.model.SysRole">
-    update t_sys_role
-    set role = #{role,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR},
-      available = #{available,jdbcType=BIT}
+  <update id="updateByPrimaryKey" parameterType="cyf.gradle.dao.model.Kerr2">
+    update kerr_2
+    set title = #{title,jdbcType=VARCHAR},
+      publishtime = #{publishtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="selfPlusMinus">
-    update t_sys_role
+    update kerr_2
  	  set ${columnName} = ${columnName} ${operator}  ${count} 
 	  <if test="_parameter != null">
 		<include refid="Update_By_Example_Where_Clause" />

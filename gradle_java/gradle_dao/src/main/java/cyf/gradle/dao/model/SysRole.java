@@ -1,7 +1,6 @@
 package cyf.gradle.dao.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * @author 
@@ -13,9 +12,7 @@ public class SysRole implements Serializable {
 
     private String description;
 
-    private Boolean availiable;
-
-    private List<SysPermission> permissions;
+    private Boolean available;
 
     private static final long serialVersionUID = 1L;
 
@@ -43,19 +40,11 @@ public class SysRole implements Serializable {
         this.description = description;
     }
 
-    public Boolean getAvailiable() {
-        return availiable;
+    public Boolean getAvailable() {
+        return available;
     }
 
-    public void setAvailiable(Boolean availiable) {
-        this.availiable = availiable;
-    }
-
-    public List<SysPermission> getPermissions() {
-        return permissions;
-    }
-
-    public void setPermissions(List<SysPermission> permissions) {
-        this.permissions = permissions;
+    public void setAvailable(Boolean available) {
+        this.available = available;
     }
 }
