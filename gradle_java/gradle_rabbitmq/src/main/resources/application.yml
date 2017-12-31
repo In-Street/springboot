@@ -6,9 +6,9 @@ spring:
   application.name: rabbitmq
   profiles.active: mq
   rabbitmq:
-    host: 127.0.0.1
+    host: 39.106.118.71
     # port 对应的是 5672 不是web 管理的 15672 ,增加完角色后 权限的赋予
-    port: 7002
+    port: 5672
     username: chengyufei
     password: chengyufei
 

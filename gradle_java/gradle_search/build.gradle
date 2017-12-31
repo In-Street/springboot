@@ -1,6 +1,6 @@
-bootRepackage{
+/*bootRepackage{
     mainClass= 'cyf.gradle.search.SearchApplication'
-}
+}*/
 
 dependencies {
     compile "org.springframework.boot:spring-boot-starter-data-elasticsearch"

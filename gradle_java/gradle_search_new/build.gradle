@@ -1,6 +1,6 @@
-bootRepackage {
+/*bootRepackage {
     mainClass = 'cyf.gradle.trans.SearchTransportApplication'
-}
+}*/
 dependencies {
 
      compile group: 'org.elasticsearch', name: 'elasticsearch', version: '5.1.1'

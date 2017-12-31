@@ -1,9 +1,7 @@
 package cyf.gradle.rabbitmq.controller;
 
-import cyf.gradle.rabbitmq.modal.User;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,6 +17,7 @@ public class FirstReceiver {
     @RabbitHandler
     public void process(String parameter) {
         System.out.println("Receiver  : " + parameter);
+
     }
 
 

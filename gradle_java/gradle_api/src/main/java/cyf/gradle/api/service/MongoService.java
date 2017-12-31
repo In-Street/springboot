@@ -1,5 +1,6 @@
 package cyf.gradle.api.service;
 
+import com.google.common.collect.Lists;
 import com.mongodb.DB;
 import cyf.gradle.dao.mongodb.PrimaryMongoObject;
 import cyf.gradle.dao.mongodb.SecondMongoObject;
@@ -79,10 +80,11 @@ public class MongoService {
      * */
 
     public List<String> getCollections() {
-        DB cyfdb = primaryFactory.getDb("cyfdb");
+      /*  DB cyfdb = primaryFactory.getDb("cyfdb");
         Set<String> names = cyfdb.getCollectionNames();
         List<String> list = new ArrayList<>(names);
-        return list;
+        return list;*/
+        return Lists.newArrayList();
     }
 
 }

@@ -1,7 +1,6 @@
-bootRepackage{
-    mainClass = ''
-}
+/*bootRepackage{
+    mainClass = 'cyf.gradle.rabbitmq.MqApplication'
+}*/
 dependencies{
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-amqp', version: '1.5.2.RELEASE'
-
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-amqp', version: '2.0.0.M3'
 }

@@ -21,6 +21,42 @@ import java.io.Serializable;
 @Slf4j
 public class FoundationSearch implements ElasticsearchCrudRepository,ElasticsearchRepository {
 
+
+    @Override
+    public Object index(Object entity) {
+        return null;
+    }
+
+    @Override
+    public Iterable search(QueryBuilder query) {
+        return null;
+    }
+
+    @Override
+    public Page search(QueryBuilder query, Pageable pageable) {
+        return null;
+    }
+
+    @Override
+    public Page search(SearchQuery searchQuery) {
+        return null;
+    }
+
+    @Override
+    public Page searchSimilar(Object entity, String[] fields, Pageable pageable) {
+        return null;
+    }
+
+    @Override
+    public void refresh() {
+
+    }
+
+    @Override
+    public Class getEntityClass() {
+        return null;
+    }
+
     @Override
     public Iterable findAll(Sort sort) {
         return null;
@@ -83,36 +119,6 @@ public class FoundationSearch implements ElasticsearchCrudRepository,Elasticsear
 
     @Override
     public void deleteAll() {
-
-    }
-
-    @Override
-    public Object index(Object entity) {
-        return null;
-    }
-
-    @Override
-    public Iterable search(QueryBuilder query) {
-        return null;
-    }
-
-    @Override
-    public Page search(QueryBuilder query, Pageable pageable) {
-        return null;
-    }
-
-    @Override
-    public Page search(SearchQuery searchQuery) {
-        return null;
-    }
-
-    @Override
-    public Page searchSimilar(Object entity, String[] fields, Pageable pageable) {
-        return null;
-    }
-
-    @Override
-    public void refresh() {
 
     }
 }
