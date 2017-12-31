@@ -10,4 +10,5 @@ include 'gradle_rabbitmq'
 include 'gradle_new_redis'
 include 'gradle_search'
 include 'gradle_search_new'
+include 'rabbitmq_consumer'
 

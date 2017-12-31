@@ -1,0 +1,6 @@
+dependencies{
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-amqp', version: '2.0.0.M3'
+
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '2.0.0.M3'
+
+}

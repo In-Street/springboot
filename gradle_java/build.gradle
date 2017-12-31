@@ -142,6 +142,13 @@ project(':gradle_search_new') {
         compile project(':gralde_base')
     }
 }
+
+project(':rabbitmq_consumer') {
+    dependencies {
+        compile project(':gradle_util')
+        compile project(':gralde_base')
+    }
+}
 task wrapper(type: Wrapper) {
     gradleVersion = "4.4"
 }
