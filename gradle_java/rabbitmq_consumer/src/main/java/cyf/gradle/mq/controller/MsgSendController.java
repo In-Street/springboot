@@ -30,4 +30,14 @@ public class MsgSendController {
         amqpTemplate.convertAndSend(Constants.AMQP_EXCHANGE_MSG,Constants.AMQP_ROUTING_KEY_MSG, FastJsonUtils.toJSONString(messageDto));
         return new Response();
     }
+
+    @RequestMapping("/sendDelay")
+    public Response sendDelay() {
+        MessageDto messageDto = new MessageDto();
+        messageDto.setPrimaryKey(2);
+        messageDto.setType(MessageDto.Type.AUDIT_COMMENT);
+
+        amqpTemplate.convertAndSend(Constants.AMQP_EXCHANGE_MSG,Constants.AMQP_ROUTING_KEY_MSG, FastJsonUtils.toJSONString(messageDto));
+        return new Response();
+    }
 }

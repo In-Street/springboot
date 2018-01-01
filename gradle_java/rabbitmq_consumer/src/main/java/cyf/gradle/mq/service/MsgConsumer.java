@@ -17,8 +17,27 @@ import java.io.IOException;
 @Component
 public class MsgConsumer {
 
-    @RabbitListener(queues = Constants.AMQP_QUEUE_MSG)
+//    @RabbitListener(queues = Constants.AMQP_QUEUE_MSG)
     public void msgConsumer(String json, Channel channel, Message message) {
+
+        System.out.println(json);
+//        parallelStream().forEachOrdered
+        try {
+            // 配置文件中为手动应答，所以这里需 应答
+            channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+        } catch (Exception e) {
+            try {
+                channel.basicNack(message.getMessageProperties().getDeliveryTag(),false,false);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+
+    }
+
+    @RabbitListener(queues = Constants.AMQP_QUEUE_DELAY)
+    public void delayConsumer(String json, Channel channel, Message message) {
 
         System.out.println(json);
         try {
