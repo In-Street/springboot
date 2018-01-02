@@ -1,10 +1,16 @@
 server:
   port: 9090
   context-path: /
-  maxPostSize: 0
+
+#关闭健康监测
+endpoints:
+  health:
+     enabled: false
+
 spring:
   application.name: rabbitmq
-  profiles: rabbitmq
+  profiles.active: rabbitmq
+
   rabbitmq:
     host: 39.106.118.71
     # port 对应的是 5672 不是web 管理的 15672 ,增加完角色后 权限的赋予
@@ -24,19 +30,10 @@ spring:
 
 #而当我们需要使用CGLIB来实现AOP的时候，需要配置 spring.aop.proxy-target-class=true ，不然默认使用的是标准Java的实现
 spring.aop.proxy-target-class: true
-
-#JACKSON
-spring.jackson:
-  date-format: "yyyy-MM-dd HH:mm:ss"
-  default-property-inclusion: NON_NULL
-  time-zone: GMT+8
-
-
 ---
-
 spring:
-  profiles:
-    active: rabbitmq
+  profiles: rabbitmq
+
 
 
 

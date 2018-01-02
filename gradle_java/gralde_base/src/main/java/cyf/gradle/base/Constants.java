@@ -25,9 +25,6 @@ public interface Constants {
      */
     String AMQP_EXCHANGE_DEAD_LETTER = "amqp_exchange_dead_letter";
     String AMQP_ROUTING_KEY_DEAD_LETTER = "amqp_routing_key_dead_letter";
-    String AMQP_ROUTING_KEY_DELAY= "amqp_routing_key_delay";
-
     String AMQP_QUEUE_DEAD_LETTER = "amqp_queue_dead_letter";
-
     String AMQP_QUEUE_DELAY = "amqp_queue_delay";
 }
