@@ -52,10 +52,10 @@ public class AmqpConfiguration {
 
 
         amqpAdmin.declareExchange(msgExchange);
-        /*amqpAdmin.declareQueue(msgQueue);
-        amqpAdmin.declareBinding(msgBinding);*/
-        amqpAdmin.declareQueue(deadLetterQueue);
-        amqpAdmin.declareBinding(deadLetterQueueBind);
+        amqpAdmin.declareQueue(msgQueue);
+        amqpAdmin.declareBinding(msgBinding);
+        /*amqpAdmin.declareQueue(deadLetterQueue);
+        amqpAdmin.declareBinding(deadLetterQueueBind);*/
 
         //死信交换机
         Exchange deadLetterExchange = ExchangeBuilder.directExchange(Constants.AMQP_EXCHANGE_DEAD_LETTER).durable(true).build();

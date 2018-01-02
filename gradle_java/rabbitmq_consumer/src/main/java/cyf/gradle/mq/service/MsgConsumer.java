@@ -2,12 +2,15 @@ package cyf.gradle.mq.service;
 
 import com.rabbitmq.client.Channel;
 import cyf.gradle.base.Constants;
+import cyf.gradle.util.LogUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.time.FastDateFormat;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * @author Cheng Yufei
@@ -17,9 +20,12 @@ import java.io.IOException;
 @Component
 public class MsgConsumer {
 
-//    @RabbitListener(queues = Constants.AMQP_QUEUE_MSG)
-    public void msgConsumer(String json, Channel channel, Message message) {
 
+
+    @RabbitListener(queues = Constants.AMQP_QUEUE_MSG)
+    public void msgConsumer(String json, Channel channel, Message message) {
+        String time = FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(new Date());
+        LogUtil.debug(log, "正常消息处理：时间：{} 消息体：{} threadlocal：{}", time, json, Thread.currentThread().getId());
         System.out.println(json);
 //        parallelStream().forEachOrdered
         try {
@@ -27,7 +33,7 @@ public class MsgConsumer {
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
         } catch (Exception e) {
             try {
-                channel.basicNack(message.getMessageProperties().getDeliveryTag(),false,false);
+                channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, false);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -38,14 +44,15 @@ public class MsgConsumer {
 
     @RabbitListener(queues = Constants.AMQP_QUEUE_DELAY)
     public void delayConsumer(String json, Channel channel, Message message) {
-
+        String time = FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(new Date());
+        LogUtil.debug(log, "延时消息处理：时间：{} 消息体：{} threadlocal：{}", time, json, Thread.currentThread().getId());
         System.out.println(json);
         try {
             // 配置文件中为手动应答，所以这里需 应答
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
         } catch (Exception e) {
             try {
-                channel.basicNack(message.getMessageProperties().getDeliveryTag(),false,false);
+                channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, false);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
