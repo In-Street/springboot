@@ -3,7 +3,7 @@
 *.iml
 *.ipr
 *.iws
-.idea
+.idea/
 */*.log
 */target/
 *.DS_Store
