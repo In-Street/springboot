@@ -10,3 +10,7 @@
 *.classpath
 *.settings
 *.project
+.gradle/
+gradle_util/out/
+gralde_base/out/
+rabbitmq_consumer/out/
