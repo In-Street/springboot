@@ -1,9 +1,7 @@
 /target
-/.idea
 *.iml
 *.ipr
 *.iws
-.idea/
 */*.log
 */target/
 *.DS_Store
@@ -14,3 +12,4 @@
 gradle_util/out/
 gralde_base/out/
 rabbitmq_consumer/out/
+/.idea/
