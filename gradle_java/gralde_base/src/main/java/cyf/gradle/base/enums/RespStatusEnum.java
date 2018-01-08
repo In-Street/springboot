@@ -17,7 +17,7 @@ public enum RespStatusEnum {
     //1000以上状态码按业务划分
     COLUMN_NOT_EXIST(1000, "栏目不存在"),
     TAG_NOT_EXIST(1001, "标签不存在"),
-
+    USER_NOT_LOGIN(6000, "未登录"),
 
     ;
 

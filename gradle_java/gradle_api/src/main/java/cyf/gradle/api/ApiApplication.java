@@ -6,6 +6,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.MultipartConfigElement;
@@ -20,6 +21,7 @@ import javax.servlet.MultipartConfigElement;
 )
 //排除mongo自动配置
 //@EnableAutoConfiguration(exclude={MongoAutoConfiguration.class})
+@EnableAsync
 public class ApiApplication {
 
     public static void main(String[] args) {

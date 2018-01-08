@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class UserServiceForPage {
 
-    @Autowired
+    /*@Autowired
     private UserForPageRepository userForPageRepository;
 
     public Page findPage(Pageable pageable) {
@@ -28,7 +28,7 @@ public class UserServiceForPage {
         int total = userPage.getTotalPages();
 
         return userPage;
-    }
+    }*/
 
 
 }

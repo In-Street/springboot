@@ -14,6 +14,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.Arrays;
 
 /**
@@ -39,6 +40,7 @@ public class AopHandler {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
         String requestURI = request.getRequestURI();
+
 
         log.info(">>>>>> 开始请求: {},{}() with argument[s] = {}", requestURI/*pjp.getSignature().getDeclaringTypeName()*/,pjp.getSignature().getName(), Arrays.toString(pjp.getArgs()));
 

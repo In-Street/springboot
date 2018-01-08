@@ -11,6 +11,7 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 /**
  *
@@ -73,17 +74,17 @@ public class FoundationSearch implements ElasticsearchCrudRepository,Elasticsear
     }
 
     @Override
-    public Iterable save(Iterable entities) {
+    public Iterable saveAll(Iterable entities) {
         return null;
     }
 
     @Override
-    public Object findOne(Serializable serializable) {
+    public Optional findById(Object o) {
         return null;
     }
 
     @Override
-    public boolean exists(Serializable serializable) {
+    public boolean existsById(Object o) {
         return false;
     }
 
@@ -93,7 +94,7 @@ public class FoundationSearch implements ElasticsearchCrudRepository,Elasticsear
     }
 
     @Override
-    public Iterable findAll(Iterable iterable) {
+    public Iterable findAllById(Iterable iterable) {
         return null;
     }
 
@@ -103,7 +104,7 @@ public class FoundationSearch implements ElasticsearchCrudRepository,Elasticsear
     }
 
     @Override
-    public void delete(Serializable serializable) {
+    public void deleteById(Object o) {
 
     }
 
@@ -113,7 +114,7 @@ public class FoundationSearch implements ElasticsearchCrudRepository,Elasticsear
     }
 
     @Override
-    public void delete(Iterable entities) {
+    public void deleteAll(Iterable entities) {
 
     }
 

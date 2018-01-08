@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Cheng Yufei
  * @create 2018-01-04 下午11:38
  **/
-@RestController
+/*@RestController
 @RequestMapping("/userPage")
 public class UserPageController {
 
@@ -25,4 +25,4 @@ public class UserPageController {
         return userServiceForPage.findPage(pageable);
 
     }
-}
+}*/
