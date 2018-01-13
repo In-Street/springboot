@@ -24,7 +24,7 @@ public class AsyncService {
      *   使用Future<T>来返回异步调用的结果 （task1.isDone()）
      *
      *
-     *   异步方法失效情况：方法使用 static修饰 ；本类中调用 ；
+     *   异步方法失效情况：方法使用 static修饰 ；本类中调用 ；与同步相比节省大量时间
      *
      *
      * @return
