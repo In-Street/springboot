@@ -106,7 +106,7 @@ public class TransactionProxyService {
 
     /**
      * Propagation.REQUIRES_NEW的含义 ：如果当前存在事务，则挂起当前事务并且开启一个新事物继续执行，
-     *                                                      新事物执行完毕之后，然后在缓刑之前挂起的事务，如果当前不存在事务的话，则开启一个新事物。
+     *                                                      新事物执行完毕之后，然后在执行之前挂起的事务，如果当前不存在事务的话，则开启一个新事物。
      *
      *    如果不添加此参数 则在调用 test5（）时候异常：
      *      org.springframework.transaction.UnexpectedRollbackException: Transaction rolled back because it has been marked as rollback-only
