@@ -25,7 +25,7 @@ import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
  * @author Cheng Yufei
  * @create 2017-08-07 18:43
  **/
-@Configuration
+//@Configuration
 public class MultipleMongoConfig {
 
     @Autowired

@@ -14,8 +14,8 @@ import org.springframework.stereotype.Component;
  * @create 2017-08-07 18:34
  **/
 @Data
-@Component
-@ConfigurationProperties(prefix = "mongodb")
+//@Component
+//@ConfigurationProperties(prefix = "mongodb")
 public class MultipleMongoProperties {
 
         private MongoProperties primary = new MongoProperties();

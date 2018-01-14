@@ -25,14 +25,14 @@ import java.util.regex.Pattern;
  **/
 @Repository
 public class MongoService {
-    @Resource
+//    @Resource
     MongoTemplate primaryMongoTemplate;
 
-    @Resource
+//    @Resource
     MongoTemplate secondMongoTemplate;
 
 
-    @Autowired
+//    @Autowired
     MongoDbFactory primaryFactory;
 
 
