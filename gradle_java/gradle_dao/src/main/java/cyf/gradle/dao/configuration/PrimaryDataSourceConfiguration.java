@@ -11,6 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.annotation.Order;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -34,6 +35,8 @@ public class PrimaryDataSourceConfiguration {
     @Bean(name="primaryDataSource",destroyMethod = "close")
     @ConfigurationProperties(prefix="hikari.datasource.primary")
     @Primary
+    //设置 @Configuration 中@Bean 的加载顺序 或者通过参数调用的方式决定谁先加载
+//    @Order(value = )
     public DataSource primaryDataSource() {
         log.info("-------------------- primaryDataSource init ---------------------");
         return new HikariDataSource();
