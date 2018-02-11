@@ -13,3 +13,4 @@ gradle_util/out/
 gralde_base/out/
 rabbitmq_consumer/out/
 /.idea/
+/gradle_api/src/main/resources/META-INF/

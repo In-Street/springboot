@@ -12,11 +12,11 @@ import org.springframework.stereotype.Service;
  * @author Cheng Yufei
  * @create 2018-01-04 下午11:24
  **/
-@Service
+/*@Service
 @Slf4j
 public class UserServiceForPage {
 
-    /*@Autowired
+    @Autowired
     private UserForPageRepository userForPageRepository;
 
     public Page findPage(Pageable pageable) {
@@ -28,7 +28,7 @@ public class UserServiceForPage {
         int total = userPage.getTotalPages();
 
         return userPage;
-    }*/
+    }
 
 
-}
+}*/

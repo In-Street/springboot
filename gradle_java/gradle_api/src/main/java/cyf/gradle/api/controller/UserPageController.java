@@ -1,6 +1,6 @@
 package cyf.gradle.api.controller;
 
-import cyf.gradle.api.service.UserServiceForPage;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

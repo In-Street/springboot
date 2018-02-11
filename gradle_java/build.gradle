@@ -149,6 +149,12 @@ project(':rabbitmq_consumer') {
         compile project(':gralde_base')
     }
 }
+project(':boot_adminserver') {
+    dependencies {
+        compile project(':gradle_util')
+        compile project(':gralde_base')
+    }
+}
 task wrapper(type: Wrapper) {
     gradleVersion = "4.4"
 }
