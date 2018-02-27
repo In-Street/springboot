@@ -42,6 +42,7 @@ public class AsyncController {
             if (task1.isDone() && task2.isDone() && task3.isDone()) {
                 break;
             }
+
         }
         Thread.sleep(1000);
         long end = System.currentTimeMillis();
