@@ -3,9 +3,11 @@ import org.assertj.core.util.Lists;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.math.RoundingMode;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -79,6 +81,46 @@ public class TestHome {
         //文件转 Stream
         List<String> collect3 = Files.lines(Paths.get("/Users/chengyufei/Downloads/b.txt"), Charset.defaultCharset()).collect(Collectors.toList());
 //        System.out.println(collect3);
+
+    }
+
+    @Test
+    public void number() {
+        Integer num = 157700;
+        String numStr = "";
+        String numStr1 = "";
+
+        DecimalFormat df = new DecimalFormat("0.0w");
+        DecimalFormat df1 = new DecimalFormat("0w");
+        DecimalFormat df2 = new DecimalFormat("0.0");
+        //小于 1万具体显示 ； 1万 - 100万 保留一位小数 ； 大于等于100万 显示正数，没小数
+       /* df1.setRoundingMode(RoundingMode.FLOOR);
+        df.setRoundingMode(RoundingMode.FLOOR);*/
+        if (num >= 10000 && num < 1000000) {
+            numStr = df.format(num / 10000.0);
+        } else if (num >= 1000000) {
+
+            numStr = df1.format(num / 10000.0);
+        } else {
+            numStr = num.toString();
+        }
+        System.out.println(numStr);
+
+        System.out.println("-----------------------------------");
+
+        //小于1千具体显示；大于1千 保留一位小数k ；大于1万 保留一位小数w
+        df2.setRoundingMode(RoundingMode.UP);
+        if (num >= 10000) {
+            numStr1 = df2.format(num / 10000d) + "W";
+        } else if (num >= 1000) {
+            numStr1 = df2.format(num / 1000d) + "K";
+        } else {
+            numStr1 = num.toString();
+        }
+        System.out.println(numStr1);
+
+        String format = String.format("#%s#", "在吗");
+        System.out.println(format);
 
     }
 }
