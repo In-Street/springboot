@@ -6,5 +6,4 @@
   \___||_| |_| \___||_| |_| \__, |  \__, | \__,_||_|  \___||_|
                              __/ |   __/ |
                             |___/   |___/
-
 ${AnsiColor.GREEN}:: gradle_api :: ${application.formatted-version}${AnsiColor.DEFAULT}
