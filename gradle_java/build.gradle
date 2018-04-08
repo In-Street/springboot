@@ -155,6 +155,13 @@ project(':boot_adminserver') {
         compile project(':gralde_base')
     }
 }
+project(':webflux') {
+    dependencies {
+        compile project(':gradle_dao')
+        compile project(':gradle_util')
+        compile project(':gralde_base')
+    }
+}
 task wrapper(type: Wrapper) {
     gradleVersion = "4.4"
 }
