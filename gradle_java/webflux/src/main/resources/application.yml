@@ -9,7 +9,8 @@ spring:
 spring.aop.proxy-target-class: true
 ---
 spring:
-  profiles: webflux
+  profiles:
+    include: dao-dev,webflux
 
 
 

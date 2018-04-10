@@ -1,6 +1,7 @@
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
+import reactor.core.publisher.Flux;
 
 import java.io.IOException;
 import java.math.RoundingMode;
@@ -9,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -123,4 +125,41 @@ public class TestHome {
         System.out.println(format);
 
     }
+
+    @Test
+    public void nulltest() {
+        Integer i = null;
+        // 能用valueOf 替代toString ，有效避免空指针
+
+        String s = String.valueOf(i);
+        System.out.println(s);
+
+        String s1 = i.toString();
+        System.out.println(s1);
+    }
+
+    @Test
+    public void objects() {
+//        UserTest userTest = new UserTest("aa");
+        UserTest userTest = null;
+        boolean b = Objects.nonNull(userTest);
+        boolean b1 = Objects.isNull(userTest);
+        System.out.println(b);
+        System.out.println(b1);
+
+
+        Objects.requireNonNull(userTest);
+        userTest.setId(1);
+        System.out.println(userTest);
+
+    }
+
+    @Test
+    public void t1() {
+        String[] strings = new String[]{"3","4"};
+        Flux<String> just = Flux.just(strings);
+
+
+    }
+
 }
