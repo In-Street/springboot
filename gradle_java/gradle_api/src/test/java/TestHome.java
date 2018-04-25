@@ -1,3 +1,4 @@
+import com.google.common.collect.Maps;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
@@ -9,8 +10,15 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -130,36 +138,78 @@ public class TestHome {
     public void nulltest() {
         Integer i = null;
         // 能用valueOf 替代toString ，有效避免空指针
-
         String s = String.valueOf(i);
-        System.out.println(s);
+//        String s1 = i.toString();
 
-        String s1 = i.toString();
-        System.out.println(s1);
+        UserTest userTest = new UserTest("aa");
+//        UserTest userTest = null;
+        boolean b = Objects.nonNull(userTest);
+        boolean b1 = Objects.isNull(userTest);
+        Objects.requireNonNull(userTest);
+        userTest.setId(1);
+
+        //返回空collection 避免size 时空指针
+        List emptyList = Collections.EMPTY_LIST;
+        System.out.println(emptyList.size());
+
     }
 
     @Test
     public void objects() {
-//        UserTest userTest = new UserTest("aa");
-        UserTest userTest = null;
-        boolean b = Objects.nonNull(userTest);
-        boolean b1 = Objects.isNull(userTest);
-        System.out.println(b);
-        System.out.println(b1);
 
-
-        Objects.requireNonNull(userTest);
-        userTest.setId(1);
-        System.out.println(userTest);
 
     }
 
     @Test
-    public void t1() {
-        String[] strings = new String[]{"3","4"};
+    public void flux() {
+        String[] strings = new String[]{"3", "4"};
         Flux<String> just = Flux.just(strings);
+    }
+
+    @Test
+    public void t1() {
+
+        //条件判定
+        Predicate<Integer> p1 = k -> k > 2;
+        boolean test = p1.test(1);
+        System.out.println(test);
+
+        //function 可接受一个参数， 前面输入 后面输出
+        Function<String, Integer> f1 = Integer::valueOf;
+        Integer apply = f1.apply("123");
+        Function<String, String> f2 = k -> k + "45";
+        Integer apply1 = f1.compose(f2).apply("123");
+        System.out.println(apply1);
+
+        //Supplier 返回任意类型的值，和function 不同的是 不接受参数
+        Supplier<UserTest> s = UserTest::new;
+        s.get();
+
+
+        //consumer 执行单个参数的操作
+        Consumer<UserTest> c1 = u -> System.out.println(u.getName());
+        c1.accept(new UserTest("AA"));
+
+        //parallelStream 并行流
+        List<String> list = Lists.newArrayList("aaa", "bbb", "ccc");
+        Optional<String> reduce = list.parallelStream().reduce((s1, s2) -> s1 + "#" + s2);
+        System.out.println(reduce.get());
+
+        Map<Integer, String> map = Maps.newHashMap();
+        map.putIfAbsent(1, "a");
+        map.putIfAbsent(2, "b");
+        map.putIfAbsent(1, "a");
+
+        map.forEach((k, v) -> {
+            System.out.println(k + "---" + v);
+        });
+
+//        String computeIfAbsent = map.computeIfAbsent(3, v -> v + "$");
+        String computeIfAbsent = map.computeIfPresent(2, (v,n) -> v + "$"+n);
+        System.out.println(computeIfAbsent);
 
 
     }
+
 
 }
