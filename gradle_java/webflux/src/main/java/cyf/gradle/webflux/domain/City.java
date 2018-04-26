@@ -1,6 +1,8 @@
 package cyf.gradle.webflux.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -9,6 +11,8 @@ import lombok.Setter;
  **/
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class City {
 
     /**
@@ -30,5 +34,9 @@ public class City {
      * 描述
      */
     private String description;
+
+    public City (Long provinceId){
+        this.provinceId = provinceId;
+    }
 
 }

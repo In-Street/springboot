@@ -7,13 +7,15 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.Collection;
+
 /**
  * @author Cheng Yufei
  * @create 2018-04-14 上午11:03
  **/
 @RestController
 @RequestMapping("/city")
-public class CItyController {
+public class CityController {
 
     @Autowired
     private CityHandler cityHandler;
@@ -28,6 +30,12 @@ public class CItyController {
     public Flux<City> findAll() {
 
         return cityHandler.findAl();
+    }
+
+    @GetMapping("/findAllCom")
+    public Collection<City> findAllCom() {
+
+        return cityHandler.findAllCom();
     }
 
     @GetMapping("/{id}")

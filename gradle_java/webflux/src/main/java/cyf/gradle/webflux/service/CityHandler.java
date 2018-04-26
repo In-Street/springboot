@@ -1,5 +1,6 @@
 package cyf.gradle.webflux.service;
 
+import com.google.common.collect.Lists;
 import cyf.gradle.webflux.dao.CityRepository;
 import cyf.gradle.webflux.domain.City;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +10,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Cheng Yufei
@@ -52,9 +54,29 @@ public class CityHandler {
             sink.complete();
         });
 
+        List<City> list = Lists.newArrayList();
+        for (int i = 0; i < 30; i++) {
+            list.add(new City(Long.valueOf(i)));
+        }
+
         System.out.println("2");
         return flux;
     }
+
+    public Collection<City> findAllCom() {
+
+        Collection<City> all = cityRepository.findAll();
+
+        System.out.println("1");
+
+        List<City> list = Lists.newArrayList();
+        for (int i = 0; i < 30; i++) {
+            list.add(new City(Long.valueOf(i)));
+        }
+        System.out.println("2");
+        return all;
+    }
+
 
     public Mono<City> getById(long id) {
         return Mono.justOrEmpty(cityRepository.getById(id));
