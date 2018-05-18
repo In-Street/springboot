@@ -10,6 +10,6 @@ dependencies{
     compile group: 'com.github.xiaoymin', name: 'swagger-bootstrap-ui', version: '1.6'
 
     compile group: 'org.json', name: 'json', version: '20160810'
-
+    compile group: 'com.vdurmont', name: 'emoji-java', version: '4.0.0'
 
 }
