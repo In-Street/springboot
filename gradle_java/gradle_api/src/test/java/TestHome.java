@@ -1,5 +1,4 @@
 import com.google.common.collect.Maps;
-import org.apache.commons.lang3.RandomUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
@@ -158,22 +157,13 @@ public class TestHome {
     }
 
     @Test
-    public void objects() {
-        List objects = Lists.newArrayList();
-        objects.add("");
-
-        ArrayList<Object> objects1 = Lists.newArrayList();
-        objects1.add("");
-    }
-
-    @Test
-    public void flux() {
+    public void t1() {
         String[] strings = new String[]{"3", "4"};
         Flux<String> just = Flux.just(strings);
     }
 
     @Test
-    public void t1() {
+    public void t3() {
 
         //条件判定
         Predicate<Integer> p1 = k -> k > 2;
@@ -219,30 +209,20 @@ public class TestHome {
 
     @Test
     public void t2() {
-        List<UserTest> list = Lists.newArrayList();
-        for (int i = 0; i < 30; i++) {
-            list.add(new UserTest(String.valueOf(i)));
-        }
-        long start = System.currentTimeMillis();
-       /* list.forEach(i-> {
-            i.setAge(RandomUtils.nextInt());
-        });*/
-        System.out.println(1);
-        Flux.create(sink -> {
-            System.out.println(2);
-            list.forEach(i -> {
-                i.setAge(RandomUtils.nextInt());
-                sink.next(list);
-            });
-            sink.complete();
 
-        });
-        System.out.println(3);
-        List<UserTest> list2 = Lists.newArrayList();
-        for (int j = 0; j < 30; j++) {
-            list2.add(new UserTest(String.valueOf(j)));
-        }
-        long end = System.currentTimeMillis();
-        System.out.println(end - start);
+        List<Integer> list = Lists.newArrayList(2,4,7,10);
+        System.out.println("1");
+        List<Integer> collect = list.stream().map(s->{
+            System.out.println("2");
+            if (s>2) {
+                return s;
+            }else{
+                return 0;
+            }
+        }).collect(Collectors.toList());
+        System.out.println("3");
+        System.out.println(collect);
+
     }
+
 }

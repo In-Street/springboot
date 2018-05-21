@@ -1,8 +1,10 @@
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
+import com.google.common.base.Joiner;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.*;
 import com.vdurmont.emoji.Emoji;
 import com.vdurmont.emoji.EmojiManager;
 import com.vdurmont.emoji.EmojiParser;
+import cyf.gradle.base.enums.PraiseEnum;
 import cyf.gradle.util.EmojiRegexUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
@@ -185,20 +187,13 @@ public class TestCompany_xclub {
 
     @Test
     public void t8() throws Exception {
-      /*  NoChatRemoveMatchReason[] values = NoChatRemoveMatchReason.values();
-        List<NoChatRemoveMatchReason> noChatRemoveMatchReasons = Arrays.asList(values);
+        PraiseEnum[] values = PraiseEnum.values();
+        List<PraiseEnum> noChatRemoveMatchReasons = Arrays.asList(values);
 
-        Function<NoChatRemoveMatchReason, RemoveMatchReason> function = s -> new RemoveMatchReason(s.getCode(), s.getValue());
+        Function<PraiseEnum, RemoveMatchReason> function = s -> new RemoveMatchReason(s.getCode(), s.getName());
         List<RemoveMatchReason> collect = Arrays.stream(values).map(function).collect(Collectors.toList());
 
-
-        List<RemoveMatchReason> list = Lists.newArrayList();
-        for (NoChatRemoveMatchReason value : values) {
-            list.add(new RemoveMatchReason(value.getCode(), value.getValue()));
-        }
-        System.out.println(list);
-*/
-
+        System.out.println(collect);
     }
 
     @Test
@@ -295,5 +290,31 @@ public class TestCompany_xclub {
         //指定一个初始值2, 2+汇聚结果值
         Integer reduce = groups.stream().map(LikeDto::getId).reduce(2, (i, j) -> i + j);
 //        System.out.println(integer + "----" + reduce);
+    }
+
+    @Test
+    public void t10() {
+//        LikeDto likeDto = null;
+        LikeDto likeDto = new LikeDto();
+       likeDto.setNickname("Taylor");
+        LikeDto dto = Preconditions.checkNotNull(likeDto, "参数错误");
+        System.out.println(dto);
+
+        Joiner.on("a");
+
+        String[] strings = new String[]{"a","b","c"};
+        Stream<String> stream = ImmutableList.copyOf(strings).stream();
+        ImmutableList.of(strings);
+
+
+//        Multiset<String> set = LinkedHashMultiset.create();
+        Multiset<String> set =HashMultiset.create();
+        set.add("a");
+        set.add("a");
+        set.add("b");
+        int a = set.count("a");
+        System.out.println(a);
+
+
     }
 }
