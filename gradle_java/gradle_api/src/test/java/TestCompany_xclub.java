@@ -1,5 +1,6 @@
 import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Splitter;
 import com.google.common.collect.*;
 import com.vdurmont.emoji.Emoji;
 import com.vdurmont.emoji.EmojiManager;
@@ -8,7 +9,9 @@ import cyf.gradle.base.enums.PraiseEnum;
 import cyf.gradle.util.EmojiRegexUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Collections;
@@ -16,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -259,7 +263,7 @@ public class TestCompany_xclub {
         //Stream接口里带静态方法,用于创建Stream
         Stream<String> stringStream = Stream.of("a,b");
         Stream.empty();
-        String[] strings = new String[]{"cyf","taylor"};
+        String[] strings = new String[]{"cyf", "taylor"};
         Object[] objects = Stream.of(strings).map(s -> s.toUpperCase()).toArray();
         for (Object object : objects) {
             System.out.println(object);
@@ -293,27 +297,97 @@ public class TestCompany_xclub {
     }
 
     @Test
-    public void t10() {
+    public void t10() throws IOException {
 //        LikeDto likeDto = null;
         LikeDto likeDto = new LikeDto();
-       likeDto.setNickname("Taylor");
+        likeDto.setNickname("Taylor");
+        //参数校验
         LikeDto dto = Preconditions.checkNotNull(likeDto, "参数错误");
         System.out.println(dto);
 
-        Joiner.on("a");
-
-        String[] strings = new String[]{"a","b","c"};
+        //Immutable：不可变集合
+        String[] strings = new String[]{"a", "b", "c"};
         Stream<String> stream = ImmutableList.copyOf(strings).stream();
         ImmutableList.of(strings);
 
 
 //        Multiset<String> set = LinkedHashMultiset.create();
-        Multiset<String> set =HashMultiset.create();
+        //Multiset:出现次数
+        Multiset<String> set = HashMultiset.create();
         set.add("a");
         set.add("a");
         set.add("b");
         int a = set.count("a");
-        System.out.println(a);
+        System.out.println("Multiset -- " + a);
+
+        //Multimap:同一个键值可存储多个value
+        HashMultimap<Object, Object> multimap = HashMultimap.create();
+        multimap.put("A", "程");
+        multimap.put("A", "宇");
+        multimap.put("A", "飞");
+        Set<Object> set1 = multimap.get("A");
+        System.out.println("HashMultimap -- " + set1);
+
+        //键值可以是 ""、null
+        Map<String, Integer> map = Maps.newHashMap();
+        map.put("B", 1);
+        map.put("", null);
+        map.put(null, 2);
+
+
+        //BiMap: 键值与value值都不可重复
+        HashBiMap<Object, Object> hashBiMap = HashBiMap.create();
+        hashBiMap.put("A", 1);
+        hashBiMap.put("A", 2);
+        hashBiMap.put("B", 3);
+
+        //双键Map
+        HashBasedTable<String, String, Object> basedTable = HashBasedTable.create();
+        basedTable.put("A", "B", 1);
+        basedTable.put("A", "C", 2);
+        Object o = basedTable.get("A", "C");
+        System.out.println("双键Map" + o);
+
+        //Joiner
+        //a-b-c
+        List<String> list = Lists.newArrayList("a", "b", "c");
+        String join = Joiner.on("-").join(list);
+        System.out.println("Joiner-List :" + join);
+
+        //用C 代替null ：=C,C=2,B=1
+        String join1 = Joiner.on(",").withKeyValueSeparator("=").useForNull("C").join(map);
+        System.out.println("Joiner-Map :" + join1);
+
+        String str = "1,null,2,,3,\"\",4, 5,     6";
+        //去除空串、空格 Map转固定格式字符串
+        List<String> list1 = Splitter.on(",").omitEmptyStrings().trimResults().splitToList(str);
+        System.out.println("Splitter:" + list1);
+
+        //固定格式字符串转map
+        UserTest userTest = new UserTest("AA", 10);
+        String s = userTest.toString();
+        String remove = StringUtils.remove(s, UserTest.class.getName());
+//        String s1 = StringUtils.replaceEach(remove, new String[]{"(", ")"}, new String[]{"",""});
+//        String s1 = StringUtils.replace(remove, "(", "").replace(")", "");
+        String s1 = StringUtils.replaceAll(remove, "[()]", "");
+        Map<String, String> split = Splitter.on(",").trimResults().withKeyValueSeparator("=").split(s1);
+        split.forEach((k, v) -> System.out.println(k + "--" + v));
+
+        Function<Integer, Integer> function = f -> {
+            if (Objects.nonNull(f)) {
+                return f += 1;
+            }
+            return f;
+        };
+
+        Function<Integer, Double> sqrt =
+                new Function<Integer, Double>() {
+                    public Double apply(Integer in) {
+                        return Math.sqrt((int) in);
+                    }
+                };
+        Map<String, Integer> map1 = ImmutableMap.of("B", 1, "C", null);
+//        Maps.transformValues(map1, sqrt);
 
 
     }

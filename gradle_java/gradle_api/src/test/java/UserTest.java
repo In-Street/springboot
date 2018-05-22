@@ -1,6 +1,7 @@
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude ={"id","tags"})
 public class UserTest {
 
     private Integer id;
@@ -35,4 +37,5 @@ public class UserTest {
     public UserTest(String name) {
         this.name = name;
     }
+
 }
