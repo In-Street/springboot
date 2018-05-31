@@ -1,7 +1,17 @@
 import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Predicates;
 import com.google.common.base.Splitter;
-import com.google.common.collect.*;
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.HashBiMap;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.HashMultiset;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Multiset;
 import com.vdurmont.emoji.Emoji;
 import com.vdurmont.emoji.EmojiManager;
 import com.vdurmont.emoji.EmojiParser;
@@ -9,10 +19,9 @@ import cyf.gradle.base.enums.PraiseEnum;
 import cyf.gradle.util.EmojiRegexUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 import java.io.IOException;
-import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -22,6 +31,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -33,7 +43,7 @@ import java.util.stream.Stream;
 public class TestCompany_xclub {
 
     @Test
-    public void t1() {
+    public void foreachReturn() {
         List list = Lists.newArrayList(1, 3, 4, 5, 6, 7, 8, 9, 10, 2);
         Map map = Maps.newHashMap();
         map.put(2, "B");
@@ -44,10 +54,7 @@ public class TestCompany_xclub {
             }
 //            System.out.println(map.get(s));
         });
-
         Object collect = list.parallelStream().map(s -> String.valueOf(s)).collect(Collectors.toList());
-//        System.out.println(collect);
-
         List<Integer> list1 = Lists.newArrayList(1, 3, null);
         List<Integer> uids = list1.parallelStream().distinct().collect(Collectors.toList());
         System.out.println(uids);
@@ -55,103 +62,24 @@ public class TestCompany_xclub {
     }
 
     @Test
-    public void t2() {
+    public void listRemoveList() {
         List list = Lists.newArrayList(1, 3, 4, 5, 6, 7, 8, 9, 10, 2);
         List list1 = Lists.newArrayList(1, 3, 4, 20, 21);
         list.removeAll(list1);
         System.out.println(list);
     }
 
-    @Test
-    public void t3() {
-       /* ClubChatGroup g1 = new ClubChatGroup();
-        g1.setId(1);
-        g1.setFromUid(3);
-        g1.setToUid(2);
-
-        ClubChatGroup g2 = new ClubChatGroup();
-        g2.setId(2);
-        g2.setFromUid(3);
-        g2.setToUid(4);
-
-        ClubChatGroup g3 = new ClubChatGroup();
-        g3.setId(3);
-        g3.setFromUid(5);
-        g3.setToUid(3);
-        g3.setType(3);
-
-        List<ClubChatGroup> groups = Lists.newArrayList();
-        groups.add(g1);
-        groups.add(g2);
-        groups.add(g3);
-
-        Integer finalUid = 3;
-        Function<ClubChatGroup, Integer> function = c -> {
-
-            if (Objects.equals(finalUid, c.getFromUid())) {
-                return c.getToUid();
-            } else {
-                return c.getFromUid();
-            }
-        };
-        Map<Integer, List<ClubChatGroup>> map = groups.parallelStream().collect(Collectors.groupingBy(function));
-
-        List<Integer> list = groups.parallelStream().map(function).collect(Collectors.toList());
-
-
-//        map.forEach((k, v) -> System.out.println(k + "---->" + v.get(0).getId()));
-
-//        System.out.println(list);
-
-        Predicate<ClubChatGroup> p = g -> Objects.equals(ChatGroupType.MATCHED.getCode(), g.getType());
-        boolean b = groups.parallelStream().noneMatch(p);
-//        System.out.println(b);
-
-        Map map1 = Maps.newHashMap();
-        map1.put(1, "sssss");
-        Function<ClubChatGroup, ClubChatGroup> function1 = c -> {
-            if (!map1.containsKey(c.getId())) {
-                return null;
-            }
-            return c;
-        };
-        List<ClubChatGroup> collect = groups.parallelStream().map(function1).filter(s -> Objects.nonNull(s)).collect(Collectors.toList());
-        System.out.println(collect);
-*/
-    }
 
     @Test
-    public void t4() {
+    public void jsonTemplate() {
         //language=JSON
         String str = "{\"id\":1,\"name\":\"str\"}";
         System.out.println(str);
     }
 
-    @Test
-    public void t5() throws ParseException {
-        Integer uid = 2;
-        if (uid != 0 && uid != -1) {
-            System.out.println("aaaaa");
-        }
-    }
 
     @Test
-    public void t6() {
-
-        String str = "abc\uD83D\uDE1C\uD83D\uDE29\uD83D\uDE29";
-        String[] strings = StringUtils.splitByCharacterType(str);
-        for (String s : strings) {
-//            System.out.println(s + "---");
-        }
-
-        char[] chars = str.toCharArray();
-        for (char c : chars) {
-            System.out.println(c);
-        }
-    }
-
-    @Test
-    public void t7() {
+    public void emoji() {
 
         String str = "\uD83D\uDE1C\uD83D\uDE29\uD83D\uDE29哈哈哈\uD83D\uDE29";
         if (EmojiRegexUtil.containsEmoji(str)) {
@@ -190,7 +118,7 @@ public class TestCompany_xclub {
     }
 
     @Test
-    public void t8() throws Exception {
+    public void enumToStream() throws Exception {
         PraiseEnum[] values = PraiseEnum.values();
         List<PraiseEnum> noChatRemoveMatchReasons = Arrays.asList(values);
 
@@ -201,7 +129,7 @@ public class TestCompany_xclub {
     }
 
     @Test
-    public void t9() {
+    public void parallelStream() {
         List<Integer> list = Lists.newArrayList(-1, 2, 3, 4);
         List<Integer> collect = list.parallelStream().filter(s -> !Objects.equals(s, -1)).collect(Collectors.toList());
         System.out.println(collect);
@@ -235,7 +163,8 @@ public class TestCompany_xclub {
         Function<List<LikeDto>, List<Integer>> function = list -> list.stream().map(LikeDto::getId).collect(Collectors.toList());
         List list = Optional.ofNullable(groups).map(function).orElse(Collections.EMPTY_LIST);
         LikeDto likeDto = new LikeDto();
-        //likeDto为null时返回一个Optional空对象
+//        LikeDto likeDto = null;
+        //likeDto为null时返回一个Op1tional空对象
         Optional<Integer> integer1 = Optional.ofNullable(likeDto).map(LikeDto::getId);
         System.out.println("1" + integer1);
 
@@ -256,7 +185,7 @@ public class TestCompany_xclub {
         System.out.println("4" + likeDto);
 
         Map<String, LikeDto> map = Maps.newHashMap();
-        map.put("aa", new LikeDto());
+        map.put("aa", likeDto);
         Optional.ofNullable(map.get("aa")).ifPresent(s -> s.setAvatar("http://www.xxxxxx"));
         System.out.println("5---" + map.get("aa"));
 
@@ -297,7 +226,7 @@ public class TestCompany_xclub {
     }
 
     @Test
-    public void t10() throws IOException {
+    public void guava() throws IOException {
 //        LikeDto likeDto = null;
         LikeDto likeDto = new LikeDto();
         likeDto.setNickname("Taylor");
@@ -309,7 +238,6 @@ public class TestCompany_xclub {
         String[] strings = new String[]{"a", "b", "c"};
         Stream<String> stream = ImmutableList.copyOf(strings).stream();
         ImmutableList.of(strings);
-
 
 //        Multiset<String> set = LinkedHashMultiset.create();
         //Multiset:出现次数
@@ -340,6 +268,7 @@ public class TestCompany_xclub {
         hashBiMap.put("A", 1);
         hashBiMap.put("A", 2);
         hashBiMap.put("B", 3);
+//        hashBiMap.putIfAbsent("C", 2);
 
         //双键Map
         HashBasedTable<String, String, Object> basedTable = HashBasedTable.create();
@@ -388,7 +317,53 @@ public class TestCompany_xclub {
                 };
         Map<String, Integer> map1 = ImmutableMap.of("B", 1, "C", null);
 //        Maps.transformValues(map1, sqrt);
+    }
 
+    @Test
+    public void stringRemoveOrReplace() {
+        String str = "(,1,2,3,4,(,),8,[,9,]";
+        String s = StringUtils.removeAll(str, "[\\[\\]]");
+        System.out.println(s);
 
     }
+
+    @Test
+    public void optional() {
+//        List<String> list = Lists.newArrayList();
+        List<String> list = null;
+        Optional<String> s1 = Optional.ofNullable(list).map(s -> s + ",");
+        System.out.println(s1);
+
+    }
+
+    @Test
+    public void guava_2() {
+
+        //Iterables / Predicates
+        //过滤
+        List<String> list = Lists.newArrayList("A", "B", "C");
+        Iterable<String> b = Iterables.filter(list, Predicates.equalTo("B"));
+        ArrayList<String> strings = Lists.newArrayList(b);
+        System.out.println("1       " + strings);
+
+        //数据转换
+        com.google.common.base.Function<String, String> function = s -> s.toLowerCase();
+        Iterable<String> transform = Iterables.transform(list, function);
+        System.out.println("2       " + transform);
+
+        //any操作包含
+        boolean a = Iterables.any(list, Predicates.equalTo("a"));
+        boolean d = Iterables.contains(list, "D");
+        System.out.println("3       " + a + d);
+
+
+        //合并
+        List<String> list_2 = Lists.newArrayList("D", "E");
+        Iterable<String> concat = Iterables.concat(list, list_2);
+        System.out.println("4       " + concat);
+
+//        Iterables.cycle()
+    }
+
+
 }
