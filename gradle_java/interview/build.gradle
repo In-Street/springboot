@@ -1,0 +1,5 @@
+dependencies {
+    compile project(':gradle_util')
+    compile project(':gralde_base')
+
+}

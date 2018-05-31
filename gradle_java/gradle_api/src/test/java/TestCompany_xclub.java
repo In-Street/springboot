@@ -364,5 +364,4 @@ public class TestCompany_xclub {
 
 //        Iterables.cycle()
     }
-
 }

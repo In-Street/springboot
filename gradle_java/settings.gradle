@@ -13,4 +13,5 @@ include 'gradle_search_new'
 include 'rabbitmq_consumer'
 include 'boot_adminserver'
 include 'webflux'
+include 'interview'
 
