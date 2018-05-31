@@ -3,28 +3,27 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="createEmptyContentRootDirectories" value="true" />
         <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="$PROJECT_DIR$/../../../soft/gradle/gradle-3.5.1-all/gradle-3.5.1" />
+        <option name="gradleHome" value="$PROJECT_DIR$/../../../../../dmg/programme/gradle-4.4" />
         <option name="gradleJvm" value="1.8" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/boot_adminserver" />
             <option value="$PROJECT_DIR$/gradle_api" />
             <option value="$PROJECT_DIR$/gradle_dao" />
+            <option value="$PROJECT_DIR$/gradle_mail" />
+            <option value="$PROJECT_DIR$/gradle_new_redis" />
+            <option value="$PROJECT_DIR$/gradle_rabbitmq" />
+            <option value="$PROJECT_DIR$/gradle_schedule" />
+            <option value="$PROJECT_DIR$/gradle_search" />
+            <option value="$PROJECT_DIR$/gradle_search_new" />
+            <option value="$PROJECT_DIR$/gradle_shiro" />
             <option value="$PROJECT_DIR$/gradle_util" />
             <option value="$PROJECT_DIR$/gralde_base" />
-          </set>
-        </option>
-        <option name="useAutoImport" value="true" />
-        <option name="myModules">
-          <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/gradle_api" />
-            <option value="$PROJECT_DIR$/gradle_dao" />
-            <option value="$PROJECT_DIR$/gradle_util" />
-            <option value="$PROJECT_DIR$/gralde_base" />
+            <option value="$PROJECT_DIR$/rabbitmq_consumer" />
+            <option value="$PROJECT_DIR$/webflux" />
           </set>
         </option>
       </GradleProjectSettings>

@@ -1,0 +1,16 @@
+server:
+  port: 9099
+  context-path: /
+
+spring:
+  application.name: admin-server
+  profiles.active: dev
+
+#避免 启动自动检测redis健康监测
+management:
+  health:
+    redis:
+      enabled: false
+
+---
+spring.profiles: dev

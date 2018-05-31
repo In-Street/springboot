@@ -21,7 +21,5 @@ public class SpringTest {
         reader.loadBeanDefinitions(resource);
         beanFactory.getBean("");
 
-
-
     }
 }

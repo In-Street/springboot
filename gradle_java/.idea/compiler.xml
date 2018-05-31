@@ -5,14 +5,34 @@
       <profile default="true" name="Default" enabled="true" />
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="boot_adminserver_main" target="1.8" />
+      <module name="boot_adminserver_test" target="1.8" />
       <module name="gradle_api_main" target="1.8" />
       <module name="gradle_api_test" target="1.8" />
       <module name="gradle_dao_main" target="1.8" />
       <module name="gradle_dao_test" target="1.8" />
+      <module name="gradle_mail_main" target="1.8" />
+      <module name="gradle_mail_test" target="1.8" />
+      <module name="gradle_new_redis_main" target="1.8" />
+      <module name="gradle_new_redis_test" target="1.8" />
+      <module name="gradle_rabbitmq_main" target="1.8" />
+      <module name="gradle_rabbitmq_test" target="1.8" />
+      <module name="gradle_schedule_main" target="1.8" />
+      <module name="gradle_schedule_test" target="1.8" />
+      <module name="gradle_search_main" target="1.8" />
+      <module name="gradle_search_new_main" target="1.8" />
+      <module name="gradle_search_new_test" target="1.8" />
+      <module name="gradle_search_test" target="1.8" />
+      <module name="gradle_shiro_main" target="1.8" />
+      <module name="gradle_shiro_test" target="1.8" />
       <module name="gradle_util_main" target="1.8" />
       <module name="gradle_util_test" target="1.8" />
       <module name="gralde_base_main" target="1.8" />
       <module name="gralde_base_test" target="1.8" />
+      <module name="rabbitmq_consumer_main" target="1.8" />
+      <module name="rabbitmq_consumer_test" target="1.8" />
+      <module name="webflux_main" target="1.8" />
+      <module name="webflux_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

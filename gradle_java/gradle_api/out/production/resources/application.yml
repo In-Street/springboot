@@ -8,6 +8,31 @@ spring:
   thymeleaf:
     cache: false
     mode: LEGACYHTML5
+  data:
+    web:
+      pageable:
+
+      # 分页大小 默认为 20
+        default-page-size: 2
+        #当前页参数名 默认为 page
+        page-parameter: pageNumber
+#        当前页参数名 默认为 size
+        size-parameter: pageSize
+
+        # 字段排序参数名 默认为 sort
+      sort:
+        sort-parameter: orderBy
+
+async:
+     pool:
+        #核心线程数
+        corePoolSize: 5
+        #最大线程数
+        maxPoolSize: 50
+        #线程池维护线程所允许的空闲时间
+        keepAliveSeconds: 60
+        #队列长度
+        queueCapacity: 10000
 
 
 #而当我们需要使用CGLIB来实现AOP的时候，需要配置 spring.aop.proxy-target-class=true ，不然默认使用的是标准Java的实现
