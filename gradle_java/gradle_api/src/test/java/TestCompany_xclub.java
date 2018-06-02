@@ -335,7 +335,7 @@ public class TestCompany_xclub {
 
         //Iterables / Predicates
         //过滤
-        List<String> list = Lists.newArrayList("A", "B", "C");
+        List<String> list = Lists.newArrayList("A", "A", "C");
         Iterable<String> b = Iterables.filter(list, Predicates.equalTo("B"));
         ArrayList<String> strings = Lists.newArrayList(b);
         System.out.println("1       " + strings);
@@ -352,17 +352,28 @@ public class TestCompany_xclub {
 
 
         //合并
-        List<String> list_2 = Lists.newArrayList("D", "E");
+        List<String> list_2 = Lists.newArrayList("A", "B", "C");
         Iterable<String> concat = Iterables.concat(list, list_2);
         System.out.println("4       " + concat);
 
-        Iterables.cycle(list);
+        //两个集合元素完全相同 - true
+        boolean b1 = Iterables.elementsEqual(list, list_2);
+        System.out.println("5       " + b1);
+
+        //集合元素出现频率
+        int frequency = Iterables.frequency(list, "A");
+        System.out.println("6       " + frequency);
+
+        String onlyElement = Iterables.getOnlyElement(list);
+        System.out.println("7       "+onlyElement);
+
+//        Iterables.mergeSorted(list,Comparator.comparing())
     }
 
     @Test
     public void timestamp() {
         long time = 1527858072;
-        Date date = new Date(time *1000);
+        Date date = new Date(time * 1000);
         System.out.println(FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(date));
 
 
