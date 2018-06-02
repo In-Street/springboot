@@ -356,7 +356,7 @@ public class TestCompany_xclub {
         Iterable<String> concat = Iterables.concat(list, list_2);
         System.out.println("4       " + concat);
 
-//        Iterables.cycle()
+        Iterables.cycle();
     }
 
     @Test
