@@ -1,0 +1,8 @@
+  _____            _  _
+ |  __ \          | |(_)
+ | |__) | ___   __| | _  ___
+ |  _  / / _ \ / _` || |/ __|
+ | | \ \|  __/| (_| || |\__ \
+ |_|  \_\\___| \__,_||_||___/
+
+${AnsiColor.GREEN}:: gradle_new_redis :: ${application.formatted-version}${AnsiColor.BRIGHT_CYAN}

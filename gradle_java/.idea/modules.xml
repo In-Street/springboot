@@ -2,19 +2,49 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/gradle_api/gradle_api.iml" filepath="$PROJECT_DIR$/gradle_api/gradle_api.iml" group="gradle_api" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/boot_adminserver/boot_adminserver.iml" filepath="$PROJECT_DIR$/.idea/modules/boot_adminserver/boot_adminserver.iml" group="boot_adminserver" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/boot_adminserver/boot_adminserver_main.iml" filepath="$PROJECT_DIR$/.idea/modules/boot_adminserver/boot_adminserver_main.iml" group="boot_adminserver" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/boot_adminserver/boot_adminserver_test.iml" filepath="$PROJECT_DIR$/.idea/modules/boot_adminserver/boot_adminserver_test.iml" group="boot_adminserver" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_api/gradle_api.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_api/gradle_api.iml" group="gradle_api" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_api/gradle_api_main.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_api/gradle_api_main.iml" group="gradle_api" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_api/gradle_api_test.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_api/gradle_api_test.iml" group="gradle_api" />
-      <module fileurl="file://$PROJECT_DIR$/gradle_dao/gradle_dao.iml" filepath="$PROJECT_DIR$/gradle_dao/gradle_dao.iml" group="gradle_dao" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_dao/gradle_dao.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_dao/gradle_dao.iml" group="gradle_dao" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_dao/gradle_dao_main.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_dao/gradle_dao_main.iml" group="gradle_dao" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_dao/gradle_dao_test.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_dao/gradle_dao_test.iml" group="gradle_dao" />
       <module fileurl="file://$PROJECT_DIR$/gradle_java.iml" filepath="$PROJECT_DIR$/gradle_java.iml" />
-      <module fileurl="file://$PROJECT_DIR$/gradle_util/gradle_util.iml" filepath="$PROJECT_DIR$/gradle_util/gradle_util.iml" group="gradle_util" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_mail/gradle_mail.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_mail/gradle_mail.iml" group="gradle_mail" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_mail/gradle_mail_main.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_mail/gradle_mail_main.iml" group="gradle_mail" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_mail/gradle_mail_test.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_mail/gradle_mail_test.iml" group="gradle_mail" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_new_redis/gradle_new_redis.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_new_redis/gradle_new_redis.iml" group="gradle_new_redis" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_new_redis/gradle_new_redis_main.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_new_redis/gradle_new_redis_main.iml" group="gradle_new_redis" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_new_redis/gradle_new_redis_test.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_new_redis/gradle_new_redis_test.iml" group="gradle_new_redis" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_rabbitmq/gradle_rabbitmq.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_rabbitmq/gradle_rabbitmq.iml" group="gradle_rabbitmq" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_rabbitmq/gradle_rabbitmq_main.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_rabbitmq/gradle_rabbitmq_main.iml" group="gradle_rabbitmq" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_rabbitmq/gradle_rabbitmq_test.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_rabbitmq/gradle_rabbitmq_test.iml" group="gradle_rabbitmq" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_schedule/gradle_schedule.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_schedule/gradle_schedule.iml" group="gradle_schedule" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_schedule/gradle_schedule_main.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_schedule/gradle_schedule_main.iml" group="gradle_schedule" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_schedule/gradle_schedule_test.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_schedule/gradle_schedule_test.iml" group="gradle_schedule" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_search/gradle_search.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_search/gradle_search.iml" group="gradle_search" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_search/gradle_search_main.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_search/gradle_search_main.iml" group="gradle_search" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_search_new/gradle_search_new.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_search_new/gradle_search_new.iml" group="gradle_search_new" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_search_new/gradle_search_new_main.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_search_new/gradle_search_new_main.iml" group="gradle_search_new" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_search_new/gradle_search_new_test.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_search_new/gradle_search_new_test.iml" group="gradle_search_new" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_search/gradle_search_test.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_search/gradle_search_test.iml" group="gradle_search" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_shiro/gradle_shiro.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_shiro/gradle_shiro.iml" group="gradle_shiro" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_shiro/gradle_shiro_main.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_shiro/gradle_shiro_main.iml" group="gradle_shiro" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_shiro/gradle_shiro_test.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_shiro/gradle_shiro_test.iml" group="gradle_shiro" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_util/gradle_util.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_util/gradle_util.iml" group="gradle_util" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_util/gradle_util_main.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_util/gradle_util_main.iml" group="gradle_util" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle_util/gradle_util_test.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle_util/gradle_util_test.iml" group="gradle_util" />
-      <module fileurl="file://$PROJECT_DIR$/gralde_base/gralde_base.iml" filepath="$PROJECT_DIR$/gralde_base/gralde_base.iml" group="gralde_base" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gralde_base/gralde_base.iml" filepath="$PROJECT_DIR$/.idea/modules/gralde_base/gralde_base.iml" group="gralde_base" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/gralde_base/gralde_base_main.iml" filepath="$PROJECT_DIR$/.idea/modules/gralde_base/gralde_base_main.iml" group="gralde_base" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/gralde_base/gralde_base_test.iml" filepath="$PROJECT_DIR$/.idea/modules/gralde_base/gralde_base_test.iml" group="gralde_base" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/rabbitmq_consumer/rabbitmq_consumer.iml" filepath="$PROJECT_DIR$/.idea/modules/rabbitmq_consumer/rabbitmq_consumer.iml" group="rabbitmq_consumer" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/rabbitmq_consumer/rabbitmq_consumer_main.iml" filepath="$PROJECT_DIR$/.idea/modules/rabbitmq_consumer/rabbitmq_consumer_main.iml" group="rabbitmq_consumer" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/rabbitmq_consumer/rabbitmq_consumer_test.iml" filepath="$PROJECT_DIR$/.idea/modules/rabbitmq_consumer/rabbitmq_consumer_test.iml" group="rabbitmq_consumer" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/webflux/webflux.iml" filepath="$PROJECT_DIR$/.idea/modules/webflux/webflux.iml" group="webflux" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/webflux/webflux_main.iml" filepath="$PROJECT_DIR$/.idea/modules/webflux/webflux_main.iml" group="webflux" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/webflux/webflux_test.iml" filepath="$PROJECT_DIR$/.idea/modules/webflux/webflux_test.iml" group="webflux" />
     </modules>
   </component>
 </project>

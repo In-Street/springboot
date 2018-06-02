@@ -18,17 +18,11 @@ import com.vdurmont.emoji.EmojiParser;
 import cyf.gradle.base.enums.PraiseEnum;
 import cyf.gradle.util.EmojiRegexUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.FastDateFormat;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -365,5 +359,12 @@ public class TestCompany_xclub {
 //        Iterables.cycle()
     }
 
+    @Test
+    public void timestamp() {
+        long time = 1527858072;
+        Date date = new Date(time *1000);
+        System.out.println(FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(date));
 
+
+    }
 }
