@@ -1,9 +1,11 @@
 import com.google.common.base.Converter;
 import com.google.common.base.Enums;
 import com.google.common.base.Joiner;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicates;
 import com.google.common.base.Splitter;
+import com.google.common.base.Stopwatch;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.HashMultimap;
@@ -14,6 +16,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multiset;
+import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import com.vdurmont.emoji.Emoji;
 import com.vdurmont.emoji.EmojiManager;
@@ -27,6 +30,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -408,4 +412,31 @@ public class TestCompany_xclub {
         Date date = new Date(time * 1000); //秒级 * 1000
         System.out.println(FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(date));
     }
+
+    @Test
+    public void MoreObjects() {
+        UserTest userTest = new UserTest();
+        userTest.setName("Taylor");
+        System.out.println(userTest);
+        String name = MoreObjects.toStringHelper(UserTest.class).add("name", userTest.getName()).toString();
+        System.out.println(name);
+    }
+
+    @Test
+    public void order() {
+        Ordering<Comparable> comparableOrdering = Ordering.natural().nullsLast();
+    }
+
+    //代码运行时常
+    @Test
+    public void stopWatch() {
+        Stopwatch started = Stopwatch.createStarted();
+        for (int i = 0; i < 1000000; i++) {
+
+        }
+        long elapsed = started.elapsed(TimeUnit.MILLISECONDS);
+        System.out.println("耗时：" + elapsed + "ms");
+    }
+
+
 }

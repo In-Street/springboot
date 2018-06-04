@@ -1,6 +1,8 @@
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.util.Date;
@@ -10,10 +12,11 @@ import java.util.List;
  * @author Cheng Yufei
  * @create 2017-11-10 下午11:13
  **/
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude ={"id","tags"})
+//@ToString(exclude ={"id","tags"})
 public class UserTest {
 
     private Integer id;
