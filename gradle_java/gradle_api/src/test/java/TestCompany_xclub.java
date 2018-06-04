@@ -316,7 +316,8 @@ public class TestCompany_xclub {
     @Test
     public void stringRemoveOrReplace() {
         String str = "(,1,2,3,4,(,),8,[,9,]";
-        String s = StringUtils.removeAll(str, "[\\[\\]]");
+        //同时排除[] ()
+        String s = StringUtils.removeAll(str, "[\\[\\]()]");
         System.out.println(s);
 
     }
@@ -335,7 +336,7 @@ public class TestCompany_xclub {
 
         //Iterables / Predicates
         //过滤
-        List<String> list = Lists.newArrayList("A", "A", "C");
+        List<String> list = Lists.newArrayList("A", "B", "C");
         Iterable<String> b = Iterables.filter(list, Predicates.equalTo("B"));
         ArrayList<String> strings = Lists.newArrayList(b);
         System.out.println("1       " + strings);
@@ -364,18 +365,16 @@ public class TestCompany_xclub {
         int frequency = Iterables.frequency(list, "A");
         System.out.println("6       " + frequency);
 
-        String onlyElement = Iterables.getOnlyElement(list);
-        System.out.println("7       "+onlyElement);
+       /* String onlyElement = Iterables.getOnlyElement(list);
+        System.out.println("7       "+onlyElement);*/
 
-//        Iterables.mergeSorted(list,Comparator.comparing())
+        List<UserTest> userTests = Lists.newArrayList(new UserTest(new Date()), new UserTest(new Date(1527926658874L)));
     }
 
     @Test
     public void timestamp() {
         long time = 1527858072;
-        Date date = new Date(time * 1000);
+        Date date = new Date(time * 1000); //秒级 * 1000
         System.out.println(FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(date));
-
-
     }
 }

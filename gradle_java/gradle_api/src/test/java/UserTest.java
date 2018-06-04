@@ -3,6 +3,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,6 +23,11 @@ public class UserTest {
     private List<String> tags;
 
     private Integer age;
+    private Date date;
+
+    public UserTest(Date date) {
+        this.date = date;
+    }
 
     public UserTest(String name, Integer age) {
         this.name = name;
