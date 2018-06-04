@@ -1,3 +1,5 @@
+import com.google.common.base.Converter;
+import com.google.common.base.Enums;
 import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicates;
@@ -12,11 +14,13 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multiset;
+import com.google.common.collect.Sets;
 import com.vdurmont.emoji.Emoji;
 import com.vdurmont.emoji.EmojiManager;
 import com.vdurmont.emoji.EmojiParser;
 import cyf.gradle.base.enums.PraiseEnum;
 import cyf.gradle.util.EmojiRegexUtil;
+import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.junit.Test;
@@ -369,6 +373,33 @@ public class TestCompany_xclub {
         System.out.println("7       "+onlyElement);*/
 
         List<UserTest> userTests = Lists.newArrayList(new UserTest(new Date()), new UserTest(new Date(1527926658874L)));
+    }
+
+    @Test
+    public void guava_3() {
+        Set set_1 = Sets.newHashSet(1, 2, 3, 4);
+        Set set_2 = Sets.newHashSet(3, 4, 5, 6);
+
+        //前者相对后者的不同元素
+        Sets.SetView difference = Sets.difference(set_2, set_1);
+        System.out.println(difference);//[5,6]
+
+        //合并set
+        Sets.SetView union = Sets.union(set_1, set_2);
+        System.out.println(union);//[1, 2, 3, 4, 5, 6]
+
+        //两个set 的交叉元素
+        Sets.SetView intersection = Sets.intersection(set_1, set_2);
+        System.out.println(intersection);//[3, 4]
+
+        PushType anEnum = EnumUtils.getEnum(PushType.class, "NEW_HELLO");
+
+        //枚举code - value 生成Map
+        List<PushType> enumList = EnumUtils.getEnumList(PushType.class);
+        Map<Integer, String> enumMap = enumList.stream().collect(Collectors.toMap(PushType::getCode, PushType::getValue));
+
+        //key: NAME值
+        Map<String, PushType> enumMap1 = EnumUtils.getEnumMap(PushType.class);
     }
 
     @Test
