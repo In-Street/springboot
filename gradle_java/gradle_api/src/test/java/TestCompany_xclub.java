@@ -1,11 +1,13 @@
-import com.google.common.base.Converter;
-import com.google.common.base.Enums;
 import com.google.common.base.Joiner;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicates;
 import com.google.common.base.Splitter;
 import com.google.common.base.Stopwatch;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.HashMultimap;
@@ -29,11 +31,19 @@ import org.apache.commons.lang3.time.FastDateFormat;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -436,6 +446,40 @@ public class TestCompany_xclub {
         }
         long elapsed = started.elapsed(TimeUnit.MILLISECONDS);
         System.out.println("耗时：" + elapsed + "ms");
+    }
+
+    //guava 缓存策略
+    @Test
+    public void cache() throws ExecutionException {
+        Cache<Object, Object> build = CacheBuilder.newBuilder().build();
+        build.put("A", "Taylor");
+        Object b = build.getIfPresent("A");
+
+        LoadingCache<String, String> build_1 = CacheBuilder.newBuilder().build(new CacheLoader<String, String>() {
+            @Override
+            public String load(String key) throws Exception {
+                return "Hello" + key;
+            }
+        });
+        String s = build_1.get("B");
+        System.out.println(s); // HelloB
+
+        LoadingCache<String, String> build_2 = CacheBuilder.newBuilder()
+                .maximumSize(100)
+                //过期时间
+                .expireAfterWrite(20, TimeUnit.SECONDS)
+                .build(new CacheLoader<String, String>() {
+                    @Override
+                    public String load(String key) throws Exception {
+                        System.out.println();
+                        return "Hi" + key;
+                    }
+                });
+        build_2.put("D", "DDDDDD");
+        String c = build_2.get("C");
+        String d = build_2.get("D");
+        System.out.println(c + "---" + d);
+
     }
 
 

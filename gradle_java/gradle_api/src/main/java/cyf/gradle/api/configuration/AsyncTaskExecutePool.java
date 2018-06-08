@@ -1,5 +1,7 @@
 package cyf.gradle.api.configuration;
 
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import io.netty.util.concurrent.RejectedExecutionHandlers;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +11,12 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.lang.reflect.Method;
 import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.RejectedExecutionHandler;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Cheng Yufei
@@ -24,9 +31,16 @@ public class AsyncTaskExecutePool implements AsyncConfigurer {
     private AsyncPoolConfig asyncPoolConfig;
 
     /**
-     *  不设置执行异步任务时 提示 no TaskExecutor
+     * 不设置执行异步任务时 提示 no TaskExecutor
+     *
      * @return
      */
+
+    private static ThreadPoolTaskExecutor executor;
+
+    public static ThreadPoolTaskExecutor getExecutor() {
+        return executor;
+    }
 
     @Override
     public Executor getAsyncExecutor() {
@@ -44,13 +58,29 @@ public class AsyncTaskExecutePool implements AsyncConfigurer {
          */
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         executor.initialize();
-        return executor;
+        AsyncTaskExecutePool.executor = executor;
+        log.info("<=================初始化Executor=================>");
 
+        Executors.newScheduledThreadPool()
+
+        /**
+         * 不建议Executors.创建线程池：
+         * newFixedThreadPool、newSingleThreadExecutor
+         *
+         * newScheduledThreadPool、
+         *
+         */
+        ThreadFactory build = new ThreadFactoryBuilder().setNameFormat("demo_pool_%d").build();
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(asyncPoolConfig.getCorePoolSize(), asyncPoolConfig.getMaxPoolSize(),
+                asyncPoolConfig.getKeepAliveSeconds(), TimeUnit.SECONDS, new LinkedBlockingQueue<>(1024), build, new ThreadPoolExecutor.AbortPolicy());
+
+
+
+        return executor;
     }
 
     @Override
     public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
-
         return new AsyncUncaughtExceptionHandler() {
             @Override
             public void handleUncaughtException(Throwable arg0, Method arg1, Object... arg2) {
