@@ -1,14 +1,17 @@
 package cyf.gradle.api.configuration;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
+ * 线程池参数设置
  * @author Cheng Yufei
  * @create 2018-01-08 下午10:37
  **/
-@Data
+@Getter
+@Setter
 @Component
 @ConfigurationProperties(prefix = "async.pool")
 public class AsyncPoolConfig {
@@ -26,7 +29,7 @@ public class AsyncPoolConfig {
      */
     private int keepAliveSeconds ;
     /**
-     *队列长度
+     *队列长度，存放提交的任务
      */
     private int queueCapacity ;
 }
