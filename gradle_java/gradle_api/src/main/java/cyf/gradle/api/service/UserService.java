@@ -7,14 +7,10 @@ import cyf.gradle.dao.model.UserExample;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.Future;
 
 /**
  * Created by cheng on 2017/7/10.

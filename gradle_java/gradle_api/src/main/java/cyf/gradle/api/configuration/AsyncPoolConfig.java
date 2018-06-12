@@ -25,7 +25,7 @@ public class AsyncPoolConfig {
      */
     private int maxPoolSize ;
     /**
-     *线程池维护线程所允许的空闲时间
+     *线程池维护线程所允许的空闲时间(最大不活动时间，否则清除此线程)
      */
     private int keepAliveSeconds ;
     /**

@@ -19,13 +19,17 @@ public class GuavaCacheService {
     @Autowired
     private LoadingCache<String, String> expireLoadingCache;
     @Autowired
-    private LoadingCache<String, String> getLoadingCacheRefresh;
+    private LoadingCache<String, String> refreshLoadingCache;
+    @Autowired
+    private LoadingCache<String, String> asyncRefreshLoadingCache;
 
     public String get(String v) throws ExecutionException {
 
-        String s = expireLoadingCache.get(v);
-//        getLoadingCacheExpire.invalidate();
-        return s;
+//        String expire = expireLoadingCache.get(v);
+
+        String refresh = asyncRefreshLoadingCache.get(v);
+
+        return  refresh;
 
     }
 

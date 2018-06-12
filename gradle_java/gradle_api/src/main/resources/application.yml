@@ -31,7 +31,7 @@ async:
         #线程池维护线程所允许的空闲时间
         keepAliveSeconds: 60
         #队列长度
-        queueCapacity: 10000
+        queueCapacity: 50
 
 
 #而当我们需要使用CGLIB来实现AOP的时候，需要配置 spring.aop.proxy-target-class=true ，不然默认使用的是标准Java的实现
