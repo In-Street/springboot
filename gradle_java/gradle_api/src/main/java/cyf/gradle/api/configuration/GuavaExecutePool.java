@@ -30,7 +30,7 @@ public class GuavaExecutePool   {
      * 缓存失效
      * @return
      */
-    @Bean
+    @Bean(name = "expireLoadingCache")
     public LoadingCache<String, String> getLoadingCacheExpire() {
 
         log.info("<=================初始化 LoadingCache<String, String>=================>");
