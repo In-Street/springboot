@@ -4,7 +4,6 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.cache.RemovalListener;
-import com.google.common.cache.RemovalListeners;
 import com.google.common.cache.RemovalNotification;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.MoreExecutors;
@@ -13,10 +12,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 
-import java.util.Objects;
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 线程池配置
@@ -125,6 +126,12 @@ public class GuavaExecutePool {
     /**
      * java.util.concurrent ThreadPoolExecutor 线程池使用
      *
+     * Executor(Interface)、ExecutorService(Interface) 、Executors :
+     *  1.ExecutorService继承Executor
+     *  2.Executor提供executor() 接受Runnable参数，不返回结果； ExecutorService提供submit(), 接受Runnable，Callable 参数，有Future返回
+     *  3.ExecutorService提供对线程池操作的方法
+     *
+     *  4.Executors提供创建线程池的方法，但是不建议使用
      * @return
      */
     @Bean

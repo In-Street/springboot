@@ -29,8 +29,9 @@ public class GuavaCacheService {
 //        String expire = expireLoadingCache.get(v);
 
 // 缓存显示清除       asyncRefreshLoadingCache.invalidate(key);
-//        expireLoadingCache.getUnchecked()
 
+        /*String unchecked = expireLoadingCache.getUnchecked(v);
+        log.info("unchecked:{}", unchecked);*/
 
         String refresh = expireLoadingCache.get(v);
         CacheStats stats = expireLoadingCache.stats();
