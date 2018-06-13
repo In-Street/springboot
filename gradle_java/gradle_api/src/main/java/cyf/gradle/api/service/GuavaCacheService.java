@@ -1,5 +1,6 @@
 package cyf.gradle.api.service;
 
+import com.google.common.cache.CacheStats;
 import com.google.common.cache.LoadingCache;
 import cyf.gradle.api.configuration.GuavaExecutePool;
 import lombok.extern.slf4j.Slf4j;
@@ -27,9 +28,16 @@ public class GuavaCacheService {
 
 //        String expire = expireLoadingCache.get(v);
 
-        String refresh = asyncRefreshLoadingCache.get(v);
+// 缓存显示清除       asyncRefreshLoadingCache.invalidate(key);
+//        expireLoadingCache.getUnchecked()
 
-        return  refresh;
+
+        String refresh = expireLoadingCache.get(v);
+        CacheStats stats = expireLoadingCache.stats();
+        long hitCount = stats.hitCount();
+        double loadTime = stats.averageLoadPenalty();
+        log.info("缓存命中次数：{}，新缓存加载时间：{}", hitCount, loadTime);
+        return refresh;
 
     }
 

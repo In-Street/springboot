@@ -3,6 +3,9 @@ package cyf.gradle.api.configuration;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import com.google.common.cache.RemovalListener;
+import com.google.common.cache.RemovalListeners;
+import com.google.common.cache.RemovalNotification;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
@@ -39,9 +42,14 @@ public class GuavaExecutePool {
 
         log.info("<=================初始化 Expire LoadingCache<String, String>=================>");
         LoadingCache<String, String> cache_Expire = CacheBuilder.newBuilder()
+                //基于容量回收：当数量逼近限定值时，回收最近很少使用或总体很少使用的缓存
                 .maximumSize(100)
                 //过期时间,当缓存失效时，多个线程用相同key获取缓存时，只有一个线程进入load,用于缓存生成（机制有效避免了缓存穿透），其他线程阻塞等待缓存生成，但此时某个缓存过期会导致大量请求线程阻塞，引入refreshAfterWrite刷新机制
                 .expireAfterWrite(1, TimeUnit.MINUTES)
+                //移除监听器
+                .removalListener(removalListener())
+                //开启统计信息
+                .recordStats()
                 //.expireAfterAccess() 在被访问多少秒后失效
                 .build(new CacheLoader<String, String>() {
                     @Override
@@ -55,6 +63,7 @@ public class GuavaExecutePool {
 
     /**
      * 缓存定时刷新（有线程触发）
+     * 刷新的好处是可以返回旧值而不必阻塞等待新缓存值的生成
      *
      * @return
      */
@@ -79,7 +88,7 @@ public class GuavaExecutePool {
 
 
     /**
-     * 异步刷新缓存 reload, 解决多个key获取时多个load线程阻塞，刷新交由异步线程完成，load线程不阻塞，返回缓存旧值（有线程触发）
+     * 异步线程执行reload 进行缓存刷新, 解决多个key获取时多个load线程阻塞，刷新交由异步线程完成，load线程不阻塞，返回缓存旧值（有线程触发）
      *
      * @return
      */
@@ -104,7 +113,7 @@ public class GuavaExecutePool {
                         return MoreExecutors.listeningDecorator(getThreadPoolExecutor()).submit(new Callable<String>() {
                             @Override
                             public String call() throws Exception {
-                                log.info("<================= Thread: {}=================>",Thread.currentThread().getName());
+                                log.info("<================= Thread: {}=================>", Thread.currentThread().getName());
                                 return "AsyncRefresh-reload" + key;
                             }
                         });
@@ -141,5 +150,19 @@ public class GuavaExecutePool {
         return threadPoolExecutor;
     }
 
+    /**
+     * 缓存移除监听器，缓存移除时收到原因，键值等信息，做一些额外的操作
+     * @return
+     */
+    public RemovalListener removalListener() {
+        RemovalListener removalListener = new RemovalListener() {
+            @Override
+            public void onRemoval(RemovalNotification notification) {
+                String cause = notification.getCause().name();
+                log.info("缓存移除监听，原因：{}", cause);
+            }
+        };
+        return removalListener;
+    }
 
 }
