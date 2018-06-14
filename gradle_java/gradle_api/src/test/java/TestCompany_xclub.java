@@ -24,6 +24,8 @@ import com.google.common.collect.Ordering;
 import com.google.common.collect.PeekingIterator;
 import com.google.common.collect.Sets;
 import com.google.common.primitives.Ints;
+import com.google.common.util.concurrent.AsyncFunction;
+import com.google.common.util.concurrent.ListenableFuture;
 import com.vdurmont.emoji.Emoji;
 import com.vdurmont.emoji.EmojiManager;
 import com.vdurmont.emoji.EmojiParser;
@@ -522,6 +524,12 @@ public class TestCompany_xclub {
         //初始化时指定容器大小
         ArrayList<Object> objects = Lists.newArrayListWithCapacity(5);
 
+        AsyncFunction<String, String> asyncFunction = new AsyncFunction() {
+            @Override
+            public ListenableFuture apply(Object input) throws Exception {
+                return null;
+            }
+        };
     }
 
 
