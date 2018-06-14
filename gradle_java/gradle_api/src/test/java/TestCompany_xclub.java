@@ -4,10 +4,12 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Predicates;
 import com.google.common.base.Splitter;
 import com.google.common.base.Stopwatch;
+import com.google.common.base.Strings;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.HashMultimap;
@@ -19,7 +21,9 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Ordering;
+import com.google.common.collect.PeekingIterator;
 import com.google.common.collect.Sets;
+import com.google.common.primitives.Ints;
 import com.vdurmont.emoji.Emoji;
 import com.vdurmont.emoji.EmojiManager;
 import com.vdurmont.emoji.EmojiParser;
@@ -280,7 +284,7 @@ public class TestCompany_xclub {
         hashBiMap.put("A", 1);
         hashBiMap.put("A", 2);
         hashBiMap.put("B", 3);
-//        hashBiMap.putIfAbsent("C", 2);
+//      hashBiMap.putIfAbsent("C", 2);
 
         //双键Map
         HashBasedTable<String, String, Object> basedTable = HashBasedTable.create();
@@ -350,7 +354,7 @@ public class TestCompany_xclub {
     }
 
     @Test
-    public void guava_2() {
+    public void guava_Iterables() {
 
         //Iterables / Predicates
         //过滤
@@ -386,11 +390,15 @@ public class TestCompany_xclub {
        /* String onlyElement = Iterables.getOnlyElement(list);
         System.out.println("7       "+onlyElement);*/
 
+       //获取集合第一个/最后一个元素
+        Iterables.getFirst(list, 1);
+        Iterables.getLast(list);
+
         List<UserTest> userTests = Lists.newArrayList(new UserTest(new Date()), new UserTest(new Date(1527926658874L)));
     }
 
     @Test
-    public void guava_3() {
+    public void guava_Sets_enumUtils() {
         Set set_1 = Sets.newHashSet(1, 2, 3, 4);
         Set set_2 = Sets.newHashSet(3, 4, 5, 6);
 
@@ -424,7 +432,7 @@ public class TestCompany_xclub {
     }
 
     @Test
-    public void MoreObjects() {
+    public void guava_MoreObjects() {
         UserTest userTest = new UserTest();
         userTest.setName("Taylor");
         System.out.println(userTest);
@@ -433,13 +441,13 @@ public class TestCompany_xclub {
     }
 
     @Test
-    public void order() {
+    public void guava_order() {
         Ordering<Comparable> comparableOrdering = Ordering.natural().nullsLast();
     }
 
     //代码运行时常
     @Test
-    public void stopWatch() {
+    public void guava_stopWatch() {
         Stopwatch started = Stopwatch.createStarted();
         for (int i = 0; i < 1000000; i++) {
 
@@ -450,7 +458,7 @@ public class TestCompany_xclub {
 
     //guava 缓存策略
     @Test
-    public void cache() throws ExecutionException {
+    public void guava_cache() throws ExecutionException {
         Cache<Object, Object> build = CacheBuilder.newBuilder().build();
         build.put("A", "Taylor");
         Object b = build.getIfPresent("A");
@@ -479,6 +487,40 @@ public class TestCompany_xclub {
         String c = build_2.get("C");
         String d = build_2.get("D");
         System.out.println(c + "---" + d);
+
+    }
+
+
+    // mysql获取随机： select id,nickname from club_user where id >= ((select MAX(id) from club_user)- (select min(id) from club_user)) * rand() + (select min(id) from club_user) limit 100;
+    @Test
+    public void guava_ComparisonChain() {
+        //链式比较
+        //第一个compare相等的情况下进行后续compare比较否则以第一个compare结果为准
+        int result = ComparisonChain.start().compare(2, 2).compare(2, 3).result();
+        System.out.println(result);//-1
+    }
+
+    @Test
+    public void guava_base() {
+        //Ints
+        List<Integer> integers = Ints.asList(1, 2, 3, 0, 10, 21, 11);
+        Ints.max(1, 2, 4, 3, 19, 0, 2);
+
+        //获取集合最大值
+        Integer max1 = Collections.max(integers);
+        Integer max = Ordering.natural().max(integers);
+        System.out.println(max + "===============" + max1);
+
+        //获取最大2个数据
+        List<Integer> integers1 = Ordering.natural().greatestOf(integers, 2);
+        System.out.println(integers1);
+
+        String str = "";
+        System.out.println(Strings.emptyToNull(str));
+        System.out.println(Strings.isNullOrEmpty(str));
+
+        //初始化时指定容器大小
+        ArrayList<Object> objects = Lists.newArrayListWithCapacity(5);
 
     }
 
