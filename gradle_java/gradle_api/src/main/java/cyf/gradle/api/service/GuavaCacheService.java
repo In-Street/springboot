@@ -2,12 +2,18 @@ package cyf.gradle.api.service;
 
 import com.google.common.cache.CacheStats;
 import com.google.common.cache.LoadingCache;
+import com.google.common.util.concurrent.FutureCallback;
+import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.common.util.concurrent.MoreExecutors;
 import cyf.gradle.api.configuration.GuavaExecutePool;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @author Cheng Yufei
@@ -23,6 +29,8 @@ public class GuavaCacheService {
     private LoadingCache<String, String> refreshLoadingCache;
     @Autowired
     private LoadingCache<String, String> asyncRefreshLoadingCache;
+    @Autowired
+    private ThreadPoolExecutor threadPoolExecutor;
 
     public String get(String v) throws ExecutionException {
 
@@ -42,5 +50,31 @@ public class GuavaCacheService {
 
     }
 
+    public String futureCallback(String str){
+
+        //并发下可提供成功回调
+        ListenableFuture<String> listenableFuture = MoreExecutors.listeningDecorator(threadPoolExecutor).submit(new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+                System.out.println(Thread.currentThread().getName());
+                return str +"d";
+            }
+        });
+
+        Futures.addCallback(listenableFuture, new FutureCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                System.out.println(Thread.currentThread().getName());
+                System.out.println(result.toUpperCase());
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                return;
+            }
+        });
+        return str;
+
+    }
 
 }

@@ -134,7 +134,7 @@ public class GuavaExecutePool {
      *  4.Executors提供创建线程池的方法，但是不建议使用
      * @return
      */
-    @Bean
+    @Bean(name = "threadPoolExecutor")
     public ThreadPoolExecutor getThreadPoolExecutor() {
 
         log.info("<=================初始化 ThreadPoolExecutor=================>");

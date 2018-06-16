@@ -1,28 +1,9 @@
-import com.google.common.base.Joiner;
-import com.google.common.base.MoreObjects;
-import com.google.common.base.Preconditions;
-import com.google.common.base.Predicates;
-import com.google.common.base.Splitter;
-import com.google.common.base.Stopwatch;
-import com.google.common.base.Strings;
+import com.google.common.base.*;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import com.google.common.collect.ComparisonChain;
-import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.HashBiMap;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.HashMultiset;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Multiset;
-import com.google.common.collect.Ordering;
-import com.google.common.collect.PeekingIterator;
-import com.google.common.collect.Sets;
+import com.google.common.collect.*;
 import com.google.common.primitives.Ints;
 import com.google.common.util.concurrent.AsyncFunction;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -392,7 +373,7 @@ public class TestCompany_xclub {
        /* String onlyElement = Iterables.getOnlyElement(list);
         System.out.println("7       "+onlyElement);*/
 
-       //获取集合第一个/最后一个元素
+        //获取集合第一个/最后一个元素
         Iterables.getFirst(list, 1);
         Iterables.getLast(list);
 
@@ -524,13 +505,18 @@ public class TestCompany_xclub {
         //初始化时指定容器大小
         ArrayList<Object> objects = Lists.newArrayListWithCapacity(5);
 
-        AsyncFunction<String, String> asyncFunction = new AsyncFunction() {
-            @Override
-            public ListenableFuture apply(Object input) throws Exception {
-                return null;
-            }
-        };
+        //区间操作
+        boolean contains = Range.closed(1, 4).intersection(Range.closed(2, 5)).contains(3);
+        System.out.println(contains);
+
+
     }
 
+    @Test
+    public void guava_future() {
+
+
+
+    }
 
 }

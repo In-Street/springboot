@@ -26,4 +26,9 @@ public class GuavaCacheController {
     public String get(@RequestParam String value) throws ExecutionException {
         return cacheService.get(value);
     }
+
+    @GetMapping("/future")
+    public String future(@RequestParam String value)  {
+        return cacheService.futureCallback(value);
+    }
 }
