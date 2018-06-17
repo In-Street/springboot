@@ -1,3 +1,5 @@
+package cyf.gradle.api.Enums;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;

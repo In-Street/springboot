@@ -1,4 +1,6 @@
+import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
+import cyf.gradle.api.Enums.UserTest;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
@@ -10,9 +12,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -23,6 +23,7 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * @author Cheng Yufei
@@ -209,18 +210,27 @@ public class TestHome {
     @Test
     public void t2() {
 
-        List<Integer> list = Lists.newArrayList(2,4,7,10);
+        List<Integer> list = Lists.newArrayList(2, 4, 7, 10);
         System.out.println("1");
-        List<Integer> collect = list.stream().map(s->{
+        List<Integer> collect = list.stream().map(s -> {
             System.out.println("2");
-            if (s>2) {
+            if (s > 2) {
                 return s;
-            }else{
+            } else {
                 return 0;
             }
         }).collect(Collectors.toList());
         System.out.println("3");
         System.out.println(collect);
+
+    }
+
+    @Test
+    public void stream_peek() {
+        String[] str = new String[]{"ab","c"};
+        Consumer<String> consumer = c -> c.toUpperCase();
+        Stream.of(str).peek(consumer).forEach(x->{});
+        System.out.println(str.toString());
 
     }
 

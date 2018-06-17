@@ -5,11 +5,13 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.collect.*;
 import com.google.common.primitives.Ints;
-import com.google.common.util.concurrent.AsyncFunction;
-import com.google.common.util.concurrent.ListenableFuture;
 import com.vdurmont.emoji.Emoji;
 import com.vdurmont.emoji.EmojiManager;
 import com.vdurmont.emoji.EmojiParser;
+import cyf.gradle.api.Enums.LikeDto;
+import cyf.gradle.api.Enums.PushType;
+import cyf.gradle.api.Enums.RemoveMatchReason;
+import cyf.gradle.api.Enums.UserTest;
 import cyf.gradle.base.enums.PraiseEnum;
 import cyf.gradle.util.EmojiRegexUtil;
 import org.apache.commons.lang3.EnumUtils;
@@ -39,7 +41,7 @@ import java.util.stream.Stream;
  * @author Cheng Yufei
  * @create 2018-05-18 18:49
  **/
-public class TestCompany_xclub {
+public class Study_xclub {
 
     @Test
     public void foreachReturn() {

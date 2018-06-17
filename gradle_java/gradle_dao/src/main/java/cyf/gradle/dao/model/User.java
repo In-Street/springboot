@@ -2,6 +2,9 @@ package cyf.gradle.dao.model;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.List;
@@ -9,8 +12,9 @@ import java.util.List;
 /**
  * @author 
  */
-@Data
-
+@Getter
+@Setter
+@NoArgsConstructor
 public class User implements Serializable {
 
     @ApiModelProperty(hidden = true)
@@ -26,6 +30,11 @@ public class User implements Serializable {
     private List<SysRole> roleList;
 
     private static final long serialVersionUID = 1L;
+
+    public User(Integer id, String username) {
+        this.id = id;
+        this.username = username;
+    }
 
     @Override
     public String toString() {
