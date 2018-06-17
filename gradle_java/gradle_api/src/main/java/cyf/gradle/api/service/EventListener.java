@@ -1,5 +1,6 @@
 package cyf.gradle.api.service;
 
+import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,8 @@ public class EventListener {
 
 
     @Subscribe
+    //允许并发执行
+    @AllowConcurrentEvents
     public String stringListener(String str) {
 
         String result = str.toUpperCase();
