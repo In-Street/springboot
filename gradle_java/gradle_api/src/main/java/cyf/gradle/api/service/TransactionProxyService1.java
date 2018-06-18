@@ -39,20 +39,28 @@ public class TransactionProxyService1 {
     }
 
     /**
+     *         一： test1 没有 @Transactional，将数据库操作全部放入test3（有@Transactional）时，3中即使有错误抛出，俩者也会插进数据库，此种做法事务无效
+     *         二：test1 有 @Transactional，直接调用 3，无论3有无@Transactional，3异常，俩者都未插数据，若在 1中捕获3异常，则数据插入，事务无效
+     *         三：test1 有 @Transactional ，用代理调 3，
+     *                                                          1. 3 无@Transactional ，效果与二一样
+     *                                                          2. 3 有@Transactional及新启事务参数： 在1中未进行捕获，效果与二一样
+     *                                                                                                                   在1中进行捕获，1 插入 3未插入
      *
      */
     @Transactional(rollbackFor = Exception.class)
     public void test1() {
-       /* Kerr2 kerr2 = new Kerr2();
+        Kerr2 kerr2 = new Kerr2();
         kerr2.setTitle("事务测试回滚-1");
         kerr2.setPublishtime(new Date());
-        kerr2Mapper.insertSelective(kerr2);*/
-        test3();
-        /*try {
+        kerr2Mapper.insertSelective(kerr2);
+
+//        proxy.test3();
+        try {
             proxy.test3();
+//            test3();
         } catch (Exception e) {
             e.printStackTrace();
-        }*/
+        }
 
     }
 
@@ -64,14 +72,8 @@ public class TransactionProxyService1 {
      * 如果不添加此参数 则在调用 test5（）时候异常：
      * org.springframework.transaction.UnexpectedRollbackException: Transaction rolled back because it has been marked as rollback-only
      */
-//    @Transactional(propagation = Propagation.REQUIRES_NEW,rollbackFor = Exception.class)
-//    @Transactional(rollbackFor = Exception.class)
+    @Transactional(propagation = Propagation.REQUIRES_NEW,rollbackFor = Exception.class)
     public void test3() {
-        Kerr2 kerr2 = new Kerr2();
-        kerr2.setTitle("事务测试回滚-1");
-        kerr2.setPublishtime(new Date());
-        kerr2Mapper.insertSelective(kerr2);
-
         Kerr2 kerr3 = new Kerr2();
         kerr3.setTitle("事务测试回滚-3");
         kerr3.setPublishtime(new Date());

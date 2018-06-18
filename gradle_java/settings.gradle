@@ -9,7 +9,6 @@ include 'gradle_mail'
 include 'gradle_rabbitmq'
 include 'gradle_new_redis'
 include 'rabbitmq_consumer'
-include 'boot_adminserver'
 include 'webflux'
 include 'interview'
 
