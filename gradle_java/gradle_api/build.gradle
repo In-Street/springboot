@@ -12,4 +12,7 @@ dependencies{
     compile group: 'org.json', name: 'json', version: '20160810'
     compile group: 'com.vdurmont', name: 'emoji-java', version: '4.0.0'
 
+    compile project(':gradle_dao')
+    compile project(':gradle_util')
+    compile project(':gralde_base')
 }

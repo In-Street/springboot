@@ -1,4 +1,7 @@
 dependencies{
     compile group: 'de.codecentric', name: 'spring-boot-admin-server', version: '1.5.6'
     compile group: 'de.codecentric', name: 'spring-boot-admin-server-ui', version: '1.5.6'
+
+    compile project(':gradle_util')
+    compile project(':gralde_base')
 }

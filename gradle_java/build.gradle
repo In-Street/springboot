@@ -1,4 +1,3 @@
-
 buildscript {
     ext {
         lombok="1.16.12"
@@ -39,13 +38,7 @@ subprojects {
 
     def defaultEncoding = 'UTF-8'
     tasks.withType(AbstractCompile).each { it.options.encoding = defaultEncoding }
-
-
-
-    springBoot {
-//        executable = true
-    }
-
+    tasks.jar.enabled = true
 
     repositories {
         mavenLocal()
@@ -80,17 +73,11 @@ subprojects {
 
         compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.0.0.RELEASE'
 
-
         compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.0.0.RELEASE'
 
         compile group: 'org.apache.shiro', name: 'shiro-spring', version: '1.4.0'
 
         compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
-
-
-        compile group: 'net.sourceforge.nekohtml', name: 'nekohtml', version: '1.9.22'
-
-        compile group: 'com.google.cloud', name: 'google-cloud-speech', version: '0.20.1-alpha'
 
         compile "org.springframework.boot:spring-boot-devtools"
 
@@ -100,70 +87,6 @@ subprojects {
     compileJava.dependsOn(processResources)
 }
 
-//工程依赖配置
-project(':gradle_api') {
-    dependencies {
-        compile project(':gradle_dao')
-        compile project(':gradle_util')
-        compile project(':gralde_base')
-//        compile project(':gradle_shiro')
-    }
-}
-
-project(':gradle_schedule') {
-    dependencies {
-        compile project(':gradle_util')
-        compile project(':gralde_base')
-    }
-}
-
-project(':gradle_mail') {
-    dependencies {
-        compile project(':gradle_util')
-        compile project(':gralde_base')
-    }
-}
-
-project(':gradle_shiro') {
-    dependencies {
-        compile project(':gradle_dao')
-        compile project(':gradle_util')
-        compile project(':gralde_base')
-    }
-}
-
-project(':gradle_search') {
-    dependencies {
-        compile project(':gradle_util')
-        compile project(':gralde_base')
-    }
-}
-project(':gradle_search_new') {
-    dependencies {
-        compile project(':gradle_util')
-        compile project(':gralde_base')
-    }
-}
-
-project(':rabbitmq_consumer') {
-    dependencies {
-        compile project(':gradle_util')
-        compile project(':gralde_base')
-    }
-}
-project(':boot_adminserver') {
-    dependencies {
-        compile project(':gradle_util')
-        compile project(':gralde_base')
-    }
-}
-project(':webflux') {
-    dependencies {
-        compile project(':gradle_dao')
-        compile project(':gradle_util')
-        compile project(':gralde_base')
-    }
-}
 task wrapper(type: Wrapper) {
     gradleVersion = "4.4"
 }

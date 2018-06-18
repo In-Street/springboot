@@ -1,6 +1,5 @@
 server:
   port: 9090
-  context-path: /
 
 #关闭健康监测
 endpoints:

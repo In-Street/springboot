@@ -2,3 +2,8 @@
 bootRepackage {
     mainClass = 'cyf.gradle.shiro.ShiroApplication'
 }*/
+dependencies{
+    compile project(':gradle_dao')
+    compile project(':gradle_util')
+    compile project(':gralde_base')
+}

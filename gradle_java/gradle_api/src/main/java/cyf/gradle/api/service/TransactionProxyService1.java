@@ -41,18 +41,18 @@ public class TransactionProxyService1 {
     /**
      *
      */
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void test1() {
-        Kerr2 kerr2 = new Kerr2();
+       /* Kerr2 kerr2 = new Kerr2();
         kerr2.setTitle("事务测试回滚-1");
         kerr2.setPublishtime(new Date());
-        kerr2Mapper.insertSelective(kerr2);
-
-        try {
+        kerr2Mapper.insertSelective(kerr2);*/
+        test3();
+        /*try {
             proxy.test3();
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 
     }
 
@@ -64,12 +64,18 @@ public class TransactionProxyService1 {
      * 如果不添加此参数 则在调用 test5（）时候异常：
      * org.springframework.transaction.UnexpectedRollbackException: Transaction rolled back because it has been marked as rollback-only
      */
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+//    @Transactional(propagation = Propagation.REQUIRES_NEW,rollbackFor = Exception.class)
+//    @Transactional(rollbackFor = Exception.class)
     public void test3() {
         Kerr2 kerr2 = new Kerr2();
-        kerr2.setTitle("事务测试回滚-3");
+        kerr2.setTitle("事务测试回滚-1");
         kerr2.setPublishtime(new Date());
         kerr2Mapper.insertSelective(kerr2);
+
+        Kerr2 kerr3 = new Kerr2();
+        kerr3.setTitle("事务测试回滚-3");
+        kerr3.setPublishtime(new Date());
+        kerr2Mapper.insertSelective(kerr3);
         throw new RuntimeException("回滚-3 exception");
     }
 }

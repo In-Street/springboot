@@ -3,4 +3,6 @@ dependencies{
 
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '2.0.0.RELEASE'
 
+    compile project(':gradle_util')
+    compile project(':gralde_base')
 }
