@@ -1,8 +1,12 @@
 package cyf.gradle.interview.controller;
 
-import cyf.gradle.interview.impl.HelloImpl;
+import cyf.gradle.interview.impl.Apple;
+import cyf.gradle.interview.impl.Impl;
+import cyf.gradle.interview.proxy.CGLibProxy;
 import cyf.gradle.interview.proxy.JdkProxy;
+import cyf.gradle.interview.service.HI;
 import cyf.gradle.interview.service.Hello;
+import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,15 +24,44 @@ public class ProxyController {
 
     @GetMapping
     @RequestMapping("/jdk")
-    public String proxy(@RequestParam String msg) {
+    public String jdk(@RequestParam String msg) {
 
 
-        Hello hello = new HelloImpl();
+        Impl impl = new Impl();
+        Class<?>[] interfaces = impl.getClass().getInterfaces();
 
-        Hello he = (Hello) Proxy.newProxyInstance(hello.getClass().getClassLoader(), new Class[]{Hello.class}, new JdkProxy(hello));
+        /**
+         * 获取代理类的所有接口
+         * 生成代理类类名
+         * 根据接口信息，动态创建Proxy字节码
+         * 将字节码转换对应的class对象
+         * 创建InvocationHandler对象
+         */
+        Object proxy = Proxy.newProxyInstance(impl.getClass().getClassLoader(), interfaces, new JdkProxy(impl));
 
-        return he.say(msg);
+        Hello hello = (Hello) proxy;
+        HI hi = (HI) proxy;
+        /**
+         * 方法调用时，直接调用 invoke 方法，根据代理类传递的method参数区分调用哪个
+         */
+        hello.sayHello(msg);
+        hi.sayHi(msg);
+        return msg;
 
     }
 
+    @GetMapping
+    @RequestMapping("/cglib")
+    public String cglib(@RequestParam String msg) {
+
+        Enhancer enhancer = new Enhancer();
+        enhancer.setSuperclass(new Apple().getClass());
+        enhancer.setCallback(new CGLibProxy());
+
+        //获取代理对象，所有非final方法调用转发到 intercept()
+        Apple o = (Apple)enhancer.create();
+        o.color(msg);
+        o.getInt(12);
+        return null;
+    }
 }

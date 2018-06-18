@@ -4,6 +4,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.collect.*;
+import com.google.common.math.IntMath;
 import com.google.common.primitives.Ints;
 import com.vdurmont.emoji.Emoji;
 import com.vdurmont.emoji.EmojiManager;
@@ -41,7 +42,7 @@ import java.util.stream.Stream;
  * @author Cheng Yufei
  * @create 2018-05-18 18:49
  **/
-public class Study_xclub {
+public class Study_guava {
 
     @Test
     public void foreachReturn() {
@@ -514,11 +515,5 @@ public class Study_xclub {
 
     }
 
-    @Test
-    public void guava_future() {
-
-
-
-    }
 
 }
