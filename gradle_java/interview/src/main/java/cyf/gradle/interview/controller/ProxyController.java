@@ -1,11 +1,11 @@
 package cyf.gradle.interview.controller;
 
-import cyf.gradle.interview.impl.Apple;
-import cyf.gradle.interview.impl.Impl;
+import cyf.gradle.interview.impl.proxy.Apple;
+import cyf.gradle.interview.impl.proxy.Impl;
 import cyf.gradle.interview.proxy.CGLibProxy;
 import cyf.gradle.interview.proxy.JdkProxy;
-import cyf.gradle.interview.service.HI;
-import cyf.gradle.interview.service.Hello;
+import cyf.gradle.interview.service.proxy.HI;
+import cyf.gradle.interview.service.proxy.Hello;
 import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

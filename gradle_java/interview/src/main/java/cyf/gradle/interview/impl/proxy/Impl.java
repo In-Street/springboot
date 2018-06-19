@@ -1,7 +1,7 @@
-package cyf.gradle.interview.impl;
+package cyf.gradle.interview.impl.proxy;
 
-import cyf.gradle.interview.service.HI;
-import cyf.gradle.interview.service.Hello;
+import cyf.gradle.interview.service.proxy.HI;
+import cyf.gradle.interview.service.proxy.Hello;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

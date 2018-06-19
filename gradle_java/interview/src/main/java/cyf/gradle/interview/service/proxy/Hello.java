@@ -1,4 +1,4 @@
-package cyf.gradle.interview.service;
+package cyf.gradle.interview.service.proxy;
 
 public interface Hello {
 

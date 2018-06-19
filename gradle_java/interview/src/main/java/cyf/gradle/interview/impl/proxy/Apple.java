@@ -1,4 +1,4 @@
-package cyf.gradle.interview.impl;
+package cyf.gradle.interview.impl.proxy;
 
 import lombok.extern.slf4j.Slf4j;
 
