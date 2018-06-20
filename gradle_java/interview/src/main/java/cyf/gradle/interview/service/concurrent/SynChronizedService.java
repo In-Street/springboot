@@ -6,13 +6,34 @@ package cyf.gradle.interview.service.concurrent;
  **/
 public class SynChronizedService {
 
-//    private int count = 3;
+    //    private int count = 3;
     private static int count = 3;
 
     private synchronized void handle() {
         count--;
         System.out.println(Thread.currentThread().getName() + "count:" + count);
     }
+
+    //=============================================================== Synchronized 的父子类继承 ======================================================================
+
+    static class SynSuper {
+        public int sum = 3;
+
+        public synchronized void handleSuper() {
+            sum--;
+            System.out.println(Thread.currentThread().getName() + "super - sum:" + sum);
+        }
+    }
+
+    static class SynSub extends SynSuper {
+        public synchronized void handleSub() {
+            while (sum > 0) {
+                System.out.println(Thread.currentThread().getName() + "sub - sum:" + sum);
+                handleSuper();
+            }
+        }
+    }
+
 
     public static void main(String[] args) {
         /**
@@ -43,5 +64,13 @@ public class SynChronizedService {
             new SynChronizedService().handle();
 //            synService.handle();
         }).start();
+
+       //父子类锁继承
+        SynSub synSub = new SynSub();
+        new Thread(() -> {
+            synSub.handleSub();
+        }).start();
+
     }
+
 }
