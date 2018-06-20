@@ -110,7 +110,7 @@ public class WaitNotifyDemo {
     public static void main(String[] args) throws InterruptedException {
 
         /**
-         * 结果：
+         * 模拟 BlockingQueue 阻塞队列 结果：
          * 初始化集合完成
          * ThreadA - wait begin:20:03:16
          * 消费元素:A
