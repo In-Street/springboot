@@ -1,12 +1,10 @@
 package cyf.gradle.interview.service.concurrent;
 
 import com.google.common.collect.Lists;
-import com.sun.org.apache.xalan.internal.xsltc.dom.SortingIterator;
 import org.apache.commons.lang3.time.FastDateFormat;
 
 import java.util.Date;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Objects;
 
 /**

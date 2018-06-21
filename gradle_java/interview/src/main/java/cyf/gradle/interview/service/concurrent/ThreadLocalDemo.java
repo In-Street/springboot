@@ -26,17 +26,18 @@ public class ThreadLocalDemo {
      * @param args
      */
     public static void main(String[] args) {
+        ThreadLocalDemo demo = new ThreadLocalDemo();
         new Thread(() -> {
 
             List<String> list = Lists.newArrayList("A", "B", "C");
-            ThreadLocalDemo demo = new ThreadLocalDemo();
+//            ThreadLocalDemo demo = new ThreadLocalDemo();
             demo.setThreadLocal(list);
             demo.getThreadLocal();
         }).start();
 
         new Thread(() -> {
             List<String> list = Lists.newArrayList("D", "E");
-            ThreadLocalDemo demo = new ThreadLocalDemo();
+//            ThreadLocalDemo demo = new ThreadLocalDemo();
             demo.setThreadLocal(list);
             demo.getThreadLocal();
         }).start();

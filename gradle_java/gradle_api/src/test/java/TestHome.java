@@ -226,12 +226,16 @@ public class TestHome {
     }
 
     @Test
-    public void stream_peek() {
-        String[] str = new String[]{"ab","c"};
-        Consumer<String> consumer = c -> c.toUpperCase();
-        Stream.of(str).peek(consumer).forEach(x->{});
-        System.out.println(str.toString());
-
+    public void bytes() {
+        //一个用户ID 8个字节，100万用户ID 7M
+        byte b = 8;
+        int i = 1000000 * 8 / 1024 / 1024;
+        int M = 1000000 << 3 >> 10 >> 10;
+        System.out.println(i + "========" + M);
     }
+
+
+
+
 
 }
