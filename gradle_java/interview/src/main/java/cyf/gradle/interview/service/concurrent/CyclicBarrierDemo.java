@@ -11,6 +11,7 @@ import java.util.concurrent.CyclicBarrier;
 public class CyclicBarrierDemo {
 
     /**
+     * 循环屏障
      * CyclicBarrier：多线程并发控制工具，让一组线程到达屏障时阻塞，直到最后一个线程到达，屏障开启，所有被拦截的线程才能继续干活。
      * @param args
      */
