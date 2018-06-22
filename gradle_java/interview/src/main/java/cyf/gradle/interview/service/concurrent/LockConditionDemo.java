@@ -19,12 +19,12 @@ public class LockConditionDemo {
         if (lock.tryLock()) {
                 System.out.println(Thread.currentThread().getName() + "await - begin");
             try {
-                condition.await();
-//                condition.await(20, TimeUnit.SECONDS);
+//                condition.await();
+                //最多等待3秒来等待唤醒获取锁，否则结束等待
+                condition.await(3000, TimeUnit.MILLISECONDS);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } finally {
-                System.out.println(Thread.currentThread().getName() + "await - unlock");
                 lock.unlock();
             }
             System.out.println(Thread.currentThread().getName() + "await - end");
@@ -34,8 +34,7 @@ public class LockConditionDemo {
 
     public void signalHandle(Condition condition) {
         if (lock.tryLock()) {
-//            condition.signal();
-           condition.signalAll();
+            condition.signal();
             System.out.println("通知发出");
             lock.unlock();
         }
@@ -43,15 +42,15 @@ public class LockConditionDemo {
 
     public static void main(String[] args) throws InterruptedException {
         LockConditionDemo demo = new LockConditionDemo();
-
+        Thread.sleep(500);
         new Thread(() -> {
             demo.awaitHandle(demo.conditionA);
         }, "Thread_1_conditionA").start();
-
+        Thread.sleep(500);
         new Thread(() -> {
             demo.awaitHandle(demo.conditionB);
         }, "Thread_2_conditionB").start();
-
+        Thread.sleep(500);
         new Thread(() -> {
             demo.awaitHandle(demo.conditionC);
         }, "Thread_3_conditionC").start();
@@ -66,10 +65,11 @@ public class LockConditionDemo {
             demo.signalHandle(demo.conditionB);
         }, "Thread_signal_conditionB").start();
 
-        Thread.sleep(500);
+        //没有唤醒conditionA，等待3秒后自动结束
+        /*Thread.sleep(500);
         new Thread(() -> {
             demo.signalHandle(demo.conditionA);
-        }, "Thread_signal_conditionA").start();
+        }, "Thread_signal_conditionA").start();*/
     }
 
 
