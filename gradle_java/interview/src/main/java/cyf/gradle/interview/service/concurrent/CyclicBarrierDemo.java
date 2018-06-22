@@ -47,7 +47,7 @@ public class CyclicBarrierDemo {
                 System.out.println("召唤");
             }
         });
-        //等待全部法师完成任务
+        //等待全部法师完成任务,法师到来 await 通知屏障已到，阻塞等待最后一个法师到来
         for (int i = 1; i <= 7; i++) {
             int finalI = i;
             new Thread(() -> {
