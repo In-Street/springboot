@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
  **/
 @Configuration
 @Slf4j
-public class GuavaExecutePool {
+public class GuavaCache {
 
     @Autowired
     private AsyncPoolConfig asyncPoolConfig;
