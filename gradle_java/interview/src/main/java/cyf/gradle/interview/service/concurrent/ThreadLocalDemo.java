@@ -25,7 +25,7 @@ public class ThreadLocalDemo {
      * 各个线程的ThreadLocal 独立不影响
      * @param args
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         ThreadLocalDemo demo = new ThreadLocalDemo();
         new Thread(() -> {
 
@@ -35,6 +35,7 @@ public class ThreadLocalDemo {
             demo.getThreadLocal();
         }).start();
 
+        Thread.sleep(1000);
         new Thread(() -> {
             List<String> list = Lists.newArrayList("D", "E");
 //            ThreadLocalDemo demo = new ThreadLocalDemo();
