@@ -1,4 +1,3 @@
-import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import cyf.gradle.api.Enums.UserTest;
 import org.apache.shiro.crypto.hash.Md5Hash;
@@ -23,7 +22,6 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 /**
  * @author Cheng Yufei
@@ -232,10 +230,23 @@ public class TestHome {
         int i = 1000000 * 8 / 1024 / 1024;
         int M = 1000000 << 3 >> 10 >> 10;
         System.out.println(i + "========" + M);
+
+        System.out.println(2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2);
+        System.out.println(Math.pow(2, 10));
+        System.out.println(Math.sqrt(8));
+
     }
 
-
-
+    @Test
+    public void t() {
+        int n = 1024;
+        int a=0;
+        while(n%2==0){
+            n=n/2;
+            a++;
+        }
+        System.out.println(a);
+    }
 
 
 }
