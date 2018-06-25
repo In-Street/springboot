@@ -1,7 +1,6 @@
 package cyf.gradle.interview.service.concurrent;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
+import cyf.gradle.interview.modle.User;
 
 import java.util.List;
 import java.util.Map;
@@ -17,7 +16,7 @@ public class ThreadLocalAdvanceDemo {
     private static ThreadLocal<Map<Integer,String>> threadLocal_3 = new ThreadLocal<>();
 
     public static void main(String[] args) throws InterruptedException {
-        Map<Integer, String> map = Maps.newHashMap();
+       /* Map<Integer, String> map = Maps.newHashMap();
         map.put(100, "Candice");
         new Thread(() -> {
             threadLocal_1.set("100");
@@ -29,7 +28,22 @@ public class ThreadLocalAdvanceDemo {
         new Thread(() -> {
             threadLocal_2.set(Lists.newArrayList("Candice","Cheng"));
             System.out.println(threadLocal_2.get());
-        }).start();
+        }).start();*/
+
+        User user = new User(1,"Taylor");
+       /* WeakReference<User> ref = new WeakReference<User>(user);
+        System.out.println(ref.get());*/
+        System.out.println(user);
+
+        user = null;
+        System.gc();
+        System.runFinalization();
+
+        System.out.println(user);
+
+
+
+
     }
 
 }
