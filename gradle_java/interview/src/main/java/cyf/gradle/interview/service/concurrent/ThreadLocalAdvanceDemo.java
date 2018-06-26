@@ -1,5 +1,7 @@
 package cyf.gradle.interview.service.concurrent;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import cyf.gradle.interview.modle.User;
 
 import java.lang.ref.WeakReference;
@@ -17,7 +19,11 @@ public class ThreadLocalAdvanceDemo {
     private static ThreadLocal<Map<Integer,String>> threadLocal_3 = new ThreadLocal<>();
 
     public static void main(String[] args) throws InterruptedException {
-       /* Map<Integer, String> map = Maps.newHashMap();
+
+        /**
+         * 一个线程存放多个ThreadLocal
+         */
+        Map<Integer, String> map = Maps.newHashMap();
         map.put(100, "Candice");
         new Thread(() -> {
             threadLocal_1.set("100");
@@ -29,7 +35,7 @@ public class ThreadLocalAdvanceDemo {
         new Thread(() -> {
             threadLocal_2.set(Lists.newArrayList("Candice","Cheng"));
             System.out.println(threadLocal_2.get());
-        }).start();*/
+        }).start();
 
 
         System.out.println("====================================== 引用 ======================================");
