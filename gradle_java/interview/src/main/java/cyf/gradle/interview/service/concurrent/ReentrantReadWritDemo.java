@@ -15,6 +15,8 @@ public class ReentrantReadWritDemo {
 
         try {
             readWriteLock.readLock().lock();
+//            读锁不允许获取Condition、写锁可以
+//            Condition condition = readWriteLock.readLock().newCondition();
             System.out.println(Thread.currentThread().getName() + "获取读锁" + System.currentTimeMillis());
             Thread.sleep(5000);
         } catch (InterruptedException e) {
