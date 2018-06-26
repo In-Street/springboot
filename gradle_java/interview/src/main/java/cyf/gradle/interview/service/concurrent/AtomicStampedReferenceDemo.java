@@ -1,5 +1,6 @@
 package cyf.gradle.interview.service.concurrent;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicStampedReference;
 
 /**
@@ -12,6 +13,8 @@ import java.util.concurrent.atomic.AtomicStampedReference;
 public class AtomicStampedReferenceDemo {
 
     public static AtomicStampedReference<Integer> atomic = new AtomicStampedReference(18, 0);
+
+    public static AtomicInteger integer = new AtomicInteger(1);
 
     public static void main(String[] args) {
 
@@ -62,6 +65,13 @@ public class AtomicStampedReferenceDemo {
                 }
             }
         }*/
+
+        for (int i = 0; i < 50; i++) {
+            new Thread(()->{
+                System.out.println(integer.getAndIncrement());
+            }).start();
+        }
+
 
     }
 }
