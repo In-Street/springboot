@@ -11,6 +11,8 @@ dependencies{
 
     compile group: 'org.json', name: 'json', version: '20160810'
     compile group: 'com.vdurmont', name: 'emoji-java', version: '4.0.0'
+    compile group: 'net.coobird', name: 'thumbnailator', version: '0.4.8'
+    compile group: 'com.github.hui.media', name: 'image-plugin', version: '1.0'
 
     compile project(':gradle_dao')
     compile project(':gradle_util')
