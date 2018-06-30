@@ -1,19 +1,27 @@
 package cyf.gradle.interview.service.concurrent;
 
+import org.springframework.stereotype.Service;
+
 /**
  * @author Cheng Yufei
  * @create 2018-06-19 20:30
  **/
+@Service
 public class SynChronizedService {
 
-    //    private int count = 3;
-    private static int count = 3;
+        private volatile int count = 3;
+//    private static int count = 3;
 
-    private synchronized void handle() {
+    public synchronized void handle() {
         count--;
         System.out.println(Thread.currentThread().getName() + "count:" + count);
     }
 
+
+    public  void hand() {
+        count--;
+        System.out.println(Thread.currentThread().getName() + "count:" + count);
+    }
     //=============================================================== Synchronized 的父子类继承 ======================================================================
 
     static class SynSuper {
@@ -47,29 +55,29 @@ public class SynChronizedService {
 
         new Thread(()->{
             new SynChronizedService().handle();
-//            synService.handle();
+//            synService.handleV();
         }).start();
 
         new Thread(()->{
             new SynChronizedService().handle();
-//            synService.handle();
+//            synService.handleV();
         }).start();
 
         new Thread(()->{
             new SynChronizedService().handle();
-//            synService.handle();
+//            synService.handleV();
         }).start();
 
         new Thread(()->{
             new SynChronizedService().handle();
-//            synService.handle();
+//            synService.handleV();
         }).start();
 
        //父子类锁继承
-        SynSub synSub = new SynSub();
+       /* SynSub synSub = new SynSub();
         new Thread(() -> {
             synSub.handleSub();
-        }).start();
+        }).start();*/
 
     }
 
