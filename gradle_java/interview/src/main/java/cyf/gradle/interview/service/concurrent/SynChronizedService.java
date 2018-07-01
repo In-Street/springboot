@@ -10,14 +10,19 @@ import org.springframework.stereotype.Service;
 public class SynChronizedService {
 
         private volatile int count = 3;
-//    private static int count = 3;
+    private static int countSyn = 3;
 
+    /**
+     * 保证共享变量的一致性间接保证可见性
+     */
     public synchronized void handle() {
-        count--;
-        System.out.println(Thread.currentThread().getName() + "count:" + count);
+        countSyn--;
+        System.out.println(Thread.currentThread().getName() + "count:" + countSyn);
     }
 
-
+    /**
+     * volatile 不能保证操作的原子性，只能保证多线程间的可见性(jmeter测试)
+     */
     public  void hand() {
         count--;
         System.out.println(Thread.currentThread().getName() + "count:" + count);

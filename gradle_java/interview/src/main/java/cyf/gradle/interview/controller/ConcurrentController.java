@@ -1,13 +1,13 @@
 package cyf.gradle.interview.controller;
 
+import cyf.gradle.interview.service.concurrent.SingleEnumDemo;
 import cyf.gradle.interview.service.concurrent.SynChronizedService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @author Cheng Yufei
@@ -31,6 +31,9 @@ public class ConcurrentController {
          *
          */
         synChronizedService.hand();
+
+        List list = SingleEnumDemo.INSTANCE.getList();
+        System.out.println(list);
     }
 
 
