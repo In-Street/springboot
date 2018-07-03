@@ -1,8 +1,4 @@
 dependencies {
     compile project(':gradle_util')
     compile project(':gralde_base')
-
-
-
-    compile group: 'cn.hutool', name: 'hutool-all', version: '4.1.1'
 }

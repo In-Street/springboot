@@ -1,5 +1,6 @@
 package cyf.gradle.api.service;
 
+import com.github.hui.quick.plugin.base.GraphicUtil;
 import com.github.hui.quick.plugin.image.wrapper.create.ImgCreateOptions;
 import com.github.hui.quick.plugin.image.wrapper.merge.ImgMergeWrapper;
 import com.github.hui.quick.plugin.image.wrapper.merge.cell.IMergeCell;
@@ -10,6 +11,7 @@ import com.google.common.collect.Lists;
 import javax.imageio.ImageIO;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -24,11 +26,10 @@ import java.util.stream.IntStream;
  * @author Cheng Yufei
  * @create 2018-06-27 10:20
  **/
-public class Thumb {
+public class Thumb_2 {
 
 
     public static void main(String[] args) throws IOException {
-
         int width = 800;
         int gap = 50;
         String pre = "D:/YUFEI/work/daishu/文档/等等/图片/图片/";
@@ -39,6 +40,8 @@ public class Thumb {
         BufferedImage avatar = ImageIO.read(new File(pre + "头像" + endImg));
         BufferedImage headerBorder = ImageIO.read(new File(pre + "头部边框" + endImg));
         BufferedImage bottomBorder = ImageIO.read(new File(pre + "底部边框" + endImg));
+        BufferedImage leftBorder = ImageIO.read(new File(pre + "左侧边框" + endImg));
+        BufferedImage rightBorder = ImageIO.read(new File(pre + "右侧边框" + endImg));
 
         List<BufferedImage> first = Lists.newArrayList(ImageIO.read(new File(pre + "小标签1" + endImg)), ImageIO.read(new File(pre + "小标签2" + endImg)), ImageIO.read(new File(pre + "小标签3" + endImg)));
 
@@ -46,98 +49,99 @@ public class Thumb {
 
         List<IMergeCell> list = new ArrayList<>();
 
-        ArrayList<BufferedImage> header = Lists.newArrayList(logo, avatar);
-        final int[] y_header = {0};
-        List<ImgCell> headerCells = IntStream.rangeClosed(0, header.size() - 1).mapToObj(i -> {
-            BufferedImage image = header.get(i);
+//        first.add(0, headerBorder);
+        first.add(0, logo);
+        first.add(1, avatar);
+//        final int[] y = {logo.getHeight() + avatar.getHeight() + 10};
+        final int[] y = {0};
+        List<ImgCell> firstImgCells = IntStream.rangeClosed(0, first.size() - 1).mapToObj(i -> {
+            BufferedImage image = first.get(i);
             ImgCell cell;
-            if (i == 1) {
+            if (i == 0) {
                 cell = ImgCell.builder()
                         .img(image)
-                        .x((width - image.getWidth()) / 2)
-                        .y(logo.getHeight() / 2)
+                        .x((800 - image.getWidth()) / 2)
+                        .y(y[0])
                         .build();
+                y[0] += image.getHeight() + gap;
             } else {
                 cell = ImgCell.builder()
                         .img(image)
                         .x((800 - image.getWidth()) / 2)
-                        .y(y_header[0])
+                        .y(y[0])
                         .build();
-                y_header[0] += image.getHeight() + gap;
+                y[0] += image.getHeight() + gap;
             }
             return cell;
         }).collect(Collectors.toList());
-        list.addAll(headerCells);
 
-        TextCell nicknameCell = new TextCell();
-        nicknameCell.setFont(new Font("微软雅黑", Font.BOLD, 30));
-        nicknameCell.setColor(Color.red);
-        nicknameCell.setStartX((width - logo.getWidth()) / 2);
-        nicknameCell.setStartY(y_header[0] + gap * 2);
-        nicknameCell.setEndX((width - logo.getWidth()) / 2 + logo.getWidth());
-        nicknameCell.setEndY(y_header[0] + gap);
-        nicknameCell.addText("文本文本文本文本文本的LoveIn印象标签");
-        nicknameCell.setDrawStyle(ImgCreateOptions.DrawStyle.HORIZONTAL);
-        nicknameCell.setAlignStyle(ImgCreateOptions.AlignStyle.CENTER);
-        list.add(nicknameCell);
-
-        final int[] y_f = {y_header[0] + gap * 3};
-        List<ImgCell> firstImgCells = IntStream.rangeClosed(0, first.size() - 1).mapToObj(i -> {
-            BufferedImage image = first.get(i);
-            ImgCell cell = ImgCell.builder()
-                    .img(image)
-                    .x((800 - image.getWidth()) / 2)
-                    .y(y_f[0])
-                    .build();
-            y_f[0] += image.getHeight();
-            return cell;
-        }).collect(Collectors.toList());
         list.addAll(firstImgCells);
 
         TextCell textCell = new TextCell();
-        textCell.setFont(new Font("微软雅黑", Font.BOLD, 22));
+        textCell.setFont(new Font("宋体", Font.BOLD, 22));
         textCell.setColor(Color.BLACK);
-        textCell.setStartX((width - logo.getWidth()) / 2);
-        textCell.setStartY(y_f[0] + gap);
-        textCell.setEndX((width - logo.getWidth()) / 2 + logo.getWidth());
-        textCell.setEndY(y_f[0] + gap + 150);
+        textCell.setStartX((width - headerBorder.getWidth()) / 2);
+        textCell.setStartY(y[0] + gap);
+        textCell.setEndX((width - headerBorder.getWidth()) / 2 + headerBorder.getWidth());
+        textCell.setEndY(y[0] + gap + 150);
         textCell.addText("文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本");
         textCell.setDrawStyle(ImgCreateOptions.DrawStyle.HORIZONTAL);
         textCell.setAlignStyle(ImgCreateOptions.AlignStyle.CENTER);
+
         list.add(textCell);
 
+
         TextCell text = new TextCell();
-        text.setFont(new Font("微软雅黑", Font.BOLD, 22));
+        text.setFont(new Font("宋体", Font.BOLD, 22));
         text.setColor(Color.BLACK);
-        text.setStartX((width - logo.getWidth()) / 2);
+        text.setStartX((width - headerBorder.getWidth()) / 2);
         text.setStartY(textCell.getEndY() + gap);
-        text.setEndX((width - logo.getWidth()) / 2 + logo.getWidth());
+        text.setEndX((width - headerBorder.getWidth()) / 2 + headerBorder.getWidth());
         text.setEndY(textCell.getEndY() + 150);
         text.addText("文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本");
         text.setDrawStyle(ImgCreateOptions.DrawStyle.HORIZONTAL);
         text.setAlignStyle(ImgCreateOptions.AlignStyle.CENTER);
+
         list.add(text);
 
-        final int[] y_c = {y_f[0] + gap + 300 + 80};
+
+        final int[] y_c = {text.getEndY() + 80};
         content.add(end);
 //        content.add(bottomBorder);
         List<ImgCell> contentImgCells = IntStream.rangeClosed(0, content.size() - 1).mapToObj(i -> {
             BufferedImage image = content.get(i);
-            ImgCell cell = ImgCell.builder()
-                    .img(image)
-                    .x((800 - image.getWidth()) / 2)
-                    .y(y_c[0])
-                    .build();
-            y_c[0] += image.getHeight();
+            ImgCell cell;
+            if (i == 0) {
+                cell = ImgCell.builder()
+                        .img(image)
+                        .x((800 - image.getWidth()) / 2)
+                        .y(y_c[0])
+                        .build();
+                y_c[0] += image.getHeight() + gap;
+            } else {
+                cell = ImgCell.builder()
+                        .img(image)
+                        .x((800 - image.getWidth()) / 2)
+                        .y(y_c[0])
+                        .build();
+                y_c[0] += image.getHeight() + gap;
+            }
             return cell;
         }).collect(Collectors.toList());
         list.addAll(contentImgCells);
 
         int hight = y_c[0];
-        BufferedImage ans = ImgMergeWrapper.merge(list,
+      /*  BufferedImage ans = ImgMergeWrapper.merge(list,
                 width,
                 hight, Color.white);
+        ImageIO.write(ans, "png", new File("D:/EE.png"));*/
 
-        ImageIO.write(ans, "png", new File("D:/DD.png"));
+        BufferedImage bg = new BufferedImage(width, hight, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2d = GraphicUtil.getG2d(bg);
+        g2d.setColor(Color.orange);
+        g2d.fillRect(0, 0, width, hight);
+
+        list.stream().forEach(s -> s.draw(g2d));
+        ImageIO.write(bg, "png", new File("D:/FF.png"));
     }
 }
