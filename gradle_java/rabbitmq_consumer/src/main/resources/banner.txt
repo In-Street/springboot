@@ -7,4 +7,4 @@
                                                  | |
                                                  |_|
 
-${AnsiColor.GREEN}:: gradle_rabbitmq :: ${application.formatted-version}${AnsiColor.BRIGHT_CYAN}
+${AnsiColor.GREEN}:: rabbitmq :: ${application.formatted-version}${AnsiColor.BRIGHT_CYAN}
