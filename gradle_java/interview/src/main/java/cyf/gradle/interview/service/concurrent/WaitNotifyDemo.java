@@ -108,6 +108,12 @@ public class WaitNotifyDemo {
     public static void main(String[] args) throws InterruptedException {
 
         /**
+         * wait() 之后会立即释放锁，停止执行，直到获取锁之后再执行后边代码
+         * notify() 之后不会立即释放锁，而是执行完代码之后才释放(ThreadA - ThreadB 例子)
+         */
+
+
+        /**
          * 模拟 BlockingQueue 阻塞队列 结果：
          * 初始化集合完成
          * ThreadA - wait begin:20:03:16
