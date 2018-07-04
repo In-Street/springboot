@@ -1,8 +1,0 @@
-   ______   _____
-  |  ____| / ____|
-  | |__   | (___
-  |  __|   \___ \
-  | |____  ____) |
-  |______||_____/
-
-${AnsiColor.GREEN}:: gradle_search :: ${application.formatted-version}${AnsiColor.BRIGHT_CYAN}

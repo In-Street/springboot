@@ -9,8 +9,8 @@
 *.settings
 *.project
 .gradle/
-gradle_util/out/
-gralde_base/out/
+util/out/
+base/out/
 rabbitmq_consumer/out/
 /.idea/
-/gradle_api/src/main/resources/META-INF/
+/api/src/main/resources/META-INF/
