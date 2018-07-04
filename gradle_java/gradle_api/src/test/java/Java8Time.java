@@ -54,7 +54,7 @@ public class Java8Time {
         TemporalAccessor parse = pattern.parse("2018-07-02 12:12:12");
         LocalDateTime from = LocalDateTime.from(parse);
 
-        ZoneId.systemDefault().getId();
+        //LocalDate 转 Date
         Date date = Date.from(from.atZone(ZoneId.systemDefault()).toInstant());
         System.out.println(date);
 
@@ -68,7 +68,7 @@ public class Java8Time {
         long between = ChronoUnit.DAYS.between(from, time);
         long between1 = ChronoUnit.MINUTES.between(from, time);
         long between2 = ChronoUnit.WEEKS.between(from, time);
-        System.out.println("相差：" + between + "-----" + between1+ "-----" + between2);
+        System.out.println("相差：" + between + "-----" + between1 + "-----" + between2);
 
 
         //Instant 与 Date 转换
@@ -76,6 +76,11 @@ public class Java8Time {
         System.out.println("Instant.now:" + now);
         Date date1 = Date.from(now);
         System.out.println(date1);
+
+        //Date 转 LocalDate
+        Date date2 = new Date();
+        LocalDate localDate1 = LocalDate.from(date2.toInstant().atZone(ZoneId.systemDefault()));
+        System.out.println(localDate1.getYear()+"    "+localDate1.getMonthValue()+"      "+localDate1.getDayOfMonth());
 
     }
 }
