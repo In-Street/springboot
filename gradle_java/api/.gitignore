@@ -1,0 +1,10 @@
+/bin/
+/.classpath
+/.project
+/.idea
+/org.springsource.ide.eclipse.gradle.core.prefs
+/org.springsource.ide.eclipse.gradle.refresh.prefs
+/.settings/
+/src/main/resources/META-INF/
+/build/
+/out/

@@ -1,0 +1,8 @@
+/*bootRepackage {
+    mainClass = "cyf.gradle.newredis.NewRedisApplication"
+
+}*/
+dependencies{
+    compile group: 'com.alibaba', name: 'fastjson', version: '1.2.38'
+
+}

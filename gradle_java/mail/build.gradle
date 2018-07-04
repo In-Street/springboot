@@ -1,0 +1,8 @@
+/*
+bootRepackage {
+    mainClass = 'cyf.gradle.mail.MailApplication'
+}*/
+dependencies{
+    compile project(':util')
+    compile project(':base')
+}

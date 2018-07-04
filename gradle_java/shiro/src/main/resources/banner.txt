@@ -1,0 +1,10 @@
+       _      _
+      | |    (_)
+  ___ | |__   _  _ __  ___
+ / __|| '_ \ | || '__|/ _ \
+ \__ \| | | || || |  | (_) |
+ |___/|_| |_||_||_|   \___/
+
+
+
+${AnsiColor.GREEN}:: shiro :: ${application.formatted-version}${AnsiColor.BRIGHT_CYAN}

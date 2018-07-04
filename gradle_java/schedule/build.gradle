@@ -1,0 +1,8 @@
+/*
+bootRepackage {
+    mainClass = 'cyf.gradle.schedule.ScheduleApplication'
+}*/
+dependencies{
+    compile project(':util')
+    compile project(':base')
+}
