@@ -196,7 +196,7 @@ public class Study_guava {
         Stream.empty();
         String[] strings = new String[]{"cyf", "taylor"};
         Object[] objects = Stream.of(strings).map(s -> s.toUpperCase()).toArray();
-        for (Object object : objects) {
+        for (Object object: objects) {
             System.out.println(object);
         }
 
@@ -513,6 +513,14 @@ public class Study_guava {
         System.out.println(contains);
 
 
+    }
+
+    @Test
+    public void cycle() {
+        List<Integer> list = Ints.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        //打乱顺序
+        Collections.shuffle(list);
+        System.out.println(list);
     }
 
 

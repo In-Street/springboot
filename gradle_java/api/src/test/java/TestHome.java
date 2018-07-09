@@ -1,3 +1,4 @@
+import cn.hutool.core.util.RandomUtil;
 import com.google.common.collect.Maps;
 import cyf.gradle.api.Enums.UserTest;
 import org.apache.shiro.crypto.hash.Md5Hash;
@@ -240,12 +241,19 @@ public class TestHome {
     @Test
     public void t() {
         int n = 1024;
-        int a=0;
-        while(n%2==0){
-            n=n/2;
+        int a = 0;
+        while (n % 2 == 0) {
+            n = n / 2;
             a++;
         }
         System.out.println(a);
+    }
+
+    @Test
+    public void rendom() {
+        String s = RandomUtil.randomStringUpper(6);
+        System.out.println(s);
+
     }
 
 

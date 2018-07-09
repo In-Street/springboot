@@ -25,6 +25,7 @@ public class AsyncService {
      *
      *
      *   异步方法失效情况：方法使用 static修饰 ；本类中调用 ；与同步相比节省大量时间
+     *   如果在本类中使用@Async 需用代理调用，否则异步不生效
      *
      *
      * @return
