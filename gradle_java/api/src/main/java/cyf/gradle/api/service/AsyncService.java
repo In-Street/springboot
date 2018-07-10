@@ -30,7 +30,7 @@ public class AsyncService {
      *
      *   Bean with name ‘xxxService’ has been injected into other beans [xxxService] in its raw version as part of a circular reference, but has eventually been wrapped. This means that said other beans do not use the final version of the bean. This is often the result of over-eager type matching – consider using ‘getBeanNamesOfType’ with the ‘allowEagerInit’ flag turned off, for example.
      *
-     *   解决：在某一个重复调用的地方加:  @Autowired 两者共同使用
+     *   解决：在某一个重复调用的地方加:  @Autowired 两者共同使用，采用懒加载
      *                               @Lazy
      *
      *
