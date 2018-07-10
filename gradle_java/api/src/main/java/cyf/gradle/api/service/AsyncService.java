@@ -24,8 +24,14 @@ public class AsyncService {
      *   使用Future<T>来返回异步调用的结果 （task1.isDone()）
      *
      *
-     *   异步方法失效情况：方法使用 static修饰 ；本类中调用 ；与同步相比节省大量时间
-     *   如果在本类中使用@Async 需用代理调用，否则异步不生效
+     *   1.异步方法失效情况：方法使用 static修饰 ；本类中调用 ；与同步相比节省大量时间
+     *   2.如果在本类中使用@Async 需用代理调用，否则异步不生效;
+     *   3.多个Service 存在循环 @Autowired 时，加载A 时，有注入B ，加载B时，发现有A的注入，A中有@Async 需要代理，此时A已经被Spring代理，报错：
+     *
+     *   Bean with name ‘xxxService’ has been injected into other beans [xxxService] in its raw version as part of a circular reference, but has eventually been wrapped. This means that said other beans do not use the final version of the bean. This is often the result of over-eager type matching – consider using ‘getBeanNamesOfType’ with the ‘allowEagerInit’ flag turned off, for example.
+     *
+     *   解决：在某一个重复调用的地方加:  @Autowired 两者共同使用
+     *                               @Lazy
      *
      *
      * @return
