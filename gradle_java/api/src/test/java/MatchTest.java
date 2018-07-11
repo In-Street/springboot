@@ -21,10 +21,8 @@ public class MatchTest {
      *          {x,y} :前面的内容至少出现x次，最多出现y次
      *          * 与{0,} 效果相同
      *          + 与{1,} 效果相同
-     *          ? 与 {0,1} 效果想通过
+     *          ? 与 {0,1} 效果相同
      */
-
-
     @Test
     public void Pattern() {
         //至少3位字符串：字母开头至少1位，以2位数字结尾
@@ -33,22 +31,22 @@ public class MatchTest {
         System.out.println(matches);
 
         //6开头6结尾中间4位：
-        String str_1 = "6r12r6";
+        String str_1 = "6r12r6"; //true
         boolean matches_1 = Pattern.matches("^6[a-z0-9]{4}6$", str_1);
         System.out.println(matches_1);
 
         //1位字母或数字
-        String str_2 = "q";
+        String str_2 = "q"; //true
         boolean matches_2 = Pattern.matches("^[a-z0-9]$", str_2);
         System.out.println(matches_2);
 
         //2位字母开头数字结尾
-        String str_3 = "w24"; //fasle
+        String str_3 = "w24"; //false
         boolean matches_3 = Pattern.matches("^[a-z][0-9]$", str_3);
         System.out.println(matches_3);
 
         //2 位非字母开头数字结尾
-        String str_4 = "#3";
+        String str_4 = "#3"; //true
         boolean matches_4 = Pattern.matches("^[^a-z][0-9]$", str_4);
         System.out.println(matches_4);
 
