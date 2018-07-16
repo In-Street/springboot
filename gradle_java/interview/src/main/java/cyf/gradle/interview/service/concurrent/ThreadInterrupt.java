@@ -6,7 +6,7 @@ package cyf.gradle.interview.service.concurrent;
  * @author Cheng Yufei
  * @create 2018-07-14 下午4:56
  **/
-public class ThreadBasicOperation {
+public class ThreadInterrupt {
 
     static class MyThread extends Thread {
 
