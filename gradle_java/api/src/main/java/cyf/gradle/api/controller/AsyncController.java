@@ -53,7 +53,8 @@ public class AsyncController {
      *  同步(4012ms) 、异步(2050ms)耗时比较
      * @throws InterruptedException
      */
-    @GetMapping("/sync")
+//    @GetMapping("/sync")
+    @RequestMapping("/sync")
     public void synchronization() throws InterruptedException {
         long start = System.currentTimeMillis();
         userService.doTask1();

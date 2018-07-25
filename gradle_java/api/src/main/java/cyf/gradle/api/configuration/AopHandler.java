@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -33,8 +34,9 @@ public class AopHandler {
      * @return Object
      * @throws Throwable  Throwable
      */
-    @Around("@annotation(requestMapping)")
-    public Object printMethodsExecutionTime(ProceedingJoinPoint pjp, RequestMapping requestMapping) throws Throwable {
+//    @Around("@annotation(requestMapping)")
+    @Around("service()")
+    public Object printMethodsExecutionTime(ProceedingJoinPoint pjp/*, RequestMapping requestMapping*/) throws Throwable {
         long start = System.currentTimeMillis();
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
@@ -69,5 +71,10 @@ public class AopHandler {
         return result;
     }
 
+    //监控Controller指定注解形式，RequestMapping注解不切入
+    @Pointcut("execution(* cyf.gradle.api.controller.*Controller.*(..)) && @annotation(org.springframework.web.bind.annotation.GetMapping)")
+    public void service() {
+        System.out.println("进入Pointcut");
+    }
 
 }
