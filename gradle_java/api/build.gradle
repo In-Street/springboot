@@ -13,6 +13,8 @@ dependencies{
     compile group: 'com.vdurmont', name: 'emoji-java', version: '4.0.0'
     compile group: 'net.coobird', name: 'thumbnailator', version: '0.4.8'
     compile group: 'com.github.hui.media', name: 'image-plugin', version: '1.0'
+    compile group: 'com.netflix.hystrix', name: 'hystrix-core', version: '1.5.12'
+
 
     compile project(':dao')
     compile project(':util')
