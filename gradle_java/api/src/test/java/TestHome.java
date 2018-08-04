@@ -1,6 +1,8 @@
 import cn.hutool.core.util.RandomUtil;
 import com.google.common.collect.Maps;
 import cyf.gradle.api.Enums.UserTest;
+import cyf.gradle.api.service.CommandOrder;
+import cyf.gradle.api.service.CommandUser;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
@@ -254,6 +256,19 @@ public class TestHome {
         String s = RandomUtil.randomStringUpper(6);
         System.out.println(s);
 
+    }
+
+    @Test
+    public void command() {
+        CommandOrder order = new CommandOrder("Order");
+        CommandUser user = new CommandUser("User");
+
+
+        String orderExecute = order.execute();
+        System.out.println("order-execute -" + orderExecute);
+
+        String userExecute = user.execute();
+        System.out.println("user-execute - " + userExecute);
     }
 
 

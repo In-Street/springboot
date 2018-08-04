@@ -20,7 +20,7 @@ import javax.servlet.MultipartConfigElement;
  */
 //@EnableCaching
 @SpringBootApplication(
-        scanBasePackages = {"cyf.gradle.api", "cyf.gradle.dao"},exclude={MongoAutoConfiguration.class,MongoDataAutoConfiguration.class}
+        scanBasePackages = {"cyf.gradle.api","cyf.gradle.dao"},exclude={MongoAutoConfiguration.class,MongoDataAutoConfiguration.class}
 )
 
 //排除mongo自动配置 或者在 @SpringBootApplication 中排除，否则即使 把dao层的mongo配置注释也会自动加载 localhost：27017的配置
