@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * HystrixCommand 实现线程池的隔离使用，多个线程池针对多个业务，避免一个业务占满线程池导致其他业务无法实施
+ *
  * @author Cheng Yufei
  * @create 2018-08-02 17:11
  **/
