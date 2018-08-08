@@ -9,7 +9,7 @@ import java.util.List;
  * @create 2018-07-01 上午10:27
  **/
 public enum SingleEnumDemo {
-
+//
     INSTANCE;
 
     private List integers;

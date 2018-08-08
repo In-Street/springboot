@@ -30,7 +30,7 @@ public class CommandOrder extends HystrixCommand<String> {
                         .withMaxQueueSize(6)
                         .withKeepAliveTimeMinutes(5)
                         .withQueueSizeRejectionThreshold(50))
-
+        //隔离配置
         .andCommandPropertiesDefaults(HystrixCommandProperties.Setter()
         .withExecutionIsolationStrategy(HystrixCommandProperties.ExecutionIsolationStrategy.THREAD))
         );
@@ -41,7 +41,23 @@ public class CommandOrder extends HystrixCommand<String> {
     @Override
     protected String run() throws Exception {
         TimeUnit.MILLISECONDS.sleep(100);
-        log.debug(Thread.currentThread().getName());
+//        log.debug(Thread.currentThread().getName());
+//        throw new Exception("");
         return "order: " + orderName;
+    }
+
+    /**
+     *
+     * 熔断降级方法：
+     *
+     * 熔断：默认情况下，如果run方法在运行期间，10秒总请求数超过20个，且有50%以上的请求发生异常，Hystrix内部会自动发生熔断，并且执行getFallback方法。
+     *
+     * 恢复：默认情况下，如果发生了熔断，Hystrix内部每隔5s进行一次试探，即放过一个正常请求到后端服务，如果这个请求成功了，就算后端服务恢复了，Hystrix内部会自动关闭熔断。
+     *
+     * @return
+     */
+    @Override
+    protected String getFallback() {
+        return "---------订单模块降级处理：" + orderName + "---------";
     }
 }

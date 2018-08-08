@@ -2,15 +2,12 @@ package cyf.gradle.api.controller;
 
 import cyf.gradle.api.service.CommandOrder;
 import cyf.gradle.api.service.CommandUser;
-import cyf.gradle.api.service.GuavaCacheService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 /**
  * @author Cheng Yufei
@@ -23,12 +20,17 @@ public class CommandController {
 
 
     @GetMapping("/get")
-    public String get() {
+    public String get()  {
         CommandOrder order = new CommandOrder("Order");
+        CommandOrder order_2 = new CommandOrder("Order_2");
         CommandUser user = new CommandUser("User");
         CommandUser user_2 = new CommandUser("Taylor");
+        CommandUser user_3 = new CommandUser("Swift");
 
-
+        /**
+         * execute() 实现run方法同步
+         * queue() 实现run 方法的异步执行
+         */
         String orderExecute = order.execute();
         log.debug("order-execute {}", orderExecute);
 
@@ -36,8 +38,12 @@ public class CommandController {
         log.debug("user-execute {}", userExecute);
 
         String user_2Execute = user_2.execute();
-        log.debug("user-execute {}", user_2Execute);
+        log.debug("user_2-execute {}", user_2Execute);
 
+        Future<String> queue = user_3.queue();
+
+        String order_2Execute = order_2.execute();
+        log.debug("order_2-execute {}", order_2Execute);
         return "";
     }
 }

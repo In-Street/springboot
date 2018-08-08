@@ -26,16 +26,24 @@ public class CommandUser extends HystrixCommand<String> {
                         .withMaxQueueSize(6)
                         .withKeepAliveTimeMinutes(5)
                         .withQueueSizeRejectionThreshold(50))
-
+                //线程池隔离配置（CommandOrder业务、CommandUser业务进行线程池隔离，避免一个业务把线程池沾满）
                 .andCommandPropertiesDefaults(HystrixCommandProperties.Setter()
-                        .withExecutionIsolationStrategy(HystrixCommandProperties.ExecutionIsolationStrategy.THREAD)));
+                        .withExecutionIsolationStrategy(HystrixCommandProperties.ExecutionIsolationStrategy.THREAD)
+                        //设置超时时间
+                        .withExecutionTimeoutInMilliseconds(500)));
         this.userName = userName;
     }
 
     @Override
     protected String run() throws Exception {
-        TimeUnit.MILLISECONDS.sleep(100);
-        log.debug(Thread.currentThread().getName());
+        TimeUnit.MILLISECONDS.sleep(400);
+//        log.debug(Thread.currentThread().getName());
+        System.out.println("username: " + userName);
         return "username: " + userName;
+    }
+
+    @Override
+    protected String getFallback() {
+        return "---------用户模块降级处理：" + userName + "---------";
     }
 }
