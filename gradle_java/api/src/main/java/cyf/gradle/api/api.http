@@ -1,5 +1,5 @@
 ### 线程池隔离 执行
-GET {{url}}/command/get
+GET {{url}}/command/get_2?username=english
 Accept: */*
 Cache-Control: no-cache
 

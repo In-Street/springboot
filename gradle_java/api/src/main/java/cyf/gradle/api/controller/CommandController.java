@@ -2,9 +2,12 @@ package cyf.gradle.api.controller;
 
 import cyf.gradle.api.service.CommandOrder;
 import cyf.gradle.api.service.CommandUser;
+import cyf.gradle.api.service.CommandUserForAnnotation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.concurrent.Future;
@@ -18,6 +21,8 @@ import java.util.concurrent.Future;
 @Slf4j
 public class CommandController {
 
+    @Autowired
+    private CommandUserForAnnotation commandUserForAnnotation;
 
     @GetMapping("/get")
     public String get()  {
@@ -45,5 +50,10 @@ public class CommandController {
         String order_2Execute = order_2.execute();
         log.debug("order_2-execute {}", order_2Execute);
         return "";
+    }
+
+    @GetMapping("/get_2")
+    public String get_2(@RequestParam String username) throws Exception {
+       return commandUserForAnnotation.run(username);
     }
 }

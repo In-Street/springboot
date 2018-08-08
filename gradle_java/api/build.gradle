@@ -6,7 +6,11 @@ dependencies{
 //    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.2.2'
     compile group: 'com.github.xiaoymin', name: 'swagger-bootstrap-ui', version: '1.6'
 
+    //HystrixCommand 使用业务线程池隔离及熔断降级
     compile group: 'com.netflix.hystrix', name: 'hystrix-core', version: '1.5.12'
+    //HystrixCommand注解版
+    compile group: 'com.netflix.hystrix', name: 'hystrix-javanica', version: '1.5.12'
+
     compile group: 'org.json', name: 'json', version: '20160810'
     compile group: 'com.vdurmont', name: 'emoji-java', version: '4.0.0'
     compile group: 'net.coobird', name: 'thumbnailator', version: '0.4.8'
