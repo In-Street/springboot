@@ -40,7 +40,7 @@ public class CommandOrder extends HystrixCommand<String> {
 
     @Override
     protected String run() throws Exception {
-        TimeUnit.MILLISECONDS.sleep(100);
+//        TimeUnit.MILLISECONDS.sleep(100);
 //        log.debug(Thread.currentThread().getName());
 //        throw new Exception("");
         return "order: " + orderName;

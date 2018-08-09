@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Cheng Yufei
@@ -25,7 +26,7 @@ public class CommandController {
     private CommandUserForAnnotation commandUserForAnnotation;
 
     @GetMapping("/get")
-    public String get()  {
+    public String get() {
         CommandOrder order = new CommandOrder("Order");
         CommandOrder order_2 = new CommandOrder("Order_2");
         CommandUser user = new CommandUser("User");
@@ -36,14 +37,14 @@ public class CommandController {
          * execute() 实现run方法同步
          * queue() 实现run 方法的异步执行
          */
-        String orderExecute = order.execute();
+       /* String orderExecute = order.execute();
         log.debug("order-execute {}", orderExecute);
 
         String userExecute = user.execute();
         log.debug("user-execute {}", userExecute);
 
         String user_2Execute = user_2.execute();
-        log.debug("user_2-execute {}", user_2Execute);
+        log.debug("user_2-execute {}", user_2Execute);*/
 
         Future<String> queue = user_3.queue();
 
@@ -52,8 +53,17 @@ public class CommandController {
         return "";
     }
 
+    /**
+     * 注解形式实现异步及熔断降级
+     * @param username
+     * @param orderName
+     * @return
+     * @throws Exception
+     */
     @GetMapping("/get_2")
-    public String get_2(@RequestParam String username) throws Exception {
-       return commandUserForAnnotation.run(username);
+    public String get_2(@RequestParam String username, @RequestParam String orderName) throws Exception {
+        commandUserForAnnotation.async(orderName);
+        String run = commandUserForAnnotation.run(username);
+        return run;
     }
 }

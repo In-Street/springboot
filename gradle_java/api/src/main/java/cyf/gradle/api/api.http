@@ -1,5 +1,10 @@
 ### 线程池隔离 执行
-GET {{url}}/command/get_2?username=english
+GET {{url}}/command/get_2?username=english&orderName=order
+Accept: */*
+Cache-Control: no-cache
+
+### 线程池隔离 执行
+GET {{url}}/command/get
 Accept: */*
 Cache-Control: no-cache
 
