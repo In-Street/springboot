@@ -25,22 +25,33 @@ public class CommandUserForAnnotation {
      * @return
      * @throws Exception
      */
-    @HystrixCommand(fallbackMethod = "getFallback")
-    public String run(String userName) throws Exception {
+    @HystrixCommand(fallbackMethod = "getFallback",
+            commandProperties = {
+                    /**
+                     * 线程池隔离：业务请求线程和依赖服务的执行线程是俩个线程
+                     * 信号量隔离：（业务请求线程和依赖服务的执行线程是同一个线程）
+                     *      如果不依赖网络访问的服务，或者依赖服务是极低延迟的，比如访问内存缓存，使用信号量隔离会更为轻量和开销小
+                     *
+                     */
+                    @HystrixProperty(name = "execution.isolation.strategy", value = "SEMAPHORE"),
+            })
+    public String run(String userName, ThreadLocal threadLocal) throws Exception {
 //        TimeUnit.MILLISECONDS.sleep(600);
-        System.out.println("username: " + userName + "---" + Thread.currentThread().getName());
+        System.out.println("username: " + userName + "---" + Thread.currentThread().getName() + "ThreadLocal:" + threadLocal.get());
         //抛出异常走降级方法
-//        throw new Exception("");
-        return "username: " + userName;
+        throw new Exception("");
+        //信号量隔离服务执行线程和业务请求线程是同一个线程，可传递ThreadLocal
+//        return "run - username: " + userName + "---------ThreadLocal:" + threadLocal.get();
     }
 
 
-    public String getFallback(String userName) {
+    public String getFallback(String userName, ThreadLocal threadLocal) {
         return "---------用户模块降级处理：" + userName + " ---------";
     }
 
     /**
      * 虽然属性中设置了隔离策略，但执行时仍按同步执行
+     *
      * @param orderName
      * @return
      * @throws InterruptedException
@@ -48,31 +59,32 @@ public class CommandUserForAnnotation {
     @HystrixCommand(commandProperties = {
             //name值从 HystrixPropertiesManager 类获取
             @HystrixProperty(name = "execution.isolation.strategy", value = "THREAD"),
-           @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds",value = "2000")
+            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "2000")
     })
-    public String sync(String orderName) throws InterruptedException {
+    public String sync(String orderName, ThreadLocal threadLocal) throws InterruptedException {
         /**
          * 在不设定超时属性时，sleep时间过长会报TimeOutException
          */
-        TimeUnit.MILLISECONDS.sleep(1500);
-        System.out.println("同步：" + orderName + "---" + Thread.currentThread().getName());
+//        TimeUnit.MILLISECONDS.sleep(1500);
+        System.out.println("同步：" + orderName + "---" + Thread.currentThread().getName() + "----" + "ThreadLocal:" + threadLocal.get());
         return "同步：" + orderName;
     }
 
     /**
      * 异步执行：需返回 AsyncResult 实列
+     *
      * @param orderName
      * @return
      * @throws InterruptedException
      */
     @HystrixCommand
-    public Future<String> async(String orderName) throws InterruptedException {
+    public Future<String> async(String orderName, ThreadLocal threadLocal) throws InterruptedException {
 
         TimeUnit.MILLISECONDS.sleep(500);
-        return new AsyncResult<String>(){
+        return new AsyncResult<String>() {
             @Override
             public String invoke() {
-                System.out.println("异步：" + orderName + "---" + Thread.currentThread().getName());
+                System.out.println("异步：" + orderName + "---" + Thread.currentThread().getName() + "----" + "ThreadLocal:" + threadLocal.get());
                 return "异步：" + orderName;
             }
         };

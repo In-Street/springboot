@@ -22,6 +22,9 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class CommandController {
 
+    private static ThreadLocal threadLocal;
+
+
     @Autowired
     private CommandUserForAnnotation commandUserForAnnotation;
 
@@ -55,6 +58,7 @@ public class CommandController {
 
     /**
      * 注解形式实现异步及熔断降级
+     *
      * @param username
      * @param orderName
      * @return
@@ -62,8 +66,12 @@ public class CommandController {
      */
     @GetMapping("/get_2")
     public String get_2(@RequestParam String username, @RequestParam String orderName) throws Exception {
-        commandUserForAnnotation.async(orderName);
-        String run = commandUserForAnnotation.run(username);
+        threadLocal = new ThreadLocal();
+        threadLocal.set("i am threadLocal");
+        log.debug("ThreadLocal:" + threadLocal.get());
+//        commandUserForAnnotation.async(orderName, threadLocal);
+        String run = commandUserForAnnotation.run(username, threadLocal);
+//        commandUserForAnnotation.sync(orderName, threadLocal);
         return run;
     }
 }
