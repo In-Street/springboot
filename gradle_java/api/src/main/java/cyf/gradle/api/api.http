@@ -1,9 +1,9 @@
-### 线程池隔离 执行
-GET {{url}}/command/get_2?username=english&orderName=order
+### Hystrix 注解模式
+GET {{url}}/command/user?username=hystrix&orderName=order
 Accept: */*
 Cache-Control: no-cache
 
-### 线程池隔离 执行
+### Hystrix
 GET {{url}}/command/get
 Accept: */*
 Cache-Control: no-cache

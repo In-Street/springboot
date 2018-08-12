@@ -64,14 +64,16 @@ public class CommandController {
      * @return
      * @throws Exception
      */
-    @GetMapping("/get_2")
+    @GetMapping("/user")
     public String get_2(@RequestParam String username, @RequestParam String orderName) throws Exception {
         threadLocal = new ThreadLocal();
         threadLocal.set("i am threadLocal");
         log.debug("ThreadLocal:" + threadLocal.get());
-//        commandUserForAnnotation.async(orderName, threadLocal);
-        String run = commandUserForAnnotation.run(username, threadLocal);
-//        commandUserForAnnotation.sync(orderName, threadLocal);
-        return run;
+        commandUserForAnnotation.async(username);
+               /*String run = commandUserForAnnotation.run(username, threadLocal);
+             commandUserForAnnotation.async(orderName, threadLocal);
+        commandUserForAnnotation.sync(orderName, threadLocal);*/
+        String handle = commandUserForAnnotation.handle(username, threadLocal);
+        return handle;
     }
 }

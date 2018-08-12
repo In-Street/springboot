@@ -3,6 +3,7 @@ package cyf.gradle.api.service;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import com.netflix.hystrix.contrib.javanica.command.AsyncResult;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.Future;
@@ -13,6 +14,7 @@ import java.util.concurrent.TimeUnit;
  * @create 2018-08-04 上午9:54
  **/
 @Service
+@Slf4j
 public class CommandUserForAnnotation {
 
 
@@ -37,11 +39,12 @@ public class CommandUserForAnnotation {
             })
     public String run(String userName, ThreadLocal threadLocal) throws Exception {
 //        TimeUnit.MILLISECONDS.sleep(600);
-        System.out.println("username: " + userName + "---" + Thread.currentThread().getName() + "ThreadLocal:" + threadLocal.get());
+        log.debug("username: {} ---Thread:{}", userName, Thread.currentThread().getName());
+//        System.out.println("username: " + userName + "---" + Thread.currentThread().getName() + "ThreadLocal:" + threadLocal.get());
         //抛出异常走降级方法
-        throw new Exception("");
+//        throw new Exception("");
         //信号量隔离服务执行线程和业务请求线程是同一个线程，可传递ThreadLocal
-//        return "run - username: " + userName + "---------ThreadLocal:" + threadLocal.get();
+        return "run - username: " + userName + "---------ThreadLocal:" + threadLocal.get();
     }
 
 
@@ -84,8 +87,47 @@ public class CommandUserForAnnotation {
         return new AsyncResult<String>() {
             @Override
             public String invoke() {
+
                 System.out.println("异步：" + orderName + "---" + Thread.currentThread().getName() + "----" + "ThreadLocal:" + threadLocal.get());
                 return "异步：" + orderName;
+            }
+        };
+    }
+
+    @HystrixCommand(fallbackMethod = "fallback",
+            commandProperties = {
+                    @HystrixProperty(name = "execution.isolation.strategy", value = "SEMAPHORE"),
+            },
+            threadPoolProperties = {
+                    @HystrixProperty(name = "coreSize", value = "5"),
+                    @HystrixProperty(name = "maxQueueSize", value = "7"),
+                    @HystrixProperty(name = "keepAliveTimeMinutes", value = "5"),
+                    @HystrixProperty(name = "queueSizeRejectionThreshold", value = "50")
+            })
+    public String handle(String userName, ThreadLocal threadLocal) throws Exception {
+        log.debug("username: {} ---Thread:{} --- ThreadLocal：{}", userName, Thread.currentThread().getName(), threadLocal.get());
+        //抛出异常走降级方法
+//        throw new Exception("");
+        return "run - username: " + userName;
+    }
+
+    public String fallback(String userName, ThreadLocal threadLocal) {
+        return "---------用户模块降级处理：" + userName + " ---------";
+    }
+
+    @HystrixCommand
+    public Future<String> async(String userName){
+
+        return new AsyncResult<String>() {
+            @Override
+            public String invoke() {
+                try {
+                    TimeUnit.MILLISECONDS.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                log.debug("异步:{}, --- Thread:{}", userName, Thread.currentThread().getName());
+                return "异步：" + userName;
             }
         };
     }
