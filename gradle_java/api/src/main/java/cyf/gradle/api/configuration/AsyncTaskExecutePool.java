@@ -64,7 +64,7 @@ public class AsyncTaskExecutePool implements AsyncConfigurer {
          */
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         //ThreadFactory 生产线程
-        executor.setThreadFactory(new ThreadFactoryBuilder().setNameFormat("demo_pool_%d").build());
+        executor.setThreadFactory(new ThreadFactoryBuilder().setNameFormat("task_demo_pool_%d").build());
 //        executor.setThreadNamePrefix();
         //初始化
         executor.initialize();

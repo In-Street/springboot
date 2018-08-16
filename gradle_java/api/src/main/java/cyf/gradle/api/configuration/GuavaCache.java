@@ -146,13 +146,23 @@ public class GuavaCache {
          * newScheduledThreadPool、newCachedThreadPool ：
          * 可创建线程数 Integer.MAX_VALUE ,会创建大量线程导致OOM
          *
+         * jmeter 测试：
+         *
+         * 池中线程数 < 核心线程数 ，请求创建新线程去执行
+         *
+         * 池中线程数  == 核心线程数 ，请求进入队列（小于队列长度），已创建的核心线程去处理请求
+         *
+         * 已达到核心线程数，队列已满，池中线程数 < maxPoolSize  ，创建新线程处理请求
+         *
+         *已达到核心线程数，队列已满，池中线程数 == maxPoolSize ，新请求根据策略处理
+         *
          */
         ThreadFactory build = new ThreadFactoryBuilder().setNameFormat("demo_pool_%d").build();
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(asyncPoolConfig.getCorePoolSize(), asyncPoolConfig.getMaxPoolSize(),
                 asyncPoolConfig.getKeepAliveSeconds(), TimeUnit.SECONDS,
                 //LinkedBlockingQueue：链表存储数据，有两把锁，放数据锁与取数据锁，放入数据的线程和取出数据的线程可以同时操作；不指定容器大小时为Integer.MAX_VALUE
                 //ArrayBlockingQueue：放数据线程与取数据线程是互斥的，需指定容器大小
-                new LinkedBlockingQueue<>(50), build, new ThreadPoolExecutor.AbortPolicy());
+                new LinkedBlockingQueue<>(20), build, new ThreadPoolExecutor.AbortPolicy());
 
         return threadPoolExecutor;
     }
