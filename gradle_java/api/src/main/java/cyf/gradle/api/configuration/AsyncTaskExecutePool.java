@@ -57,7 +57,7 @@ public class AsyncTaskExecutePool implements AsyncConfigurer {
         /**
          * 线程数已最大，队列已满，此时新来的任务处理方式
          * 线程池对拒绝任务（无线程可用）的处理策略，目前只支持AbortPolicy、CallerRunsPolicy
-         AbortPolicy:直接抛出java.util.concurrent.RejectedExecutionException异常 -->
+         AbortPolicy:直接抛出java.util.concurrent.RejectedExecutionException异常 -->,拒绝接受新任务
          CallerRunsPolicy:主线程直接执行该任务，执行完之后尝试添加下一个任务到线程池中，可以有效降低向线程池内添加任务的速度 -->
          DiscardOldestPolicy:抛弃旧的任务、暂不支持；会导致被丢弃的任务无法再次被执行 -->
          DiscardPolicy:抛弃当前任务、暂不支持；会导致被丢弃的任务无法再次被执行 -->

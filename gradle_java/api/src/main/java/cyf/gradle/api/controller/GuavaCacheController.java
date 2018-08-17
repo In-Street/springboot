@@ -23,12 +23,14 @@ public class GuavaCacheController {
     private GuavaCacheService cacheService;
 
     @GetMapping("/get")
-    public String get(@RequestParam String value) throws ExecutionException {
-        return cacheService.get(value);
+    public String get(@RequestParam String value) throws ExecutionException, InterruptedException {
+
+        return this.cacheService.get(value);
     }
 
     @GetMapping("/future")
     public String future(@RequestParam String value)  {
-        return cacheService.futureCallback(value);
+//        return cacheService.futureCallback(value);
+        return "";
     }
 }
