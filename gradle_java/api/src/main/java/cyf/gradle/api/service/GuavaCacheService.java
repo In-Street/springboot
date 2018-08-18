@@ -6,20 +6,12 @@ import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.MoreExecutors;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.data.annotation.Transient;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
-import java.lang.annotation.Inherited;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -62,7 +54,18 @@ public class GuavaCacheService {
         log.info("缓存命中次数：{}，新缓存加载时间：{}", hitCount, loadTime);
 
         // jemter 测试线程池(ThreadPoolExecutor)
-       /* threadPoolExecutor.execute(new Runnable() {
+       /* Future<?> submitFuture = threadPoolExecutor.submit(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    TimeUnit.MILLISECONDS.sleep(600);
+                    log.info("线程：{}，执行完毕", Thread.currentThread().getName());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });*/
+        /*threadPoolExecutor.execute(new Runnable() {
             @Override
             public void run() {
                 try {
