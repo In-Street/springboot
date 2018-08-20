@@ -271,5 +271,12 @@ public class TestHome {
         System.out.println("user-execute - " + userExecute);
     }
 
+    @Test
+    public void threadT() {
+        //CPU 核数，用于线程池核心数的设定
+        int i = Runtime.getRuntime().availableProcessors();
+        System.out.println(i);
+    }
+
 
 }

@@ -1,0 +1,7 @@
+dependencies {
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-websocket', version: '2.0.0.RELEASE'
+//    compile group: 'org.j-im', name: 'jim-server', version: '2.2.0.v20180725-RELEASE'
+
+    compile project(':util')
+    compile project(':base')
+}

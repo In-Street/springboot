@@ -1,0 +1,8 @@
+   __          __ _____
+   \ \        / // ____|
+    \ \  /\  / /| (___
+     \ \/  \/ /  \___ \
+      \  /\  /   ____) |
+       \/  \/   |_____/
+
+${AnsiColor.GREEN}:: ws :: ${application.formatted-version}${AnsiColor.DEFAULT}

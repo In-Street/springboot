@@ -18,6 +18,7 @@ public class AsyncPoolConfig {
 
     /**
      * 核心线程数
+     * Runtime.getRuntime().availableProcessors():获取CPU核数进心参数设定
      */
     private int corePoolSize ;
     /**

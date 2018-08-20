@@ -1,0 +1,20 @@
+server:
+  port: 7071
+  maxPostSize: 0
+spring:
+  application.name: ws
+  profiles.active: dev
+
+#JACKSON
+spring.jackson:
+  date-format: "yyyy-MM-dd HH:mm:ss"
+  default-property-inclusion: NON_NULL
+  time-zone: GMT+8
+---
+spring.profiles: dev
+
+
+
+
+
+
