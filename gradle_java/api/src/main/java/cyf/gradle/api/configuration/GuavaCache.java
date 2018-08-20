@@ -53,6 +53,7 @@ public class GuavaCache {
                     @Override
                     public String load(String key) throws Exception {
                         log.info("<================= 缓存过期，加载 - load key: {}=================>", key);
+                        TimeUnit.MILLISECONDS.sleep(600);
                         User user = userMapper.selectByPrimaryKey(Integer.valueOf(key));
                         String userJsonString = JSONObject.toJSONString(user);
                         return "Expire_" + key + ":" + userJsonString;
@@ -76,11 +77,17 @@ public class GuavaCache {
                 //为了避免很多线程阻塞等待缓存生成，此刷新会只有load一个线程阻塞用于生成缓存，其他线程不阻塞会给返回旧的缓存值，但是只有有线程触发时才会刷新
                 //但多个线程获取多个key值的缓存时，因load还是会阻塞多个load线程，压力也会穿透到数据库层，此时也需要给这个线程返回旧值，更新操作交由线程池异步完成 -> 进阶异步刷新
                 .refreshAfterWrite(1, TimeUnit.MINUTES)
+                .recordStats()
                 .build(new CacheLoader<String, String>() {
                     @Override
-                    public String load(String value) throws Exception {
-                        log.info("<================= Refresh缓存 - load :key:{}=================>", value);
-                        return "Refresh" + value;
+                    public String load(String key) throws Exception {
+                        log.info("<================= Refresh缓存 - load :key:{}=================>", key);
+                        //更新缓存时，延时600ms，观察其他并发线程是否返回旧缓存值还是处于阻塞状态（已证实返回旧值）
+                        TimeUnit.MILLISECONDS.sleep(600);
+                        User user = userMapper.selectByPrimaryKey(Integer.valueOf(key));
+                        String userJsonString = JSONObject.toJSONString(user);
+                        return "Refresh_" + key + ":" + userJsonString;
+
                     }
                 });
         return cache_Refresh;
