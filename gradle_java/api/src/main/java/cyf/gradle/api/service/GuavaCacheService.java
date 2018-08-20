@@ -38,7 +38,7 @@ public class GuavaCacheService {
 
 
     //    @Transactional(rollbackFor = Exception.class)
-    public String get(String v) throws ExecutionException, InterruptedException {
+    public String get(String key) throws ExecutionException, InterruptedException {
 
 //        String expire = expireLoadingCache.get(v);
 
@@ -47,7 +47,8 @@ public class GuavaCacheService {
         /*String unchecked = expireLoadingCache.getUnchecked(v);
         log.info("unchecked:{}", unchecked);*/
 
-        String refresh = expireLoadingCache.get(v);
+        String refresh = expireLoadingCache.get(key);
+//        expireLoadingCache.put();
         CacheStats stats = expireLoadingCache.stats();
         long hitCount = stats.hitCount();
         double loadTime = stats.averageLoadPenalty();
@@ -83,8 +84,8 @@ public class GuavaCacheService {
          *  3. 使用 ApplicationContext 获取当前类的代理类，可处理异步，但不能用@PostConstruct设置全局的代理，否则处理异步仍是请求的线程在处理
          */
 //        ((GuavaCacheService) AopContext.currentProxy()).taskPool();
-        GuavaCacheService proxy = applicationContext.getBean(GuavaCacheService.class);
-        proxy.taskPool();
+       /* GuavaCacheService proxy = applicationContext.getBean(GuavaCacheService.class);
+        proxy.taskPool();*/
         return refresh;
     }
 

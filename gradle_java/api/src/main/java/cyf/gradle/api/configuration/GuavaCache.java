@@ -1,15 +1,19 @@
 package cyf.gradle.api.configuration;
 
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.cache.*;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import cyf.gradle.dao.mapper.UserMapper;
+import cyf.gradle.dao.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 线程池配置
@@ -23,7 +27,8 @@ public class GuavaCache {
 
     @Autowired
     private AsyncPoolConfig asyncPoolConfig;
-
+    @Autowired
+    private UserMapper userMapper;
 
     /**
      * 缓存失效
@@ -34,7 +39,7 @@ public class GuavaCache {
     public LoadingCache<String, String> getLoadingCacheExpire() {
 
         log.info("<=================初始化 Expire LoadingCache<String, String>=================>");
-        LoadingCache<String, String> cache_Expire = CacheBuilder.newBuilder()
+        LoadingCache cache_Expire = CacheBuilder.newBuilder()
                 //基于容量回收：当数量逼近限定值时，回收最近很少使用或总体很少使用的缓存
                 .maximumSize(100)
                 //过期时间,当缓存失效时，多个线程用相同key获取缓存时，只有一个线程进入load,用于缓存生成（机制有效避免了缓存穿透），其他线程阻塞等待缓存生成，但此时某个缓存过期会导致大量请求线程阻塞，引入refreshAfterWrite刷新机制
@@ -46,9 +51,11 @@ public class GuavaCache {
                 //.expireAfterAccess() 在被访问多少秒后失效
                 .build(new CacheLoader<String, String>() {
                     @Override
-                    public String load(String value) throws Exception {
-                        log.info("<================= 过期缓存 - load key: {}=================>", value);
-                        return "Expire" + value;
+                    public String load(String key) throws Exception {
+                        log.info("<================= 缓存过期，加载 - load key: {}=================>", key);
+                        User user = userMapper.selectByPrimaryKey(Integer.valueOf(key));
+                        String userJsonString = JSONObject.toJSONString(user);
+                        return "Expire_" + key + ":" + userJsonString;
                     }
                 });
         return cache_Expire;
@@ -117,13 +124,14 @@ public class GuavaCache {
 
     /**
      * java.util.concurrent ThreadPoolExecutor 线程池使用
-     *
+     * <p>
      * Executor(Interface)、ExecutorService(Interface) 、Executors :
-     *  1.ExecutorService继承Executor
-     *  2.Executor提供execute() 接受Runnable参数，不返回结果； ExecutorService提供submit(), 接受Runnable，Callable 参数，有Future返回
-     *  3.ExecutorService提供对线程池操作的方法
+     * 1.ExecutorService继承Executor
+     * 2.Executor提供execute() 接受Runnable参数，不返回结果； ExecutorService提供submit(), 接受Runnable，Callable 参数，有Future返回
+     * 3.ExecutorService提供对线程池操作的方法
+     * <p>
+     * 4.Executors提供创建线程池的方法，但是不建议使用
      *
-     *  4.Executors提供创建线程池的方法，但是不建议使用
      * @return
      */
     @Bean(name = "threadPoolExecutor")
@@ -161,6 +169,7 @@ public class GuavaCache {
 
     /**
      * 缓存移除监听器，缓存移除时收到原因，键值等信息，做一些额外的操作
+     *
      * @return
      */
     public RemovalListener removalListener() {

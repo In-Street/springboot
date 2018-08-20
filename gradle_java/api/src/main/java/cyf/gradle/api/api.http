@@ -13,4 +13,9 @@ GET {{url}}/proxy/jdk?msg=taylor
 Accept: */*
 Cache-Control: no-cache
 
+### Guava-cache
+GET {{url}}/cache/get?key=6
+Accept: */*
+Cache-Control: no-cache
+
 ###

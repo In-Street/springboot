@@ -23,9 +23,9 @@ public class GuavaCacheController {
     private GuavaCacheService cacheService;
 
     @GetMapping("/get")
-    public String get(@RequestParam String value) throws ExecutionException, InterruptedException {
+    public String get(@RequestParam String key) throws ExecutionException, InterruptedException {
 
-        return this.cacheService.get(value);
+        return this.cacheService.get(key);
     }
 
     @GetMapping("/future")
