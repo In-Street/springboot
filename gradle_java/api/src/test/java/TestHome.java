@@ -3,11 +3,18 @@ import com.google.common.collect.Maps;
 import cyf.gradle.api.Enums.UserTest;
 import cyf.gradle.api.service.CommandOrder;
 import cyf.gradle.api.service.CommandUser;
+import cyf.gradle.dao.model.User;
+import lombok.Cleanup;
+import lombok.SneakyThrows;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
 import reactor.core.publisher.Flux;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.RoundingMode;
 import java.nio.charset.Charset;
@@ -272,10 +279,22 @@ public class TestHome {
     }
 
     @Test
+    @SneakyThrows(value = {FileNotFoundException.class, IOException.class})
     public void threadT() {
         //CPU 核数，用于线程池核心数的设定
         int i = Runtime.getRuntime().availableProcessors();
         System.out.println(i);
+
+        //User 类添加@Builder,设置对象属性
+        User build = User.builder().id(100).username("程").pwd("宇飞").build();
+        System.out.println(build);
+
+        File file = new File("D:/A.txt");
+        @Cleanup
+        FileOutputStream outputStream = new FileOutputStream(file);
+        String str = "哈哈哈";
+        outputStream.write(str.getBytes());
+
     }
 
 
