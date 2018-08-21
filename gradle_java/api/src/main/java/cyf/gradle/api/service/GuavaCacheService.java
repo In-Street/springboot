@@ -47,8 +47,11 @@ public class GuavaCacheService {
         /*String unchecked = expireLoadingCache.getUnchecked(v);
         log.info("unchecked:{}", unchecked);*/
 
-        String refresh = refreshLoadingCache.get(key);
-        CacheStats stats = refreshLoadingCache.stats();
+       /* String refresh = refreshLoadingCache.get(key);
+        CacheStats stats = refreshLoadingCache.stats();*/
+
+        String refresh = asyncRefreshLoadingCache.get(key);
+        CacheStats stats = asyncRefreshLoadingCache.stats();
         long hitCount = stats.hitCount();
         double loadTime = stats.averageLoadPenalty();
         log.info("缓存命中次数：{}，新缓存加载时间：{}", hitCount, loadTime);

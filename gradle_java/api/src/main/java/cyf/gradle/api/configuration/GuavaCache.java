@@ -7,6 +7,7 @@ import com.google.common.util.concurrent.MoreExecutors;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import cyf.gradle.dao.mapper.UserMapper;
 import cyf.gradle.dao.model.User;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -106,22 +107,30 @@ public class GuavaCache {
         LoadingCache<String, String> cache_Refresh = CacheBuilder.newBuilder()
                 .maximumSize(100)
                 .refreshAfterWrite(1, TimeUnit.MINUTES)
+                .recordStats()
                 .build(new CacheLoader<String, String>() {
                     @Override
-                    public String load(String value) {
-                        log.info("<================= AsyncRefresh -load 缓存 - load :key:{}=================>", value);
-                        return "AsyncRefresh-load" + value;
+                    @SneakyThrows(value = {InterruptedException.class})
+                    public String load(String key) {
+                        log.info("<================= AsyncRefresh -load 缓存 - load :key:{}=================>", key);
+                        TimeUnit.MILLISECONDS.sleep(600);
+                        User user = userMapper.selectByPrimaryKey(Integer.valueOf(key));
+                        String userJsonString = JSONObject.toJSONString(user);
+                        return "AsyncRefresh_load_" + key + ":" + userJsonString;
                     }
 
                     @Override
                     public ListenableFuture<String> reload(String key, String oldValue) {
-                        log.info("<================= AsyncRefresh -reload 缓存 - load :key:{}=================>", key);
+                        log.info("<================= AsyncRefresh -reload 缓存 - reload :key:{}=================>", key);
 
                         return MoreExecutors.listeningDecorator(getThreadPoolExecutor()).submit(new Callable<String>() {
                             @Override
                             public String call() throws Exception {
                                 log.info("<================= Thread: {}=================>", Thread.currentThread().getName());
-                                return "AsyncRefresh-reload" + key;
+                                TimeUnit.MILLISECONDS.sleep(600);
+                                User user = userMapper.selectByPrimaryKey(Integer.valueOf(key));
+                                String userJsonString = JSONObject.toJSONString(user);
+                                return "AsyncRefresh_reload_" + key + ":" + userJsonString;
                             }
                         });
                     }
