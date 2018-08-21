@@ -23,20 +23,23 @@ public class EventBusPool {
     private ThreadPoolExecutor threadPoolExecutor;
 
     /**
-     * String 处理事件总线
+     *  处理事件总线
      * @return
      */
     @Bean
-    public EventBus stringEventBus() {
+    public EventBus eventBus() {
         return new EventBus();
     }
 
     /**
-     * Integer 异步事件处理总线
+     *  异步事件处理总线
      * @return
      */
     @Bean
-    public AsyncEventBus intAsyncEventBus() {
+    public AsyncEventBus asyncEventBus() {
+
         return new AsyncEventBus(threadPoolExecutor);
     }
+
+
 }

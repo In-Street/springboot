@@ -1,11 +1,24 @@
 package cyf.gradle.dao.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author 
  */
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@ToString
 public class Kerr2 implements Serializable {
     private Integer id;
 
@@ -15,27 +28,4 @@ public class Kerr2 implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Date getPublishtime() {
-        return publishtime;
-    }
-
-    public void setPublishtime(Date publishtime) {
-        this.publishtime = publishtime;
-    }
 }

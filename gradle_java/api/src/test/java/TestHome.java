@@ -1,5 +1,6 @@
 import cn.hutool.core.util.RandomUtil;
 import com.google.common.collect.Maps;
+import com.google.common.primitives.Ints;
 import cyf.gradle.api.Enums.UserTest;
 import cyf.gradle.api.service.CommandOrder;
 import cyf.gradle.api.service.CommandUser;
@@ -216,24 +217,6 @@ public class TestHome {
     }
 
     @Test
-    public void t2() {
-
-        List<Integer> list = Lists.newArrayList(2, 4, 7, 10);
-        System.out.println("1");
-        List<Integer> collect = list.stream().map(s -> {
-            System.out.println("2");
-            if (s > 2) {
-                return s;
-            } else {
-                return 0;
-            }
-        }).collect(Collectors.toList());
-        System.out.println("3");
-        System.out.println(collect);
-
-    }
-
-    @Test
     public void bytes() {
         //一个用户ID 8个字节，100万用户ID 7M
         byte b = 8;
@@ -245,17 +228,6 @@ public class TestHome {
         System.out.println(Math.pow(2, 10));
         System.out.println(Math.sqrt(8));
 
-    }
-
-    @Test
-    public void t() {
-        int n = 1024;
-        int a = 0;
-        while (n % 2 == 0) {
-            n = n / 2;
-            a++;
-        }
-        System.out.println(a);
     }
 
     @Test
@@ -279,6 +251,7 @@ public class TestHome {
     }
 
     @Test
+    //try/cache 异常
     @SneakyThrows(value = {FileNotFoundException.class, IOException.class})
     public void threadT() {
         //CPU 核数，用于线程池核心数的设定
@@ -287,15 +260,35 @@ public class TestHome {
 
         //User 类添加@Builder,设置对象属性
         User build = User.builder().id(100).username("程").pwd("宇飞").build();
-        System.out.println(build);
+        User build1 = User.builder().build();
+        System.out.println(build1);
 
         File file = new File("D:/A.txt");
+        //调用资源关闭
         @Cleanup
         FileOutputStream outputStream = new FileOutputStream(file);
         String str = "哈哈哈";
         outputStream.write(str.getBytes());
-
+        throw new FileNotFoundException("not found");
     }
 
+    @Test
+    public void idea() {
+        List<Integer> integers = Ints.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        for (int i = 0; i < integers.size(); i++) {
+            //条件断点（设定i==8 时，会在循环到8时进入断点）
+            System.out.println(integers.get(i));
+        }
+        //Drop Frame 重新走
+        m1();
+    }
+
+    private void m1() {
+        System.out.println("m1");
+        m2();
+    }
+    private void m2() {
+        System.out.println("m2");
+    }
 
 }

@@ -1,5 +1,6 @@
 package cyf.gradle.api.service;
 
+import com.google.common.eventbus.AsyncEventBus;
 import com.google.common.eventbus.EventBus;
 import cyf.gradle.dao.model.User;
 import lombok.extern.slf4j.Slf4j;
@@ -12,21 +13,22 @@ import org.springframework.stereotype.Service;
  **/
 @Service
 @Slf4j
-public class EventService {
+public class EventService<T> {
 
 
     @Autowired
-    private EventBus stringEventBus;
+    private EventBus eventBus;
     @Autowired
-    private EventBus intAsyncEventBus;
+    private AsyncEventBus asyncEventBus;
 
-    public  <K>  K genericity(K k) {
+    public <K> K genericity(K k) {
 
-       return k;
+        return k;
     }
 
-    public  void post(User user) {
-        stringEventBus.post(user.getUsername());
-        intAsyncEventBus.post(user.getId());
+    public T post(T t) {
+//        eventBus.post(t);
+        asyncEventBus.post(t);
+        return t;
     }
 }

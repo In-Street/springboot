@@ -1,20 +1,25 @@
-### Hystrix 注解模式
+### api Hystrix 注解模式
 GET {{url}}/command/user?username=hystrix&orderName=order
 Accept: */*
 Cache-Control: no-cache
 
-### Hystrix
+### api Hystrix
 GET {{url}}/command/get
 Accept: */*
 Cache-Control: no-cache
 
-###代理
+### interview 代理
 GET {{url}}/proxy/jdk?msg=taylor
 Accept: */*
 Cache-Control: no-cache
 
-### Guava-cache
+### api Guava-cache
 GET {{url}}/cache/get?key=6
+Accept: */*
+Cache-Control: no-cache
+
+### api Guava-EventBus
+GET {{url}}/event/post
 Accept: */*
 Cache-Control: no-cache
 

@@ -1,16 +1,15 @@
 package cyf.gradle.api.controller;
 
 import cyf.gradle.api.service.EventService;
-import cyf.gradle.api.service.GuavaCacheService;
+import cyf.gradle.dao.model.Kerr2;
 import cyf.gradle.dao.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Cheng Yufei
@@ -23,13 +22,16 @@ public class GuavaEventBusController {
 
     @Autowired
     private EventService eventService;
+    private AtomicInteger id = new AtomicInteger(1);
 
     @GetMapping("/post")
-    public String post(){
-        User user = new User(1, "swift");
-         eventService.post(user);
-        System.out.println(eventService.genericity("gen"));
-        return "";
+    public <T> T post() {
+        int incrementId = id.getAndIncrement();
+        /*User user = User.builder().id(incrementId).build();
+        log.debug("初始化User：{} - {}", user.toString(), Thread.currentThread().getName());*/
+        Kerr2 kerr2 = Kerr2.builder().id(incrementId).build();
+        log.debug("初始化Kerr2：{} - {}", kerr2.toString(), Thread.currentThread().getName());
+        return (T) eventService.post(kerr2);
     }
 
 }
