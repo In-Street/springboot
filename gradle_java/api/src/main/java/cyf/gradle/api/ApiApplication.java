@@ -29,7 +29,11 @@ import javax.servlet.MultipartConfigElement;
 
 //开启异步使用
 @EnableAsync
-//通过AopProxy上下文获取代理对象,用于 数据库事务操作 或者 通过ApplicationContext上下文 详见 TransactionProxyService （test5()）、TransactionProxyService1（test1()）
+/**
+ * 1.通过AopContext上下文获取代理对象,用于 数据库事务操作 或者 通过ApplicationContext上下文 详见 TransactionProxyService （test5()）、TransactionProxyService1（test1()）
+ * 2. exposeProxy = true: 通过Aop框架暴露该代理对象，AopContext能够访问
+ * 3. ApplicationContext 获取代理对象时无需开启暴露
+ */
 @EnableAspectJAutoProxy(exposeProxy = true)
 public class ApiApplication  {
 
