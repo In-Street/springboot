@@ -45,6 +45,8 @@ public class TransactionProxyService1 {
      *                                                          1. 3 无@Transactional ，效果与二一样
      *                                                          2. 3 有@Transactional及新启事务参数： 在1中未进行捕获，效果与二一样
      *                                                                                                                   在1中进行捕获，1 插入 3未插入
+     *        四：@Transactional 本工程采用AOP代理类，private方法会使事务注解失效，只有目标方法由外部调用,事务才会生效；
+     *              同一类中的其他没有@Transactional 注解的方法内部调用有@Transactional 注解的方法，有@Transactional 注解的方法的事务被忽略，不会发生回滚（自调用问题）
      *
      */
     @Transactional(rollbackFor = Exception.class)

@@ -33,7 +33,8 @@ import javax.servlet.MultipartConfigElement;
  * 1.通过AopContext上下文获取代理对象,用于 数据库事务操作 或者 通过ApplicationContext上下文 详见 TransactionProxyService （test5()）、TransactionProxyService1（test1()）
  * 2. exposeProxy = true: 通过Aop框架暴露该代理对象，AopContext能够访问
  * 3. ApplicationContext 获取代理对象时无需开启暴露
- * 4. proxyTargetClass = true ：参数设为true时,表示使用CGLIB来实现AOP，与在application.yml 中标注：spring.aop.proxy-target-class: true 效果一样
+ * 4. proxyTargetClass = true ：参数设为true时,表示使用CGLIB来为目标对象创建代理子类实现AOP，否则使用jdk基于接口的代理；
+ *                              与在application.yml 中标注：spring.aop.proxy-target-class: true 效果一样
  */
 @EnableAspectJAutoProxy(exposeProxy = true)
 public class ApiApplication  {
