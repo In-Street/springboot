@@ -29,13 +29,14 @@ public class AopHandler {
 
     /**
      * 打印Controller层日志
-     * @param pjp 切点
+     *
+     * @param pjp            切点
      * @param requestMapping 注解类型
      * @return Object
-     * @throws Throwable  Throwable
+     * @throws Throwable Throwable
      */
-//    @Around("@annotation(requestMapping)")
-    @Around("service()")
+    @Around("@annotation(org.springframework.web.bind.annotation.RequestMapping)||@annotation(org.springframework.web.bind.annotation.GetMapping) " +
+            "||@annotation(org.springframework.web.bind.annotation.PostMapping) ")
     public Object printMethodsExecutionTime(ProceedingJoinPoint pjp/*, RequestMapping requestMapping*/) throws Throwable {
         long start = System.currentTimeMillis();
 
@@ -44,37 +45,46 @@ public class AopHandler {
         String requestURI = request.getRequestURI();
 
 
-        log.info(">>>>>> 开始请求: {},{}() with argument[s] = {}", requestURI/*pjp.getSignature().getDeclaringTypeName()*/,pjp.getSignature().getName(), Arrays.toString(pjp.getArgs()));
+        log.info(">>>>>> 开始请求: {},{}() with argument[s] = {}", requestURI, pjp.getSignature().getName(), Arrays.toString(pjp.getArgs()));
 
         Object result = pjp.proceed();
 
         String json = "";
-        if(result != null){
+        if (result != null) {
             json = FastJsonUtils.toJSONString(result);
         }
         long usedTime = System.currentTimeMillis() - start;
-        log.info("<<<<<< 结束请求: {},{}(),耗时:{}ms with result = {}",requestURI,pjp.getSignature().getName(),usedTime, json);
+        log.info("<<<<<< 结束请求: {},{}(),耗时:{}ms with result = {}", requestURI, pjp.getSignature().getName(), usedTime, json);
 
         String pcallback = request.getParameter("pcallback");
-        if(StringUtils.isNoneBlank(pcallback)){
-        	response.addHeader("Content-Type", "application/json;charset=UTF-8");
-        	try {
-				response.getWriter().write(pcallback + "(");
-				response.getWriter().write(json);
-				response.getWriter().write(")");
+        if (StringUtils.isNoneBlank(pcallback)) {
+            response.addHeader("Content-Type", "application/json;charset=UTF-8");
+            try {
+                response.getWriter().write(pcallback + "(");
+                response.getWriter().write(json);
+                response.getWriter().write(")");
                 response.getWriter().close();
-				return null;
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+                return null;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return result;
     }
 
-    //监控Controller指定注解形式，RequestMapping注解不切入
-    @Pointcut("execution(* cyf.gradle.api.controller.*Controller.*(..)) && @annotation(org.springframework.web.bind.annotation.GetMapping)")
-    public void service() {
-        System.out.println("进入Pointcut");
-    }
+    /**
+     *为了在 service 中自调用方法可通过AopContext获取当前Service的代理，否则获取的是Controller代理对象，有类型转换错误
+     * @param pjp
+     * @return
+     * @throws Throwable
+     */
+    @Around("service()")
+     public Object serviceProxy(ProceedingJoinPoint pjp) throws Throwable {
+        return pjp.proceed();
+     }
+
+
+    @Pointcut("execution(* cyf.gradle.api.service.*Service.*(..)) ")
+    public void service() {}
 
 }

@@ -1,7 +1,6 @@
 package cyf.gradle.api;
 
 import org.springframework.beans.factory.support.DefaultBeanNameGenerator;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
@@ -17,11 +16,10 @@ import javax.servlet.MultipartConfigElement;
 
 /**
  * boot入口
- *
  */
 //@EnableCaching
 @SpringBootApplication(
-        scanBasePackages = {"cyf.gradle.api","cyf.gradle.dao"},exclude={MongoAutoConfiguration.class,MongoDataAutoConfiguration.class}
+        scanBasePackages = {"cyf.gradle.api", "cyf.gradle.dao"}, exclude = {MongoAutoConfiguration.class, MongoDataAutoConfiguration.class}
 )
 
 //排除mongo自动配置 或者在 @SpringBootApplication 中排除，否则即使 把dao层的mongo配置注释也会自动加载 localhost：27017的配置
@@ -36,23 +34,16 @@ import javax.servlet.MultipartConfigElement;
  * 4. proxyTargetClass = true ：参数设为true时,表示使用CGLIB来为目标对象创建代理子类实现AOP，否则使用jdk基于接口的代理；
  *                              与在application.yml 中标注：spring.aop.proxy-target-class: true 效果一样
  */
-@EnableAspectJAutoProxy(exposeProxy = true)
-public class ApiApplication  {
+@EnableAspectJAutoProxy(proxyTargetClass = true,exposeProxy = true)
+public class ApiApplication {
 
     public static void main(String[] args) {
         new SpringApplicationBuilder(ApiApplication.class)
                 //类名重复bean的处理
                 .beanNameGenerator(new DefaultBeanNameGenerator())
                 .run(args);
-
-
     }
 
-    @Bean
-    public RestTemplate getRestTemplat(RestTemplateBuilder restTemplateBuilder) {
-        return restTemplateBuilder.build();
-    }
-    
     @Bean
     public MultipartConfigElement multipartConfigElement() {
         MultipartConfigFactory factory = new MultipartConfigFactory();
@@ -60,11 +51,4 @@ public class ApiApplication  {
         factory.setMaxRequestSize("-1");
         return factory.createMultipartConfig();
     }
-//    @Bean
-//    public CommonsMultipartResolver multipartResolver(){
-//        CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();
-//        commonsMultipartResolver.setMaxUploadSize(52428800);//50m
-//        return commonsMultipartResolver;
-
-//    }
 }
