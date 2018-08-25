@@ -45,7 +45,7 @@ public class AopHandler {
         String requestURI = request.getRequestURI();
 
 
-        log.info(">>>>>> 开始请求: {},{}() with argument[s] = {}", requestURI, pjp.getSignature().getName(), Arrays.toString(pjp.getArgs()));
+        log.info(">>> 开始请求: {},{}() with argument[s] = {}", requestURI, pjp.getSignature().getName(), Arrays.toString(pjp.getArgs()));
 
         Object result = pjp.proceed();
 
@@ -54,7 +54,7 @@ public class AopHandler {
             json = FastJsonUtils.toJSONString(result);
         }
         long usedTime = System.currentTimeMillis() - start;
-        log.info("<<<<<< 结束请求: {},{}(),耗时:{}ms with result = {}", requestURI, pjp.getSignature().getName(), usedTime, json);
+        log.info("<<< 结束请求: {},{}(),耗时:{}ms with result = {}", requestURI, pjp.getSignature().getName(), usedTime, json);
 
         String pcallback = request.getParameter("pcallback");
         if (StringUtils.isNoneBlank(pcallback)) {

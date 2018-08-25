@@ -65,7 +65,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, username, pwd
+    id, username/*, pwd*/
   </sql>
   <select id="selectByExample" parameterType="cyf.gradle.dao.model.UserExample" resultMap="BaseResultMap">
     select

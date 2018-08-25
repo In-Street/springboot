@@ -17,7 +17,7 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * 线程池配置
+ * Guava -Cache 及 ThreadPoolExecutor 线程池配置
  *
  * @author Cheng Yufei
  * @create 2018-06-08 10:58

@@ -48,14 +48,15 @@ public class GuavaCacheService {
         /*String unchecked = expireLoadingCache.getUnchecked(v);
         log.info("unchecked:{}", unchecked);*/
 
-       /* String refresh = refreshLoadingCache.get(key);
+        /*String refresh = refreshLoadingCache.get(key);
         CacheStats stats = refreshLoadingCache.stats();*/
 
         String refresh = asyncRefreshLoadingCache.get(key);
         CacheStats stats = asyncRefreshLoadingCache.stats();
         long hitCount = stats.hitCount();
+        double hitRate = stats.hitRate();
         double loadTime = stats.averageLoadPenalty();
-        log.info("缓存命中次数：{}，新缓存加载时间：{}", hitCount, loadTime);
+        log.info("缓存命中次数/率：{}/{}，新缓存加载时间：{}", hitCount, hitRate,loadTime);
 
         // jemter 测试线程池(ThreadPoolExecutor)
        /* Future<?> submitFuture = threadPoolExecutor.submit(new Runnable() {
@@ -86,7 +87,7 @@ public class GuavaCacheService {
          *  2.加上@Transactional后，Service 本类方法因为事务产生代理， AopContext 获取的当前的代理类是Service，可转换成service 执行@Async 异步方法
          *  3. 使用 ApplicationContext 获取当前类的代理类，可处理异步，但不能用@PostConstruct设置全局的代理，否则处理异步仍是请求的线程在处理
          */
-        ((GuavaCacheService) AopContext.currentProxy()).taskPool();
+//        ((GuavaCacheService) AopContext.currentProxy()).taskPool();
        /* GuavaCacheService proxy = applicationContext.getBean(GuavaCacheService.class);
         proxy.taskPool();*/
         return refresh;
