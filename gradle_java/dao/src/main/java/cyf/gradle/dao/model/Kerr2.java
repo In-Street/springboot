@@ -18,7 +18,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
+
 public class Kerr2 implements Serializable {
     private Integer id;
 
@@ -28,4 +28,11 @@ public class Kerr2 implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Override
+    public String toString() {
+        return "Kerr2{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                '}';
+    }
 }

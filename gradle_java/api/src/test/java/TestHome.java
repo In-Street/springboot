@@ -287,8 +287,18 @@ public class TestHome {
         System.out.println("m1");
         m2();
     }
+
     private void m2() {
         System.out.println("m2");
     }
 
+    @Test
+    public void newObject() {
+        new User() {
+            {
+                setId(1);
+            }
+        };
+
+    }
 }
