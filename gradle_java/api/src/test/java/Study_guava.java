@@ -14,6 +14,7 @@ import cyf.gradle.api.Enums.PushType;
 import cyf.gradle.api.Enums.RemoveMatchReason;
 import cyf.gradle.api.Enums.UserTest;
 import cyf.gradle.base.enums.PraiseEnum;
+import cyf.gradle.base.model.Response;
 import cyf.gradle.util.EmojiRegexUtil;
 import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -21,6 +22,7 @@ import org.apache.commons.lang3.time.FastDateFormat;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -196,7 +198,7 @@ public class Study_guava {
         Stream.empty();
         String[] strings = new String[]{"cyf", "taylor"};
         Object[] objects = Stream.of(strings).map(s -> s.toUpperCase()).toArray();
-        for (Object object: objects) {
+        for (Object object : objects) {
             System.out.println(object);
         }
 
@@ -516,11 +518,33 @@ public class Study_guava {
     }
 
     @Test
-    public void cycle() {
+    public void Lists() {
         List<Integer> list = Ints.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
+        //集合按指定长度分割
+        List<List<Integer>> partition = Lists.partition(list, 3);
+        System.out.println(partition);
+
+        //笛卡尔积: [[1, A], [1, B], [1, C], [2, A], [2, B], [2, C]]
+        List cartesianProductLists = Lists.cartesianProduct(ImmutableList.of(ImmutableList.of(1, 2), ImmutableList.of("A", "B", "C")));
+        System.out.println(cartesianProductLists);
+
         //打乱顺序
         Collections.shuffle(list);
         System.out.println(list);
+    }
+
+    @Test
+    public void maps() {
+
+        Map.Entry<String, String> entry = Maps.immutableEntry("code", "ABC");
+        System.out.println(entry);
+
+        //Iterable的key，value由Function生成
+        List<Integer> ints = Ints.asList(1, 2, 3);
+        com.google.common.base.Function<Integer, String> function = i -> String.valueOf(i + "A");
+        ImmutableMap<Integer, String> immutableMap = Maps.toMap(ints, function);
+        System.out.println(immutableMap);
     }
 
 

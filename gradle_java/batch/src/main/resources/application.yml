@@ -1,0 +1,18 @@
+server:
+  port: 7071
+
+spring:
+  application.name: batch
+  profiles.active: dev
+
+---
+spring:
+  profiles:
+    include: dev
+
+
+
+
+
+
+

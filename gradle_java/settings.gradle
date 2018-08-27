@@ -12,4 +12,5 @@ include 'rabbitmq_consumer'
 include 'webflux'
 include 'interview'
 include 'websocket'
+include 'batch'
 
