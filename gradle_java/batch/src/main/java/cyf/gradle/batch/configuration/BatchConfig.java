@@ -1,5 +1,6 @@
 package cyf.gradle.batch.configuration;
 
+import com.google.common.collect.Maps;
 import cyf.gradle.dao.model.User;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -11,6 +12,9 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.database.JdbcPagingItemReader;
 import org.springframework.batch.item.database.JpaPagingItemReader;
+import org.springframework.batch.item.database.Order;
+import org.springframework.batch.item.database.PagingQueryProvider;
+import org.springframework.batch.item.database.support.MySqlPagingQueryProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +22,8 @@ import org.springframework.context.annotation.Configuration;
 import javax.annotation.Resource;
 import javax.batch.api.BatchProperty;
 import javax.sql.DataSource;
+import java.util.Map;
+import java.util.function.Function;
 
 /**
  * @author Cheng Yufei
@@ -43,36 +49,47 @@ public class BatchConfig {
     private JobBuilderFactory jobBuilderFactory;
 
 
-    @Bean
-    public JobRepositoryFactoryBean
+    /*@Bean
+    public JobRepositoryFactoryBean*/
 
     @Bean
-    public Step stepOne() {
+    public Step stepOne() throws Exception {
+
+        MySqlPagingQueryProvider provider = new MySqlPagingQueryProvider();
+        provider.setSelectClause("id,username,pwd");
+        provider.setFromClause("t_user");
+        Map<String, Order> sortKeyMap = Maps.newHashMapWithExpectedSize(1);
+        sortKeyMap.put("id", Order.ASCENDING);
+        provider.setSortKeys(sortKeyMap);
+
+        JdbcPagingItemReader<User> itemReader = new JdbcPagingItemReader<>();
+        itemReader.setDataSource(primaryDataSource);
+        itemReader.setQueryProvider(provider);
+        itemReader.afterPropertiesSet();
+
+        Function<User, User> processorFunction = process -> {
+            if (process.getId() > 8) {
+                process.setPwd(process.getUsername() + "_A");
+            }
+            return null;
+        };
+
+
         return stepBuilderFactory.get("stepOne")
                 .<User, User>chunk(10)
-                .reader(new JdbcPagingItemReader<User>() {
-                    {
-                        setDataSource(primaryDataSource);
-//                        setFetchSize(3);
-                        setPageSize(3);
-                    }
-                })
-                .processor((ItemProcessor<User, User>) process -> {
-                    if (process.getId() > 8) {
-                        process.setPwd(process.getUsername() + "_A");
-                    }
-                    return null;
-                })
+                .reader(itemReader)
+                .processor(processorFunction)
                 .writer(new JdbcBatchItemWriter<User>() {
                     {
                         setDataSource(primaryDataSource);
+
                     }
                 })
                 .build();
     }
 
     @Bean(name = "jobOne")
-    public Job job() {
+    public Job job() throws Exception {
         return jobBuilderFactory.get("jobOne")
                 .flow(stepOne())
                 .end().build();

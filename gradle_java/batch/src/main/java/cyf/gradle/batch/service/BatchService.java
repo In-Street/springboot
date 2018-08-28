@@ -30,7 +30,7 @@ public class BatchService {
     private Job jobOne;
 
 
-    @Scheduled(cron = "0 11 22 ? * *")
+    @Scheduled(cron = "0 0/1 * * * ?")
     public void launch() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
 
         log.info("<====batch任务开始====>");
