@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfigurat
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * boot入口
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
         scanBasePackages = {"cyf.gradle.batch","cyf.gradle.dao"},exclude={MongoAutoConfiguration.class, MongoDataAutoConfiguration.class}
 )
 @EnableAspectJAutoProxy(proxyTargetClass = true)
+@EnableScheduling
 public class BatchApplication {
 
     public static void main(String[] args) {

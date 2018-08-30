@@ -8,11 +8,6 @@ GET {{url}}/command/get
 Accept: */*
 Cache-Control: no-cache
 
-### interview 代理
-GET {{url}}/proxy/jdk?msg=taylor
-Accept: */*
-Cache-Control: no-cache
-
 ### api Guava-cache
 GET {{url}}/cache/get?key=6
 Accept: */*
@@ -20,6 +15,16 @@ Cache-Control: no-cache
 
 ### api Guava-EventBus
 GET {{url}}/event/post
+Accept: */*
+Cache-Control: no-cache
+
+### interview 代理
+GET {{url}}/proxy/jdk?msg=taylor
+Accept: */*
+Cache-Control: no-cache
+
+### batch
+GET {{url}}/batch/execute
 Accept: */*
 Cache-Control: no-cache
 

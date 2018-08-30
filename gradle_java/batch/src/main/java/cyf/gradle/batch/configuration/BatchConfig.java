@@ -2,25 +2,22 @@ package cyf.gradle.batch.configuration;
 
 import com.google.common.collect.Maps;
 import cyf.gradle.dao.model.User;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.core.repository.support.JobRepositoryFactoryBean;
-import org.springframework.batch.item.ItemProcessor;
+import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.database.JdbcPagingItemReader;
-import org.springframework.batch.item.database.JpaPagingItemReader;
 import org.springframework.batch.item.database.Order;
-import org.springframework.batch.item.database.PagingQueryProvider;
 import org.springframework.batch.item.database.support.MySqlPagingQueryProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 
-import javax.annotation.Resource;
-import javax.batch.api.BatchProperty;
 import javax.sql.DataSource;
 import java.util.Map;
 import java.util.function.Function;
@@ -41,6 +38,8 @@ public class BatchConfig {
 
     @Autowired
     private DataSource primaryDataSource;
+    @Autowired
+    private SqlSessionFactory primarySqlSessionFactory;
 
     @Autowired
     private StepBuilderFactory stepBuilderFactory;
@@ -48,9 +47,6 @@ public class BatchConfig {
     @Autowired
     private JobBuilderFactory jobBuilderFactory;
 
-
-    /*@Bean
-    public JobRepositoryFactoryBean*/
 
     @Bean
     public Step stepOne() throws Exception {
@@ -65,13 +61,39 @@ public class BatchConfig {
         JdbcPagingItemReader<User> itemReader = new JdbcPagingItemReader<>();
         itemReader.setDataSource(primaryDataSource);
         itemReader.setQueryProvider(provider);
+        itemReader.setRowMapper(BeanPropertyRowMapper.newInstance(User.class));
         itemReader.afterPropertiesSet();
+
+       /* MyBatisBatchItemWriter<User> itemWriter = new MyBatisBatchItemWriter<>();
+        itemWriter.setSqlSessionFactory(primarySqlSessionFactory);
+
+        //SqlSessionTemplate 需开启BATCH模式，默认是SIMPLE
+        SqlSessionTemplate primarySqlSessionTemplate = new SqlSessionTemplate(primarySqlSessionFactory,ExecutorType.BATCH);
+        itemWriter.setSqlSessionTemplate(primarySqlSessionTemplate);
+        itemWriter.setStatementId("cyf.gradle.dao.mapper.UserMapper.updateByPrimaryKeySelective");
+        itemWriter.afterPropertiesSet();*/
+
+       /* Map<String, Object> map = new HashMap<>();
+        map.put("");
+        map.put("");
+
+        PreparedStatement ps = new HikariProxyPreparedStatement();
+        ColumnMapItemPreparedStatementSetter statementSetter = new ColumnMapItemPreparedStatementSetter();
+        statementSetter.setValues();*/
+
+
+        JdbcBatchItemWriter itemWriter = new JdbcBatchItemWriter();
+        itemWriter.setDataSource(primaryDataSource);
+        itemWriter.setSql("update t_user set pwd = :pwd where id = :id");
+        itemWriter.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider());
+        itemWriter.afterPropertiesSet();
+
 
         Function<User, User> processorFunction = process -> {
             if (process.getId() > 8) {
-                process.setPwd(process.getUsername() + "_A");
+                process.setPwd(process.getUsername() + "_B");
             }
-            return null;
+            return process;
         };
 
 
@@ -79,12 +101,7 @@ public class BatchConfig {
                 .<User, User>chunk(10)
                 .reader(itemReader)
                 .processor(processorFunction)
-                .writer(new JdbcBatchItemWriter<User>() {
-                    {
-                        setDataSource(primaryDataSource);
-
-                    }
-                })
+                .writer(itemWriter)
                 .build();
     }
 

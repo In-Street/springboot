@@ -1,6 +1,14 @@
 package cyf.gradle.batch.controller;
 
+import cyf.gradle.batch.service.BatchService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.batch.core.JobParametersInvalidException;
+import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
+import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
+import org.springframework.batch.core.repository.JobRestartException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -8,6 +16,16 @@ import org.springframework.web.bind.annotation.RestController;
  * @create 2018-08-27 下午10:06
  **/
 @RestController
+@RequestMapping("/batch")
 @Slf4j
 public class BatchController {
+
+    @Autowired
+    private BatchService batchService;
+
+    @GetMapping("/execute")
+    public String execute() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
+        batchService.launch();
+        return "success";
+    }
 }
