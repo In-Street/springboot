@@ -11,14 +11,14 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @author 
+ * @author
  */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User implements Serializable {
+public class User implements Serializable, Cloneable {
 
     @ApiModelProperty(hidden = true)
     private Integer id;
@@ -39,11 +39,21 @@ public class User implements Serializable {
         this.username = username;
     }
 
-    @Override
+   /* @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 '}';
+    }*/
+
+    /**
+     * 实现 Cloneable（clone()被protected修饰） 需重写 clone()为public
+     * @return
+     * @throws CloneNotSupportedException
+     */
+    @Override
+    public User clone() throws CloneNotSupportedException {
+        return (User) super.clone();
     }
 }

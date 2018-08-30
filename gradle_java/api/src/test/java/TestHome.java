@@ -1,15 +1,19 @@
+import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.RandomUtil;
 import com.google.common.collect.Maps;
 import com.google.common.primitives.Ints;
 import cyf.gradle.api.Enums.UserTest;
 import cyf.gradle.api.service.CommandOrder;
 import cyf.gradle.api.service.CommandUser;
+import cyf.gradle.base.dto.UserDto;
 import cyf.gradle.dao.model.User;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
+import org.springframework.beans.BeanUtils;
+import org.springframework.cglib.beans.BeanCopier;
 import reactor.core.publisher.Flux;
 
 import java.io.File;
@@ -294,11 +298,49 @@ public class TestHome {
 
     @Test
     public void newObject() {
+        //匿名内部类方式初始化不推荐使用
         new User() {
             {
                 setId(1);
             }
         };
+    }
 
+    @Test
+    public void cloneObject() throws CloneNotSupportedException {
+
+        /**
+         * clone（）: 不调用构造器
+         * 基本类型拷贝，生成新对象，与原对象互不干扰
+         * 如果User中有其他引用对象，clone后进行属性修改，原来对象的值也改变，属于浅克隆
+         */
+        User user = User.builder().id(1).username("Tay").build();
+        System.out.println(user + "id:" + user.getId() + "name:" + user.getUsername());
+
+        User clone = user.clone();
+        clone.setId(2);
+        clone.setUsername("lor");
+        System.out.println(clone + "id:" + clone.getId() + "name:" + clone.getUsername());
+
+        /**
+         * 深克隆
+         */
+
+        /**
+         *  1. 构造方法有复杂操作时，通过clone'比new对象效率高。
+         *  2. 继承关系比较深的类,new 对象构造函数调用链较长，耗时
+         *
+         *  3.属性拷贝推荐使用：
+         *      BeanUtils.copyProperties() ：org.springframework.beans.BeanUtils 包下，而不是Apache包下的
+         *      BeanCopier :  org.springframework.cglib.beans.BeanCopier 包下
+         */
+
+        BeanUtils.copyProperties();
+
+        //属性类型不同，名称相同时 ，无转换器
+        BeanCopier beanCopier = BeanCopier.create(User.class, UserDto.class, false);
+        beanCopier.copy();
+
+        Assert.
     }
 }
