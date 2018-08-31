@@ -402,7 +402,7 @@ public class TestHome {
             if (o1.equals("setPwd")) {
                 return Integer.valueOf((String)(o));
             }
-            //如果User类中没有excessProperty属性，UserDto中有则转换器中不会执行
+            //如果User类中没有excessProperty属性，UserDto中有,转换器中不会执行
              if (o1.equals("setExcessProperty")) {
                 return "excessProperty";
             }
