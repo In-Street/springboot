@@ -6,6 +6,7 @@ import cyf.gradle.api.Enums.UserTest;
 import cyf.gradle.api.service.CommandOrder;
 import cyf.gradle.api.service.CommandUser;
 import cyf.gradle.base.dto.UserDto;
+import cyf.gradle.dao.model.SysRole;
 import cyf.gradle.dao.model.User;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
@@ -14,6 +15,7 @@ import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cglib.beans.BeanCopier;
+import org.springframework.cglib.core.Converter;
 import reactor.core.publisher.Flux;
 
 import java.io.File;
@@ -306,41 +308,107 @@ public class TestHome {
         };
     }
 
+    /**
+     * 深克隆、浅克隆
+     *
+     * @throws CloneNotSupportedException
+     */
     @Test
     public void cloneObject() throws CloneNotSupportedException {
 
         /**
-         * clone（）: 不调用构造器
-         * 基本类型拷贝，生成新对象，与原对象互不干扰
-         * 如果User中有其他引用对象，clone后进行属性修改，原来对象的值也改变，属于浅克隆
+         * 1.clone(): 不调用构造器
+         * 2.基本类型拷贝包括String，生成新对象，与原对象互不干扰
+         * 3.如果User中有其他引用对象(SysRole)，clone后进行属性修改，原来对象的值也改变，俩者操作的是同一个对象，属于浅克隆
          */
-        User user = User.builder().id(1).username("Tay").build();
-        System.out.println(user + "id:" + user.getId() + "name:" + user.getUsername());
+        SysRole sysRole = SysRole.builder().id(1000).role("A角色").build();
+
+        User user = User.builder().id(1).username("Tay").sysRole(sysRole).build();
+        System.out.println(user + "     id:" + user.getId() + "     name:" + user.getUsername() + "     sysrole:" + user.getSysRole() + "    " + user.getSysRole().getId());
 
         User clone = user.clone();
         clone.setId(2);
         clone.setUsername("lor");
-        System.out.println(clone + "id:" + clone.getId() + "name:" + clone.getUsername());
+        SysRole role = clone.getSysRole();
+        role.setId(2000);
+        role.setRole("B角色");
+        clone.setSysRole(role);
+        System.out.println(user.getSysRole() + "    " + user.getSysRole().getId());
+        System.out.println(clone + "     id:" + clone.getId() + "     name:" + clone.getUsername() + "     sysrole:" + clone.getSysRole() + "    " + clone.getSysRole().getId());
+
+        //浅克隆打印结果：
+        /**
+         *      cyf.gradle.dao.model.User@1412c2f     id:1     name:Tay     sysrole:cyf.gradle.dao.model.SysRole@82ba1e    1000
+         *      cyf.gradle.dao.model.SysRole@82ba1e    2000
+         *      cyf.gradle.dao.model.User@13b6d03     id:2     name:lor     sysrole:cyf.gradle.dao.model.SysRole@82ba1e    2000
+         */
+
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------");
 
         /**
-         * 深克隆
+         * 深克隆: 将属性中的SysRole也实现Cloneable接口
+         *        克隆User对象时候同时也许克隆SysRole对象，这样 clone后SysRole是新对象
          */
+        SysRole deepSysRole = SysRole.builder().id(3000).role("C角色").build();
+        User deepUser = User.builder().id(3).username("Can").sysRole(deepSysRole).build();
+        System.out.println(deepUser + "     id:" + deepUser.getId() + "     name:" + deepUser.getUsername() + "     sysrole:" + deepUser.getSysRole() + "    " + deepUser.getSysRole().getId());
+
+        User deepClone = deepUser.clone();
+        deepClone.setId(2);
+        deepClone.setUsername("lor");
+        SysRole deepRole = deepUser.getSysRole().clone();
+        deepRole.setId(4000);
+        deepRole.setRole("D角色");
+        deepClone.setSysRole(deepRole);
+        System.out.println(deepUser.getSysRole() + "    " + deepUser.getSysRole().getId());
+        System.out.println(deepClone + "     id:" + deepClone.getId() + "     name:" + deepClone.getUsername() + "     sysrole:" + deepClone.getSysRole() + "    " + deepClone.getSysRole().getId());
+        //深克隆打印结果：
+        /**
+         * cyf.gradle.dao.model.User@15f2bb7     id:3     name:Can     sysrole:cyf.gradle.dao.model.SysRole@1035e27    3000
+         * cyf.gradle.dao.model.SysRole@1035e27    3000
+         * cyf.gradle.dao.model.User@c64813     id:2     name:lor     sysrole:cyf.gradle.dao.model.SysRole@cf72fd    4000
+         */
+
 
         /**
          *  1. 构造方法有复杂操作时，通过clone'比new对象效率高。
-         *  2. 继承关系比较深的类,new 对象构造函数调用链较长，耗时
-         *
-         *  3.属性拷贝推荐使用：
-         *      BeanUtils.copyProperties() ：org.springframework.beans.BeanUtils 包下，而不是Apache包下的
-         *      BeanCopier :  org.springframework.cglib.beans.BeanCopier 包下
+         *  2. 继承关系比较深的类,new 对象时构造函数调用链较长，耗时,应使用clone()
          */
-
-        BeanUtils.copyProperties();
-
-        //属性类型不同，名称相同时 ，无转换器
-        BeanCopier beanCopier = BeanCopier.create(User.class, UserDto.class, false);
-        beanCopier.copy();
-
-        Assert.
     }
+
+    /**
+     * 属性拷贝推荐使用：
+     * BeanUtils.copyProperties() ：org.springframework.beans.BeanUtils 包下，而不是Apache包下的
+     * BeanCopier :  org.springframework.cglib.beans.BeanCopier 包下
+     */
+    @Test
+    public void beanCopy() {
+
+        //pwd属性：名称相同但类型不同，不会复制
+        User user = User.builder().id(3).username("Can").pwd("11").build();
+        UserDto dto = new UserDto();
+        BeanUtils.copyProperties(user, dto);
+        System.out.println(dto);
+
+        //pwd属性：名称相同但类型不同，不使用转换器的情况下不会复制
+        BeanCopier beanCopier = BeanCopier.create(User.class, UserDto.class, false);
+        beanCopier.copy(user, dto, null);
+        System.out.println(dto);
+
+        //使用自定义转换器可操作 名称相同但类型不同的属性拷贝
+        BeanCopier copier = BeanCopier.create(User.class, UserDto.class, true);
+        // o源对象属性set的值，aClass目标对象属性类，o1 目标对象setter方法名
+        copier.copy(user, dto, (o, aClass, o1) -> {
+            if (o1.equals("setPwd")) {
+                return Integer.valueOf((String)(o));
+            }
+            //如果User类中没有excessProperty属性，UserDto中有则转换器中不会执行
+             if (o1.equals("setExcessProperty")) {
+                return "excessProperty";
+            }
+            return o;
+        });
+        System.out.println(dto);
+    }
+
 }

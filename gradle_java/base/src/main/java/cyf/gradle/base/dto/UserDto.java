@@ -2,6 +2,7 @@ package cyf.gradle.base.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * @author Cheng Yufei
@@ -9,9 +10,15 @@ import lombok.Setter;
  **/
 @Getter
 @Setter
+@ToString
 public class UserDto {
 
     private Integer id;
 
     private String username;
+
+    private int pwd;
+
+    private String excessProperty;
+
 }

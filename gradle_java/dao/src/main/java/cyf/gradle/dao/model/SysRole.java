@@ -1,11 +1,14 @@
 package cyf.gradle.dao.model;
 
+import lombok.Builder;
+
 import java.io.Serializable;
 
 /**
- * @author 
+ * @author
  */
-public class SysRole implements Serializable {
+@Builder
+public class SysRole implements Serializable, Cloneable {
     private Integer id;
 
     private String role;
@@ -46,5 +49,10 @@ public class SysRole implements Serializable {
 
     public void setAvailable(Boolean available) {
         this.available = available;
+    }
+
+    @Override
+    public SysRole clone() throws CloneNotSupportedException {
+        return (SysRole)super.clone();
     }
 }

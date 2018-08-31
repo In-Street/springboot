@@ -29,6 +29,10 @@ public class User implements Serializable, Cloneable {
     @ApiModelProperty(value = "密码")
     private String pwd;
 
+    private SysRole sysRole;
+    private String excessProperty;
+
+
     @ApiModelProperty(hidden = true)
 //    private List<SysRole> roleList;
 
