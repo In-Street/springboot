@@ -23,7 +23,7 @@ import java.io.IOException;
 @Slf4j
 public class GlobalDefaultExceptionHandler extends ResponseEntityExceptionHandler {
 
-   /* @ExceptionHandler(value = Exception.class)
+    @ExceptionHandler(value = Exception.class)
     public void defaultErrorHandler(HttpServletRequest req, HttpServletResponse response , Exception e)  {
         log.error("异常信息", e);
         HttpStatus status = getStatus(req);
@@ -34,13 +34,13 @@ public class GlobalDefaultExceptionHandler extends ResponseEntityExceptionHandle
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-    }*/
+    }
 
-   @ExceptionHandler(value = Exception.class)
+   /*@ExceptionHandler(value = Exception.class)
    public ResponseEntity handleConflict(RuntimeException ex, WebRequest request) {
        String body = "test exception";
        return handleExceptionInternal(ex,body,new HttpHeaders(),HttpStatus.CONFLICT, request);
-   }
+   }*/
 
     private HttpStatus getStatus(HttpServletRequest request) {
         Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");

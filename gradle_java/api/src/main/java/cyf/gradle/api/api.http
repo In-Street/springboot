@@ -28,4 +28,9 @@ GET {{url}}/batch/execute
 Accept: */*
 Cache-Control: no-cache
 
+### 事务
+GET {{url}}/transaction/test
+Accept: */*
+Cache-Control: no-cache
+
 ###

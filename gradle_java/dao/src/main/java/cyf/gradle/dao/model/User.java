@@ -34,7 +34,7 @@ public class User implements Serializable, Cloneable {
 
 
     @ApiModelProperty(hidden = true)
-//    private List<SysRole> roleList;
+    private List<SysRole> roleList;
 
     private static final long serialVersionUID = 1L;
 

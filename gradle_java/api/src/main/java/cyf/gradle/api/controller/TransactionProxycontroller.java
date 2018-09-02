@@ -22,10 +22,11 @@ public class TransactionProxycontroller {
     private TransactionProxyService1 proxyService1;
 
     @GetMapping("/test")
-    public void test() {
+    public void test() throws Exception {
 
 //        proxyService.test5();
-        proxyService1.test1();
-
+//        proxyService1.test1();
+//        proxyService1.insert();
+        proxyService1.insertTwo();
     }
 }
