@@ -43,13 +43,13 @@ public class User implements Serializable, Cloneable {
         this.username = username;
     }
 
-   /* @Override
+    @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 '}';
-    }*/
+    }
 
     /**
      * 实现 Cloneable（clone()被protected修饰） 需重写 clone()为public

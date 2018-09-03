@@ -4,8 +4,12 @@ server:
 spring:
   application.name: batch
   profiles.active: dev
-#  batch:
-#    initialize-schema: NEVER
+  batch:
+#    是否生成执行状态记录的表结构
+    initialize-schema: always
+#    是否自动执行Job，默认true，需要定时任务或手动触发请置为false
+    job:
+      enabled: false
 
 ---
 spring:

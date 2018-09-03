@@ -30,10 +30,14 @@ public class BatchService {
     private Job jobOne;
 
 
-    @Scheduled(cron = "0 0/1 * * * ?")
+//    @Scheduled(cron = "0 0/1 * * * ?")
     public void launch() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
 
         log.info("<====batch任务开始====>");
+        /**
+         * JobParameters 相同的任务只能成功执行一次；
+         * 若要周期执行，需保证周期内参数唯一，否则任务只会执行一次；
+         */
         JobParameters parameters = new JobParametersBuilder().addDate("time", new Date())
                 .toJobParameters();
 
