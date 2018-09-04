@@ -1,4 +1,3 @@
-import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.RandomUtil;
 import com.google.common.collect.Maps;
 import com.google.common.primitives.Ints;
@@ -15,11 +14,9 @@ import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cglib.beans.BeanCopier;
-import org.springframework.cglib.core.Converter;
 import reactor.core.publisher.Flux;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -400,10 +397,10 @@ public class TestHome {
         // o源对象属性set的值，aClass目标对象属性类，o1 目标对象setter方法名
         copier.copy(user, dto, (o, aClass, o1) -> {
             if (o1.equals("setPwd")) {
-                return Integer.valueOf((String)(o));
+                return Integer.valueOf((String) (o));
             }
             //如果User类中没有excessProperty属性，UserDto中有,转换器中不会执行
-             if (o1.equals("setExcessProperty")) {
+            if (o1.equals("setExcessProperty")) {
                 return "excessProperty";
             }
             return o;

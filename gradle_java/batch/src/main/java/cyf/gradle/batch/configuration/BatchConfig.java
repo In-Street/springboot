@@ -2,6 +2,7 @@ package cyf.gradle.batch.configuration;
 
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.Maps;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import cyf.gradle.dao.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.ChunkListener;
@@ -12,26 +13,35 @@ import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.batch.core.Step;
+import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.StepExecutionListener;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.scope.context.ChunkContext;
+import org.springframework.batch.core.step.tasklet.Tasklet;
+import org.springframework.batch.core.step.tasklet.TaskletStep;
 import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.database.JdbcPagingItemReader;
 import org.springframework.batch.item.database.Order;
 import org.springframework.batch.item.database.support.MySqlPagingQueryProvider;
+import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import javax.sql.DataSource;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
@@ -46,8 +56,9 @@ import java.util.function.Function;
  * Step：组成一个Job的各个步骤；
  * Job：可被多次执行的任务，每次执行返回一个JobInstance,Batch操作的基础执行单元。
  * Job Launcher：启动Job
- * Tasklet: Step的一个事务过程，包括重复执行，同步、异步策略
+ * Tasklet(小任务): Step的一个事务过程，包括重复执行，同步、异步策略
  * chunk：给定数量的Item集合
+ * 一个job可以包含0到多个step;一个step可以包含0到多个tasklet;一个tasklet可以包含0到多个chunk
  * <p>
  * ------------------------------------------------------------------------------------------------------------------------------------
  * <p>
@@ -96,11 +107,11 @@ import java.util.function.Function;
  * Partitioning Step 对数据进行分区，并分开执行;
  **/
 @Configuration
+@Slf4j
 /**
- * 使得StepBuilderFactory等类可以注入
+ * 使得StepBuilderFactory等基础类可以注入
  */
 @EnableBatchProcessing
-@Slf4j
 public class BatchConfig {
 
     @Autowired
@@ -112,7 +123,6 @@ public class BatchConfig {
     @Autowired
     private JobBuilderFactory jobBuilderFactory;
 
-
     @Bean
     public Step stepOne() throws Exception {
 
@@ -123,24 +133,25 @@ public class BatchConfig {
         sortKeyMap.put("id", Order.ASCENDING);
         provider.setSortKeys(sortKeyMap);
 
+        BeanPropertyRowMapper<User> beanPropertyRowMapper = BeanPropertyRowMapper.newInstance(User.class);
         JdbcPagingItemReader<User> itemReader = new JdbcPagingItemReader<>();
         itemReader.setDataSource(primaryDataSource);
         itemReader.setQueryProvider(provider);
-        itemReader.setRowMapper(BeanPropertyRowMapper.newInstance(User.class));
+        itemReader.setRowMapper(beanPropertyRowMapper);
         itemReader.setPageSize(5);
-        System.out.println( itemReader.getPage());
         itemReader.afterPropertiesSet();
 
+        BeanPropertyItemSqlParameterSourceProvider sourceProvider = new BeanPropertyItemSqlParameterSourceProvider();
         JdbcBatchItemWriter itemWriter = new JdbcBatchItemWriter();
         itemWriter.setDataSource(primaryDataSource);
         itemWriter.setSql("update t_user set pwd = :pwd where id = :id");
-        itemWriter.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider());
+        itemWriter.setItemSqlParameterSourceProvider(sourceProvider);
         itemWriter.afterPropertiesSet();
 
 
         Function<User, User> processorFunction = process -> {
-            if (process.getId() > 5) {
-                process.setPwd(process.getUsername() + "_M");
+            if (process.getId() < 7) {
+                process.setPwd(process.getUsername() + "_T");
             }
             return process;
         };
@@ -148,21 +159,83 @@ public class BatchConfig {
         /*.faultTolerant().skip()*/
 
         return stepBuilderFactory.get("stepOne")
-                //read 10条数据后交由processor处理（commit-interval的间隔值，减少提交频次，降低资源使用率）,决定CommitCount
-                .<User, User>chunk(5)
+
+                // 10条数据后交由processor处理（commit-interval的间隔值，减少提交频次，降低资源使用率）,决定CommitCount
+                .<User, User>chunk(10)
+                .reader(itemReader)
+                .processor(processorFunction)
+                .writer(itemWriter)
+                /* .listener(new ItemWriteListener() {
+                     @Override
+                     public void beforeWrite(List items) {
+                         items.stream().forEach(u -> {
+                             System.out.println(((User) u).getId() + "_____" + Thread.currentThread().getName());
+                         });
+                     }
+
+                     @Override
+                     public void afterWrite(List items) {
+                     }
+
+                     @Override
+                     public void onWriteError(Exception exception, List items) {
+                     }
+                 })*/
+                .build();
+    }
+
+    @Bean
+    public Step stepTwo() throws Exception {
+
+        MySqlPagingQueryProvider provider = new MySqlPagingQueryProvider();
+        provider.setSelectClause("id,username,pwd");
+        provider.setFromClause("t_user");
+        Map<String, Order> sortKeyMap = Maps.newHashMapWithExpectedSize(1);
+        sortKeyMap.put("id", Order.ASCENDING);
+        provider.setSortKeys(sortKeyMap);
+        provider.setWhereClause("id >= ?");
+
+        BeanPropertyRowMapper<User> beanPropertyRowMapper = BeanPropertyRowMapper.newInstance(User.class);
+        JdbcPagingItemReader<User> itemReader = new JdbcPagingItemReader<>();
+        itemReader.setDataSource(primaryDataSource);
+        itemReader.setQueryProvider(provider);
+        itemReader.setRowMapper(beanPropertyRowMapper);
+        itemReader.setPageSize(5);
+        //provider where条件的传参
+        Map ParameterValuesMap = new HashMap(1);
+        ParameterValuesMap.put("id", 7);
+        itemReader.setParameterValues(ParameterValuesMap);
+        itemReader.afterPropertiesSet();
+
+        BeanPropertyItemSqlParameterSourceProvider sourceProvider = new BeanPropertyItemSqlParameterSourceProvider();
+        JdbcBatchItemWriter itemWriter = new JdbcBatchItemWriter();
+        itemWriter.setDataSource(primaryDataSource);
+        itemWriter.setSql("update t_user set pwd = :pwd where id = :id ");
+        itemWriter.setItemSqlParameterSourceProvider(sourceProvider);
+        itemWriter.afterPropertiesSet();
+
+
+        Function<User, User> processorFunction = process -> {
+            process.setPwd(process.getUsername() + "_S");
+            return process;
+        };
+        TaskletStep step = stepBuilderFactory.get("stepTwo")
+
+                .<User, User>chunk(10)
                 .reader(itemReader)
                 .processor(processorFunction)
                 .writer(itemWriter)
                 .listener(new ItemWriteListener() {
                     @Override
                     public void beforeWrite(List items) {
-
+                        items.stream().forEach(u -> {
+                            System.out.println(((User) u).getId() + "_____" + Thread.currentThread().getName());
+                        });
                     }
 
                     @Override
                     public void afterWrite(List items) {
-                        System.out.println(items);
-                        System.out.println( "-----");
+
                     }
 
                     @Override
@@ -170,28 +243,62 @@ public class BatchConfig {
 
                     }
                 })
+                //异步线程并发执行
+                .taskExecutor(taskExecutor())
                 .build();
+
+       /* Tasklet tasklet = new Tasklet() {
+            @Override
+            public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+                int readCount = chunkContext.getStepContext().getStepExecution().getReadCount();
+                System.out.println(readCount);
+                return RepeatStatus.FINISHED;
+            }
+        };
+        step.setTasklet(tasklet);*/
+        return step;
     }
 
-    @Bean(name = "jobOne")
-    public Job job() throws Exception {
-        return jobBuilderFactory.get("jobOne")
+    @Bean
+    public Job jobOne() throws Exception {
+        Job jobOne = jobBuilderFactory.get("jobOne")
                 .listener(new JobExecutionListener() {
                     Stopwatch stopwatch = null;
+
                     @Override
                     public void beforeJob(JobExecution jobExecution) {
                         stopwatch = Stopwatch.createStarted();
                     }
+
                     @Override
                     public void afterJob(JobExecution jobExecution) {
-                        log.info("jobOne耗时：{} ms",stopwatch.elapsed(TimeUnit.MILLISECONDS));
+                        log.info("jobOne耗时：{} ms", stopwatch.elapsed(TimeUnit.MILLISECONDS));
                         Collection<StepExecution> executions = jobExecution.getStepExecutions();
-                        executions.stream().forEach(stepExecution -> log.debug("ReadCount：{}，CommitCount：{}", stepExecution.getReadCount(), stepExecution.getCommitCount()));
+                        //每个Step 的读取总数及据chunkSize大小得出的提交次数
+                        executions.stream().forEach(stepExecution -> log.debug("Step:{}，ReadCount：{}，CommitCount：{}", stepExecution.getStepName(),stepExecution.getReadCount(), stepExecution.getCommitCount()));
                     }
                 })
-                .flow(stepOne())
-                .end().build();
+                .start(stepOne())
+                .next(stepTwo())
+                .build();
+        return jobOne;
     }
+
+
+    @Bean
+    public ThreadPoolTaskExecutor taskExecutor() {
+
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(8);
+        executor.setKeepAliveSeconds(60);
+        executor.setMaxPoolSize(10);
+        executor.setQueueCapacity(20);
+        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy());
+        executor.setThreadFactory(new ThreadFactoryBuilder().setNameFormat("batch_%d").build());
+        executor.initialize();
+        return executor;
+    }
+
 
 /* MyBatisBatchItemWriter<User> itemWriter = new MyBatisBatchItemWriter<>();
         itemWriter.setSqlSessionFactory(primarySqlSessionFactory);

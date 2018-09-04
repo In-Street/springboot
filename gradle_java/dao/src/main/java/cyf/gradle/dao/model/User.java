@@ -48,6 +48,7 @@ public class User implements Serializable, Cloneable {
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
+                ", pwd='" + pwd + '\'' +
                 '}';
     }
 
