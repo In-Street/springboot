@@ -3,6 +3,7 @@ package cyf.gradle.batch.configuration;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.Maps;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import cyf.gradle.dao.model.ClubUserDailyStat;
 import cyf.gradle.dao.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.ChunkListener;
@@ -260,6 +261,54 @@ public class BatchConfig {
     }
 
     @Bean
+    public Step stepThree() throws Exception {
+
+        MySqlPagingQueryProvider provider = new MySqlPagingQueryProvider();
+        provider.setSelectClause("id,user_id,user_type,date,recommend_num,be_liked_num,like_num,dislike_num,location,active_time,create_time,modify_time");
+        provider.setFromClause("club_user_daily_stat_history");
+        Map<String, Order> sortKeyMap = Maps.newHashMapWithExpectedSize(1);
+        sortKeyMap.put("id", Order.ASCENDING);
+        provider.setSortKeys(sortKeyMap);
+//        provider.setWhereClause("date = ?");
+        provider.setWhereClause("id > ?");
+
+        BeanPropertyRowMapper<ClubUserDailyStat> beanPropertyRowMapper = BeanPropertyRowMapper.newInstance(ClubUserDailyStat.class);
+        JdbcPagingItemReader<ClubUserDailyStat> itemReader = new JdbcPagingItemReader<>();
+        itemReader.setDataSource(primaryDataSource);
+        itemReader.setQueryProvider(provider);
+        itemReader.setRowMapper(beanPropertyRowMapper);
+        itemReader.setPageSize(5);
+        //provider where条件的传参
+        Map ParameterValuesMap = new HashMap(1);
+//        ParameterValuesMap.put("date", "2018-06-23");
+        ParameterValuesMap.put("id", "6586");
+        itemReader.setParameterValues(ParameterValuesMap);
+        itemReader.afterPropertiesSet();
+
+        BeanPropertyItemSqlParameterSourceProvider sourceProvider = new BeanPropertyItemSqlParameterSourceProvider();
+        JdbcBatchItemWriter itemWriter = new JdbcBatchItemWriter();
+        itemWriter.setDataSource(primaryDataSource);
+        itemWriter.setSql("insert into club_user_daily_stat (id,user_id,user_type,date,recommend_num,be_liked_num,like_num,dislike_num,location,active_time,create_time,modify_time)values (:id,:userId,:userType,:date,:recommendNum,:beLikedNum,:likeNum,:dislikeNum,:location,:activeTime,:createTime,:modifyTime) ");
+        itemWriter.setItemSqlParameterSourceProvider(sourceProvider);
+        itemWriter.afterPropertiesSet();
+
+
+        /*Function<User, User> processorFunction = process -> {
+            process.setPwd(process.getUsername() + "_S");
+            return process;
+        };*/
+        TaskletStep step = stepBuilderFactory.get("stepThree")
+                .<ClubUserDailyStat, ClubUserDailyStat>chunk(10)
+                .reader(itemReader)
+//                .processor(processorFunction)
+                .writer(itemWriter)
+                //异步线程并发执行
+//                .taskExecutor(taskExecutor())
+                .build();
+        return step;
+    }
+
+    @Bean
     public Job jobOne() throws Exception {
         Job jobOne = jobBuilderFactory.get("jobOne")
                 .listener(new JobExecutionListener() {
@@ -278,8 +327,8 @@ public class BatchConfig {
                         executions.stream().forEach(stepExecution -> log.debug("Step:{}，ReadCount：{}，CommitCount：{}", stepExecution.getStepName(),stepExecution.getReadCount(), stepExecution.getCommitCount()));
                     }
                 })
-                .start(stepOne())
-                .next(stepTwo())
+                .start(stepThree())
+//                .next(stepTwo())
                 .build();
         return jobOne;
     }

@@ -13,4 +13,5 @@ include 'webflux'
 include 'interview'
 include 'websocket'
 include 'batch'
+include 'miniapp'
 
