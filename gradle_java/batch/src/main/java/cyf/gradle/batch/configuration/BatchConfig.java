@@ -1,34 +1,28 @@
 package cyf.gradle.batch.configuration;
 
-import com.google.common.base.Stopwatch;
 import com.google.common.collect.Maps;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import cyf.gradle.dao.model.ClubUserDailyStat;
+import cyf.gradle.dao.model.UDaily;
 import cyf.gradle.dao.model.User;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.batch.core.ChunkListener;
-import org.springframework.batch.core.ExitStatus;
-import org.springframework.batch.core.ItemReadListener;
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.mybatis.spring.batch.MyBatisBatchItemWriter;
+import org.mybatis.spring.batch.MyBatisPagingItemReader;
 import org.springframework.batch.core.ItemWriteListener;
 import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobExecution;
-import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.StepContribution;
-import org.springframework.batch.core.StepExecution;
-import org.springframework.batch.core.StepExecutionListener;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.core.scope.context.ChunkContext;
-import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.core.step.tasklet.TaskletStep;
 import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.database.JdbcPagingItemReader;
 import org.springframework.batch.item.database.Order;
 import org.springframework.batch.item.database.support.MySqlPagingQueryProvider;
-import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,14 +30,10 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import javax.sql.DataSource;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 /**
@@ -120,6 +110,9 @@ public class BatchConfig {
 
     @Autowired
     private StepBuilderFactory stepBuilderFactory;
+
+    @Autowired
+    private SqlSessionFactory primarySqlSessionFactory;
 
     @Autowired
     private JobBuilderFactory jobBuilderFactory;
@@ -270,18 +263,18 @@ public class BatchConfig {
         sortKeyMap.put("id", Order.ASCENDING);
         provider.setSortKeys(sortKeyMap);
 //        provider.setWhereClause("date = ?");
-        provider.setWhereClause("id > ?");
+        provider.setWhereClause("id < ?");
 
         BeanPropertyRowMapper<ClubUserDailyStat> beanPropertyRowMapper = BeanPropertyRowMapper.newInstance(ClubUserDailyStat.class);
         JdbcPagingItemReader<ClubUserDailyStat> itemReader = new JdbcPagingItemReader<>();
         itemReader.setDataSource(primaryDataSource);
         itemReader.setQueryProvider(provider);
         itemReader.setRowMapper(beanPropertyRowMapper);
-        itemReader.setPageSize(5);
+        itemReader.setPageSize(1000);
         //provider where条件的传参
         Map ParameterValuesMap = new HashMap(1);
-//        ParameterValuesMap.put("date", "2018-06-23");
-        ParameterValuesMap.put("id", "6586");
+//        ParameterValuesMap.put("date", "2018-06-21");
+        ParameterValuesMap.put("id", 108363);
         itemReader.setParameterValues(ParameterValuesMap);
         itemReader.afterPropertiesSet();
 
@@ -293,41 +286,76 @@ public class BatchConfig {
         itemWriter.afterPropertiesSet();
 
 
-        /*Function<User, User> processorFunction = process -> {
-            process.setPwd(process.getUsername() + "_S");
-            return process;
-        };*/
         TaskletStep step = stepBuilderFactory.get("stepThree")
-                .<ClubUserDailyStat, ClubUserDailyStat>chunk(10)
+                .<ClubUserDailyStat, ClubUserDailyStat>chunk(500)
                 .reader(itemReader)
-//                .processor(processorFunction)
                 .writer(itemWriter)
                 //异步线程并发执行
-//                .taskExecutor(taskExecutor())
+                .taskExecutor(taskExecutor())
                 .build();
         return step;
     }
 
     @Bean
+    public Step stepFour() throws Exception {
+
+        Map readParameter = new HashMap(1);
+        readParameter.put("endId", 6587);
+
+        MyBatisPagingItemReader<ClubUserDailyStat> itemReader = new MyBatisPagingItemReader<>();
+        itemReader.setSqlSessionFactory(primarySqlSessionFactory);
+        itemReader.setQueryId("cyf.gradle.dao.mapper.UDUserDailyMapper.selectByIDRange");
+        itemReader.setParameterValues(readParameter);
+        itemReader.setPageSize(1000);
+        itemReader.afterPropertiesSet();
+
+        MyBatisBatchItemWriter<ClubUserDailyStat> itemWriter = new MyBatisBatchItemWriter<>();
+        itemWriter.setSqlSessionFactory(primarySqlSessionFactory);
+        //SqlSessionTemplate 需开启BATCH模式，默认是SIMPLE
+        SqlSessionTemplate primarySqlSessionTemplate = new SqlSessionTemplate(primarySqlSessionFactory, ExecutorType.BATCH);
+        itemWriter.setSqlSessionTemplate(primarySqlSessionTemplate);
+        itemWriter.setStatementId("cyf.gradle.dao.mapper.UDUserDailyMapper.insert");
+        itemWriter.setAssertUpdates(false);
+        itemWriter.afterPropertiesSet();
+
+       /* Function<List<ClubUserDailyStat>, UDaily> processorFunction = process -> {
+            UDaily uDaily = new UDaily();
+            uDaily.setList(process);
+            return uDaily;
+        };*/
+
+        TaskletStep step = stepBuilderFactory.get("stepFour")
+                .<ClubUserDailyStat, ClubUserDailyStat>chunk(500)
+                .reader(itemReader)
+//                .processor(processorFunction)
+                .writer(itemWriter)
+                //异步线程并发执行
+                .taskExecutor(taskExecutor())
+                .build();
+        return step;
+
+    }
+
+    @Bean
     public Job jobOne() throws Exception {
         Job jobOne = jobBuilderFactory.get("jobOne")
-                .listener(new JobExecutionListener() {
-                    Stopwatch stopwatch = null;
+                /* .listener(new JobExecutionListener() {
+                     Stopwatch stopwatch = null;
 
-                    @Override
-                    public void beforeJob(JobExecution jobExecution) {
-                        stopwatch = Stopwatch.createStarted();
-                    }
+                     @Override
+                     public void beforeJob(JobExecution jobExecution) {
+                         stopwatch = Stopwatch.createStarted();
+                     }
 
-                    @Override
-                    public void afterJob(JobExecution jobExecution) {
-                        log.info("jobOne耗时：{} ms", stopwatch.elapsed(TimeUnit.MILLISECONDS));
-                        Collection<StepExecution> executions = jobExecution.getStepExecutions();
-                        //每个Step 的读取总数及据chunkSize大小得出的提交次数
-                        executions.stream().forEach(stepExecution -> log.debug("Step:{}，ReadCount：{}，CommitCount：{}", stepExecution.getStepName(),stepExecution.getReadCount(), stepExecution.getCommitCount()));
-                    }
-                })
-                .start(stepThree())
+                     @Override
+                     public void afterJob(JobExecution jobExecution) {
+                         log.info("jobOne耗时：{} s", stopwatch.elapsed(TimeUnit.SECONDS));
+                         Collection<StepExecution> executions = jobExecution.getStepExecutions();
+                         //每个Step 的读取总数及据chunkSize大小得出的提交次数
+                         executions.stream().forEach(stepExecution -> log.debug("Step:{}，ReadCount：{}，CommitCount：{}", stepExecution.getStepName(),stepExecution.getReadCount(), stepExecution.getCommitCount()));
+                     }
+                 })*/
+                .start(stepFour())
 //                .next(stepTwo())
                 .build();
         return jobOne;
@@ -341,7 +369,7 @@ public class BatchConfig {
         executor.setCorePoolSize(8);
         executor.setKeepAliveSeconds(60);
         executor.setMaxPoolSize(10);
-        executor.setQueueCapacity(20);
+        executor.setQueueCapacity(50);
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy());
         executor.setThreadFactory(new ThreadFactoryBuilder().setNameFormat("batch_%d").build());
         executor.initialize();
@@ -349,20 +377,4 @@ public class BatchConfig {
     }
 
 
-/* MyBatisBatchItemWriter<User> itemWriter = new MyBatisBatchItemWriter<>();
-        itemWriter.setSqlSessionFactory(primarySqlSessionFactory);
-
-        //SqlSessionTemplate 需开启BATCH模式，默认是SIMPLE
-        SqlSessionTemplate primarySqlSessionTemplate = new SqlSessionTemplate(primarySqlSessionFactory,ExecutorType.BATCH);
-        itemWriter.setSqlSessionTemplate(primarySqlSessionTemplate);
-        itemWriter.setStatementId("cyf.gradle.dao.mapper.UserMapper.updateByPrimaryKeySelective");
-        itemWriter.afterPropertiesSet();*/
-
-       /* Map<String, Object> map = new HashMap<>();
-        map.put("");
-        map.put("");
-
-        PreparedStatement ps = new HikariProxyPreparedStatement();
-        ColumnMapItemPreparedStatementSetter statementSetter = new ColumnMapItemPreparedStatementSetter();
-        statementSetter.setValues();*/
 }

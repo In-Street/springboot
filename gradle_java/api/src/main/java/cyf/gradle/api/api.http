@@ -23,8 +23,13 @@ GET {{url}}/proxy/jdk?msg=taylor
 Accept: */*
 Cache-Control: no-cache
 
-### batch
+### batch 10w 130s
 GET {{url}}/batch/execute
+Accept: */*
+Cache-Control: no-cache
+
+### batch 10w 75s
+GET {{url}}/batch/commExecute
 Accept: */*
 Cache-Control: no-cache
 

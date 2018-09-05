@@ -1,6 +1,7 @@
 package cyf.gradle.batch.service;
 
 import com.google.common.base.Stopwatch;
+import cyf.gradle.dao.mapper.UDUserDailyMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
@@ -37,9 +38,14 @@ public class BatchService {
     @Autowired
     private Job jobOne;
 
+    @Autowired
+    private UDUserDailyMapper udUserDailyMapper;
+
 
 //    @Scheduled(cron = "0 0/1 * * * ?")
     public void launch() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
+
+        Stopwatch stopwatch = Stopwatch.createStarted();
 
         log.info("<====batch任务开始====>");
         /**
@@ -50,11 +56,12 @@ public class BatchService {
                 .toJobParameters();
 
 
-
-
         jobLauncher.run(jobOne, parameters);
 
-        log.info("<====batch任务结束====>");
+        log.info("<====batch任务结束，耗时：{} s====>",stopwatch.elapsed(TimeUnit.SECONDS));
     }
 
+   /* public void write() {
+        udUserDailyMapper.selectByIDRange();
+    }*/
 }

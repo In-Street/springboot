@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cyf.gradle.dao.mapper.UDUserDailyMapper">
+
+  <insert id="insertHistoryList" parameterType="java.util.List">
+    insert into club_user_daily_stat
+    (id,
+    user_id,user_type,date,recommend_num,be_liked_num, like_num, dislike_num ,location ,active_time ,create_time, modify_time
+    )
+    values
+    <foreach collection="list" item="target" index="index" open="(" close=")" separator="),(">
+      #{target.id,jdbcType=INTEGER},
+      #{target.userId,jdbcType=INTEGER},
+      #{target.userType,jdbcType=INTEGER},
+      #{target.date,jdbcType=VARCHAR},
+      #{target.recommendNum,jdbcType=INTEGER},
+      #{target.beLikedNum,jdbcType=INTEGER},
+      #{target.likeNum,jdbcType=INTEGER},
+      #{target.dislikeNum,jdbcType=INTEGER},
+      #{target.location,jdbcType=VARCHAR},
+      #{target.activeTime,jdbcType=TIMESTAMP},
+      #{target.createTime,jdbcType=TIMESTAMP},
+      #{target.modifyTime,jdbcType=TIMESTAMP}
+    </foreach>
+  </insert>
+
+    <insert id="insert" parameterType="cyf.gradle.dao.model.ClubUserDailyStat">
+        insert into club_user_daily_stat
+        (id,
+        user_id,user_type,date,recommend_num,be_liked_num, like_num, dislike_num ,location ,active_time ,create_time, modify_time
+        )
+        values(
+            #{id,jdbcType=INTEGER},
+            #{userId,jdbcType=INTEGER},
+            #{userType,jdbcType=INTEGER},
+            #{date,jdbcType=VARCHAR},
+            #{recommendNum,jdbcType=INTEGER},
+            #{beLikedNum,jdbcType=INTEGER},
+            #{likeNum,jdbcType=INTEGER},
+            #{dislikeNum,jdbcType=INTEGER},
+            #{location,jdbcType=VARCHAR},
+            #{activeTime,jdbcType=TIMESTAMP},
+            #{createTime,jdbcType=TIMESTAMP},
+            #{modifyTime,jdbcType=TIMESTAMP})
+    </insert>
+
+
+    <resultMap id="BaseResultMap" type="cyf.gradle.dao.model.ClubUserDailyStat">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="user_id" jdbcType="INTEGER" property="userId" />
+        <result column="user_type" jdbcType="INTEGER" property="userType" />
+        <result column="date" jdbcType="VARCHAR" property="date" />
+        <result column="recommend_num" jdbcType="INTEGER" property="recommendNum" />
+        <result column="be_liked_num" jdbcType="INTEGER" property="beLikedNum" />
+        <result column="like_num" jdbcType="INTEGER" property="likeNum" />
+        <result column="dislike_num" jdbcType="INTEGER" property="dislikeNum" />
+        <result column="location" jdbcType="VARCHAR" property="location" />
+        <result column="active_time" jdbcType="TIMESTAMP" property="activeTime" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id, user_id, user_type, date, recommend_num, be_liked_num, like_num, dislike_num,
+    location, active_time, create_time, modify_time
+  </sql>
+
+    <select id="selectMaxIdDaily" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select max(id)
+        from club_user_daily_stat where date = #{nowString,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectMinIdDaily" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select min(id)
+        from club_user_daily_stat where date = #{nowString,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByIDRangeDaily" resultMap="BaseResultMap"
+            parameterType="cyf.gradle.dao.model.UDaily">
+        select
+        <include refid="Base_Column_List" />
+        from club_user_daily_stat_history club_user_daily_stat_history
+        where
+        club_user_daily_stat_history.id>=#{id,jdbcType=INTEGER} and club_user_daily_stat_history.id &lt; #{endId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByIDRange" resultMap="BaseResultMap"
+            parameterType="java.lang.Integer" resultType="java.util.List">
+        select
+        <include refid="Base_Column_List" />
+        from club_user_daily_stat_history club_user_daily_stat_history
+        where
+        club_user_daily_stat_history.id &lt; #{endId,jdbcType=INTEGER} limit #{_skiprows}, #{_pagesize}
+    </select>
+
+    <update id="updateUser">
+
+	   update club_user set be_liked_num = case id
+        <foreach collection="targetList" item="target" index="index">
+            when #{target.id} then be_liked_num + #{target.value}
+        </foreach>
+        END
+        where id in (
+        <foreach collection="targetList" item="target" index="index" separator=",">
+            #{target.id}
+        </foreach>
+        )
+  </update>
+
+
+</mapper>

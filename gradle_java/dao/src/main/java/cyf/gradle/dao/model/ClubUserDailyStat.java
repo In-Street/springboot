@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author 
@@ -56,6 +57,8 @@ public class ClubUserDailyStat implements Serializable {
     private Date createTime;
 
     private Date modifyTime;
+
+//    private List<ClubUserDailyStat> list;
 
     private static final long serialVersionUID = 1L;
 
