@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -406,6 +407,17 @@ public class TestHome {
             return o;
         });
         System.out.println(dto);
+    }
+
+    @Test
+    public void sys() {
+        int i = Runtime.getRuntime().availableProcessors();
+        System.out.println(i);
+
+        AtomicInteger count = new AtomicInteger(1);
+        System.out.println(count.get());
+//        System.out.println(count.getAndIncrement()+"------"+count.get());
+        System.out.println(count.incrementAndGet()+"------"+count.get());
     }
 
 }

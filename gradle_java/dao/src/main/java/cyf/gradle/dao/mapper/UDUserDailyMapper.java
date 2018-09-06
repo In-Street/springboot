@@ -13,7 +13,6 @@ import java.util.List;
 public interface UDUserDailyMapper {
 
     Integer insertHistoryList(/*@Param("list") */List<ClubUserDailyStat> list);
-//    Integer insertHistoryList(/*@Param("list") */UDaily uDaily);
     Integer insert( ClubUserDailyStat clubUserDailyStat);
 
     Integer selectMaxIdDaily(@Param("nowString") String nowString);
