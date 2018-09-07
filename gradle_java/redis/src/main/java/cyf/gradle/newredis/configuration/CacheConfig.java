@@ -1,8 +1,7 @@
 package cyf.gradle.newredis.configuration;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.alibaba.fastjson.support.spring.GenericFastJsonRedisSerializer;
+import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
@@ -10,13 +9,15 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializationContext;
 
 import java.lang.reflect.Method;
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Cheng Yufei
@@ -53,33 +54,43 @@ public class CacheConfig extends CachingConfigurerSupport {
         };
     }
 
-    //第二步执行
     @Bean
-    public CacheManager cacheManager(RedisTemplate redisTemplate) {
-       /* RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate);
-        // 设置 key-value 超时时间 ，在redis中存在时间
-        cacheManager.setDefaultExpiration(10);
+    public CacheManager cacheManager(RedisConnectionFactory factory) {
+
+        GenericFastJsonRedisSerializer serializer = new GenericFastJsonRedisSerializer();
+
+        RedisSerializationContext.SerializationPair serializationPair = RedisSerializationContext.SerializationPair.fromSerializer(serializer);
+
+        RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig()
+                //不存储空值
+                .disableCachingNullValues()
+                //有效时间
+                .entryTtl(Duration.ofMinutes(1))
+                // 将存储的value值序列化，否则有乱码
+                .serializeValuesWith(serializationPair);
+
+
+        Map<String, RedisCacheConfiguration> map = new HashMap<>(1);
+        //针对Set种不同cache存储空间，对应各自的 configuration 配置
+        map.put("my_redis_cache", configuration);
+
+        RedisCacheManager cacheManager = RedisCacheManager.builder(factory)
+
+                //此值需与方法缓存注解的value值一致；可设置多种cache名存储空间（my_redis_cache_2等），存储不同需求的值
+                .initialCacheNames(Sets.newHashSet("my_redis_cache"))
+                .withInitialCacheConfigurations(map)
+                .build();
+
         return cacheManager;
-*/
-return null;
     }
 
-    //第一步执行
-    @Bean
-    public RedisTemplate<String,String> redisTemplate(RedisConnectionFactory factory) {
-        StringRedisTemplate template = new StringRedisTemplate(factory);
-        setSerializer(template); //设置序列化工具，这样Bean不需要实现Serializable接口
-        template.afterPropertiesSet();
-        return template;
 
-    }
-
-    private void setSerializer(StringRedisTemplate template) {
+   /* private void setSerializer(StringRedisTemplate template) {
         Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
         ObjectMapper om = new ObjectMapper();
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
         jackson2JsonRedisSerializer.setObjectMapper(om);
         template.setValueSerializer(jackson2JsonRedisSerializer);
-    }
+    }*/
 }

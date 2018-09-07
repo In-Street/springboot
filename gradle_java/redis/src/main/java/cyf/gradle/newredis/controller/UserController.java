@@ -2,12 +2,16 @@ package cyf.gradle.newredis.controller;
 
 import cyf.gradle.newredis.annotation.LogConfig;
 import cyf.gradle.newredis.en.OperaType;
+import cyf.gradle.newredis.module.Kerr2;
 import cyf.gradle.newredis.module.User;
 import cyf.gradle.newredis.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @author Cheng Yufei
@@ -25,4 +29,10 @@ public class UserController {
     public User getUser(@PathVariable Integer id,@PathVariable String username,@PathVariable String pwd) {
         return userService.getUserS(id,username,pwd);
     }
+
+    @GetMapping("/kerrs")
+    public List<Kerr2> getList() {
+        return userService.getKerr2();
+    }
+
 }

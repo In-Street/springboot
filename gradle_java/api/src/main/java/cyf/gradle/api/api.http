@@ -18,6 +18,12 @@ GET {{url}}/event/post
 Accept: */*
 Cache-Control: no-cache
 
+
+### api 事务
+GET {{url}}/transaction/test
+Accept: */*
+Cache-Control: no-cache
+
 ### interview 代理
 GET {{url}}/proxy/jdk?msg=taylor
 Accept: */*
@@ -33,9 +39,13 @@ GET {{url}}/batch/commExecute
 Accept: */*
 Cache-Control: no-cache
 
-### 事务
-GET {{url}}/transaction/test
+### redis
+GET {{url}}/newredis/user/getUser/2/Tay/Tay
 Accept: */*
 Cache-Control: no-cache
 
+### redis
+GET {{url}}/newredis/user/kerrs
+Accept: */*
+Cache-Control: no-cache
 ###

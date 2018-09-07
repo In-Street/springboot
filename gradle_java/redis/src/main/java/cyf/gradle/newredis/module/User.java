@@ -1,13 +1,22 @@
 package cyf.gradle.newredis.module;
 
-import lombok.Data;
+import lombok.*;
+
+import java.io.Serializable;
 
 /**
  * @author Cheng Yufei
  * @create 2017-10-30 17:04
  **/
-@Data
-public class User {
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+public class User implements Serializable {
+
+
+    private static final long serialVersionUID = 7503371984380217250L;
 
     private Integer id;
 
@@ -15,12 +24,5 @@ public class User {
 
     private String pwd;
 
-    public User() {
-    }
 
-    public User(Integer id, String username, String pwd) {
-        this.id = id;
-        this.username = username;
-        this.pwd = pwd;
-    }
 }
