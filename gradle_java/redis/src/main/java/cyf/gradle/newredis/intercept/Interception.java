@@ -17,12 +17,14 @@ public class Interception implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        HandlerMethod handlerMethod = (HandlerMethod) handler;
+        if (handler instanceof HandlerMethod) {
+            HandlerMethod handlerMethod = (HandlerMethod) handler;
 
-        LogConfig annotation = handlerMethod.getMethodAnnotation(LogConfig.class);
-        if (null != annotation) {
-            OperaType opera = annotation.opera();
-            request.setAttribute("OperaType-Name",opera.getName());
+            LogConfig annotation = handlerMethod.getMethodAnnotation(LogConfig.class);
+            if (null != annotation) {
+                OperaType opera = annotation.opera();
+                request.setAttribute("OperaType-Name",opera.getName());
+            }
         }
 
         return true;

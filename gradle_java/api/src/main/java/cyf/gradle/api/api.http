@@ -48,4 +48,10 @@ Cache-Control: no-cache
 GET {{url}}/newredis/user/kerrs
 Accept: */*
 Cache-Control: no-cache
+
+### redis - delay
+GET {{url}}/newredis/user/delay
+Accept: */*
+Cache-Control: no-cache
+
 ###

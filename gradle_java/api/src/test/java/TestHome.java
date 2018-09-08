@@ -25,6 +25,8 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
+import java.text.MessageFormat;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -417,7 +419,11 @@ public class TestHome {
         AtomicInteger count = new AtomicInteger(1);
         System.out.println(count.get());
 //        System.out.println(count.getAndIncrement()+"------"+count.get());
-        System.out.println(count.incrementAndGet()+"------"+count.get());
+        System.out.println(count.incrementAndGet() + "------" + count.get());
+
+        System.out.println(MessageFormat.format("时间：{0}", System.currentTimeMillis()));
     }
+
+
 
 }

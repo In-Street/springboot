@@ -35,4 +35,9 @@ public class UserController {
         return userService.getKerr2();
     }
 
+    @GetMapping("/delay")
+    public void delay() {
+        userService.delay();
+    }
+
 }

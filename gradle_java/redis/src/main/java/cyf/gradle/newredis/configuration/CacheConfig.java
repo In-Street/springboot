@@ -2,6 +2,7 @@ package cyf.gradle.newredis.configuration;
 
 import com.alibaba.fastjson.support.spring.GenericFastJsonRedisSerializer;
 import com.google.common.collect.Sets;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
@@ -12,12 +13,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 
 import java.lang.reflect.Method;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.*;
 
 /**
  * @author Cheng Yufei
@@ -93,4 +96,37 @@ public class CacheConfig extends CachingConfigurerSupport {
         jackson2JsonRedisSerializer.setObjectMapper(om);
         template.setValueSerializer(jackson2JsonRedisSerializer);
     }*/
+
+    /**
+     * redistemplate key、value 序列化
+     * @param redisTemplate
+     * @return
+     */
+   @Bean
+   public RedisTemplate serializeRedistemplate(RedisTemplate redisTemplate) {
+       GenericFastJsonRedisSerializer serializer = new GenericFastJsonRedisSerializer();
+
+       redisTemplate.setKeySerializer(serializer);
+       redisTemplate.setValueSerializer(serializer);
+       return redisTemplate;
+   }
+
+    @Bean(name = "threadPoolExecutor")
+    public ThreadPoolExecutor getThreadPoolExecutor() {
+
+        ThreadFactory build = new ThreadFactoryBuilder().setNameFormat("demo_pool_%d").build();
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(2, 5,
+                60, TimeUnit.SECONDS,
+                new LinkedBlockingQueue<>(20), build, new ThreadPoolExecutor.AbortPolicy());
+
+        return threadPoolExecutor;
+    }
+
+    @Bean(name="scheduleThreadPool")
+    public ScheduledThreadPoolExecutor getScheduleThread() {
+
+        ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("schedule_thread_%d").build();
+        ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(2, threadFactory, new ThreadPoolExecutor.AbortPolicy());
+        return executor;
+    }
 }
