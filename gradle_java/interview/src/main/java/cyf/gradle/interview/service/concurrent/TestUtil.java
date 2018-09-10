@@ -3,6 +3,7 @@ package cyf.gradle.interview.service.concurrent;
 import cyf.gradle.interview.modle.User;
 
 /**
+ * 枚举单例并初始化必要数据
  * @author Cheng Yufei
  * @create 2018-09-10 下午8:57
  **/
