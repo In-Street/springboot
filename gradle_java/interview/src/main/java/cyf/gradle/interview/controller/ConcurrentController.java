@@ -2,6 +2,7 @@ package cyf.gradle.interview.controller;
 
 import cyf.gradle.interview.service.concurrent.SingleEnumDemo;
 import cyf.gradle.interview.service.concurrent.SynChronizedService;
+import cyf.gradle.interview.service.concurrent.TestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +37,10 @@ public class ConcurrentController {
         System.out.println(list);
     }
 
+    @GetMapping("/singleton")
+    public void singleton() {
+      TestUtil.getInstance().send();
 
+    }
 
 }
