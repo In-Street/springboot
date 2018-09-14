@@ -33,6 +33,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -424,6 +425,18 @@ public class TestHome {
         System.out.println(MessageFormat.format("时间：{0}", System.currentTimeMillis()));
     }
 
+    @Test
+    public void bifunction() {
+        //双入参单出
+        BiFunction<String, String, String> function = (k, v) -> {
+            return k + v;
+        };
+
+        String apply = function.apply("A", "B");
+        System.out.println(apply);
+
+
+    }
 
 
 }

@@ -66,12 +66,7 @@ public class DelayConsumer {
 
     public void scan() {
         //每个5秒检测一次
-        scheduleThreadPool.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                consumer();
-            }
-        }, 0, 5, TimeUnit.SECONDS);
+        scheduleThreadPool.scheduleAtFixedRate(() -> consumer(), 0, 5, TimeUnit.SECONDS);
 
     }
 }
