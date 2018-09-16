@@ -59,4 +59,13 @@ GET {{url}}/newredis/user/delay
 Accept: */*
 Cache-Control: no-cache
 
+### mq - common
+GET {{url}}/send
+Accept: */*
+Cache-Control: no-cache
+
+### mq 延时
+GET {{url}}/sendDelay
+Accept: */*
+Cache-Control: no-cache
 ###

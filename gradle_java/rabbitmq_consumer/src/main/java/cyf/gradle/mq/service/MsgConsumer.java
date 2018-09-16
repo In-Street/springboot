@@ -22,10 +22,10 @@ public class MsgConsumer {
 
 
 
-    @RabbitListener(queues = Constants.AMQP_QUEUE_MSG)
+    @RabbitListener(queues = Constants.COMMON_QUEUE)
     public void msgConsumer(String json, Channel channel, Message message) {
         String time = FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(new Date());
-        LogUtil.debug(log, "正常消息处理：时间：{} 消息体：{} threadlocal：{}", time, json, Thread.currentThread().getId());
+        LogUtil.debug(log, "正常消息处理：时间：{} 消息体：{} threadlocal：{}", time, json, Thread.currentThread().getName());
         System.out.println(json);
 //        parallelStream().forEachOrdered
         try {
@@ -42,10 +42,10 @@ public class MsgConsumer {
 
     }
 
-    @RabbitListener(queues = Constants.AMQP_QUEUE_DELAY)
+    @RabbitListener(queues = Constants.DELAY_QUEUE)
     public void delayConsumer(String json, Channel channel, Message message) {
         String time = FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(new Date());
-        LogUtil.debug(log, "延时消息处理：时间：{} 消息体：{} threadlocal：{}", time, json, Thread.currentThread().getId());
+        LogUtil.debug(log, "延时消息处理：时间：{} 消息体：{} threadlocal：{}", time, json, Thread.currentThread().getName());
         System.out.println(json);
         try {
             // 配置文件中为手动应答，所以这里需 应答

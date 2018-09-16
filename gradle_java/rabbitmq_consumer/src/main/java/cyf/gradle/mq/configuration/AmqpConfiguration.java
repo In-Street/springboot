@@ -32,43 +32,55 @@ public class AmqpConfiguration {
     public AmqpConfiguration(AmqpAdmin amqpAdmin) {
 
         //交换机
-        Exchange msgExchange = ExchangeBuilder.directExchange(Constants.AMQP_EXCHANGE_MSG).durable(true).build();
+        Exchange commonExchange = ExchangeBuilder.directExchange(Constants.COMMON_EXCHANGE).durable(true).build();
 
         //队列
-        Queue msgQueue = new Queue(Constants.AMQP_QUEUE_MSG);
+        Queue commonQueue = new Queue(Constants.COMMON_QUEUE);
 
         //绑定 - 使用 BindingBuilder 也是根据 new Binding() 进行创建
-        Binding msgBinding = BindingBuilder.bind(msgQueue).to(msgExchange).with(Constants.AMQP_ROUTING_KEY_MSG).noargs();
+        Binding commonBind = BindingBuilder.bind(commonQueue).to(commonExchange).with(Constants.COMMON_ROUTING_KEY).noargs();
+
+        // 普通交换机、普通队列、普通routing-key 的声明绑定
+        amqpAdmin.declareExchange(commonExchange);
+        amqpAdmin.declareQueue(commonQueue);
+        amqpAdmin.declareBinding(commonBind);
+
+        /**
+         * mq 并没有延时设定，可通过死信实现。
+         *
+         * 将消息发入死信队列（通过额外参数设定存活时间、时间到了后发入进行消费的交换机和队列），在消息存活时间内不进行消费（延时过程）。
+         *
+         * 时间到了之后，由死信队列 额外参数map 指定routing-key 对应得队列进行消费。
+         *
+         */
+
+        //死信交换机
+        Exchange deadLetterExchange = ExchangeBuilder.directExchange(Constants.DEAD_LETTER_EXCHANGE_).durable(true).build();
 
         //死信队列参数设置
         Map<String, Object> map = Maps.newHashMap();
+        //消息存活时间 60s
         map.put("x-message-ttl", 60000);
-        map.put("x-dead-letter-exchange", Constants.AMQP_EXCHANGE_DEAD_LETTER);
-        map.put("x-dead-letter-routing-key", Constants.AMQP_ROUTING_KEY_DEAD_LETTER);
+        //存活时间过后，指定发入消费的交换机和 延时消费队列的routing-key
+        map.put("x-dead-letter-exchange", Constants.DEAD_LETTER_EXCHANGE_);
+        map.put("x-dead-letter-routing-key", Constants.DELAY_ROUTING_KEY);
         //死信队列
-        Queue deadLetterQueue = new Queue(Constants.AMQP_QUEUE_DEAD_LETTER,true,false,false,map);
-        //死信队列 绑定其他正常交换机及routing key
-        Binding deadLetterQueueBind = BindingBuilder.bind(deadLetterQueue).to(msgExchange).with(Constants.AMQP_ROUTING_KEY_MSG).noargs();
-
-
-        amqpAdmin.declareExchange(msgExchange);
-        amqpAdmin.declareQueue(msgQueue);
-        amqpAdmin.declareBinding(msgBinding);
-        /*amqpAdmin.declareQueue(deadLetterQueue);
-        amqpAdmin.declareBinding(deadLetterQueueBind);*/
-
-        //死信交换机
-        Exchange deadLetterExchange = ExchangeBuilder.directExchange(Constants.AMQP_EXCHANGE_DEAD_LETTER).durable(true).build();
-
-        //延时队列处理死信
-        Queue delayQueue = new Queue(Constants.AMQP_QUEUE_DELAY);
-
-        Binding delayQueueBind = BindingBuilder.bind(delayQueue).to(deadLetterExchange).with(Constants.AMQP_ROUTING_KEY_DEAD_LETTER).noargs();
-
-
+        Queue deadLetterQueue = new Queue(Constants.DEAD_LETTER_QUEUE,true,false,false,map);
+        //死信队列 绑定死信交换机及key
+        Binding deadLetterBind = BindingBuilder.bind(deadLetterQueue).to(deadLetterExchange).with(Constants.DEAD_LETTER_ROUTING_KEY).noargs();
 
         amqpAdmin.declareExchange(deadLetterExchange);
+        amqpAdmin.declareQueue(deadLetterQueue);
+        amqpAdmin.declareBinding(deadLetterBind);
+
+
+
+        //延时队列处理死信队列中到期的消息
+        Queue delayQueue = new Queue(Constants.DELAY_QUEUE);
+
+        Binding delayBind = BindingBuilder.bind(delayQueue).to(deadLetterExchange).with(Constants.DELAY_ROUTING_KEY).noargs();
+
         amqpAdmin.declareQueue(delayQueue);
-        amqpAdmin.declareBinding(delayQueueBind);
+        amqpAdmin.declareBinding(delayBind);
     }
 }

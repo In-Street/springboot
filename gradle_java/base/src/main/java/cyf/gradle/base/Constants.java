@@ -16,15 +16,19 @@ public interface Constants {
     /**
      *  queue - 普通消息
      */
-    String AMQP_EXCHANGE_MSG = "amqp_exchange_msg";
-    String AMQP_QUEUE_MSG = "amqp_queue_msg";
-    String AMQP_ROUTING_KEY_MSG = "amqp_routing_key_queue_msg";
+    String COMMON_EXCHANGE = "common_exchange";
+    String COMMON_QUEUE = "common_queue";
+    String COMMON_ROUTING_KEY = "common_routing_key";
 
+    /**
+     * 死信
+     */
+    String DEAD_LETTER_EXCHANGE_ = "dead_letter_exchange";
+    String DEAD_LETTER_ROUTING_KEY = "dead_letter_routing_key";
+    String DEAD_LETTER_QUEUE= "dead_letter_queue";
     /**
      * 延时
      */
-    String AMQP_EXCHANGE_DEAD_LETTER = "amqp_exchange_dead_letter";
-    String AMQP_ROUTING_KEY_DEAD_LETTER = "amqp_routing_key_dead_letter";
-    String AMQP_QUEUE_DEAD_LETTER = "amqp_queue_dead_letter";
-    String AMQP_QUEUE_DELAY = "amqp_queue_delay";
+    String DELAY_QUEUE = "delay_queue";
+    String DELAY_ROUTING_KEY = "delay_routing_key";
 }

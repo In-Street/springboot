@@ -34,8 +34,8 @@ public class MsgSendController {
         messageDto.setType(MessageDto.Type.TOPIC);
         String jsonString = FastJsonUtils.toJSONString(messageDto);
         String time = FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(new Date());
-        LogUtil.debug(log, "发送正常消息：时间：{} 消息体：{} threadlocal：{}", time, jsonString,Thread.currentThread().getId());
-        amqpTemplate.convertAndSend(Constants.AMQP_EXCHANGE_MSG, Constants.AMQP_ROUTING_KEY_MSG, jsonString);
+        LogUtil.debug(log, "发送正常消息：时间：{} , 消息体：{}  , threadlocal：{}", time, jsonString,Thread.currentThread().getName());
+        amqpTemplate.convertAndSend(Constants.COMMON_EXCHANGE, Constants.COMMON_ROUTING_KEY, jsonString);
         return new Response();
     }
 
@@ -46,8 +46,8 @@ public class MsgSendController {
         messageDto.setType(MessageDto.Type.AUDIT_COMMENT);
         String jsonString = FastJsonUtils.toJSONString(messageDto);
         String time = FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(new Date());
-        LogUtil.debug(log, "发送延时消息：时间：{} 消息体：{} threadlocal：{}", time, jsonString,Thread.currentThread().getId());
-        amqpTemplate.convertAndSend(Constants.AMQP_EXCHANGE_MSG, Constants.AMQP_ROUTING_KEY_MSG, FastJsonUtils.toJSONString(messageDto));
+        LogUtil.debug(log, "发送延时消息：时间：{} ,消息体：{} ,threadlocal：{}", time, jsonString,Thread.currentThread().getName());
+        amqpTemplate.convertAndSend(Constants.DEAD_LETTER_EXCHANGE_, Constants.DEAD_LETTER_ROUTING_KEY, FastJsonUtils.toJSONString(messageDto));
         return new Response();
     }
 }
