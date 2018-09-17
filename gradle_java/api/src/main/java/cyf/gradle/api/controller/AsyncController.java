@@ -64,4 +64,10 @@ public class AsyncController {
         long end = System.currentTimeMillis();
         log.debug("----------同步任务全部执行完成耗时：{}----------", (end - start) + "ms");
     }
+
+    @GetMapping("/handle")
+    public void handle() throws InterruptedException {
+        asyncService.handle();
+//        asyncService.insert();
+    }
 }

@@ -50,6 +50,7 @@ public class AsyncTaskExecutePool implements AsyncConfigurer {
         executor.setCorePoolSize(asyncPoolConfig.getCorePoolSize());
         executor.setKeepAliveSeconds(asyncPoolConfig.getKeepAliveSeconds());
         executor.setMaxPoolSize(asyncPoolConfig.getMaxPoolSize());
+        //设置任一正值将使用 LinkedBlockingQueue ，其他值会使用 SynchronousQueue
         executor.setQueueCapacity(asyncPoolConfig.getQueueCapacity());
         /**
          * 线程数已最大，队列已满，此时新来的任务处理方式

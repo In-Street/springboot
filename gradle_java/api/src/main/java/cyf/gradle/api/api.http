@@ -24,6 +24,11 @@ GET {{url}}/transaction/test
 Accept: */*
 Cache-Control: no-cache
 
+### api @async 自调用
+GET {{url}}/async/handle
+Accept: */*
+Cache-Control: no-cache
+
 ### interview 代理
 GET {{url}}/proxy/jdk?msg=taylor
 Accept: */*
