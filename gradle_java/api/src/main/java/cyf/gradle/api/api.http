@@ -18,7 +18,6 @@ GET {{url}}/event/post
 Accept: */*
 Cache-Control: no-cache
 
-
 ### api 事务
 GET {{url}}/transaction/test
 Accept: */*
@@ -26,6 +25,11 @@ Cache-Control: no-cache
 
 ### api @async 自调用
 GET {{url}}/async/handle
+Accept: */*
+Cache-Control: no-cache
+
+### api FutureTask
+GET {{url}}/future/futureHandle
 Accept: */*
 Cache-Control: no-cache
 

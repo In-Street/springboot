@@ -28,6 +28,7 @@ import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -434,6 +435,9 @@ public class TestHome {
 
         String apply = function.apply("A", "B");
         System.out.println(apply);
+
+
+//        EnumMap<String, String> map = new EnumMap();
 
 
     }

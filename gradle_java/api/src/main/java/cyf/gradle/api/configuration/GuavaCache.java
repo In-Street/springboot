@@ -178,7 +178,7 @@ public class GuavaCache {
                 asyncPoolConfig.getKeepAliveSeconds(), TimeUnit.SECONDS,
                 //LinkedBlockingQueue：链表存储数据，有两把锁，放数据锁与取数据锁，放入数据的线程和取出数据的线程可以同时操作；不指定容器大小时为Integer.MAX_VALUE
                 //ArrayBlockingQueue：放数据线程与取数据线程是互斥的，需指定容器大小
-                new LinkedBlockingQueue<>(20), build, new ThreadPoolExecutor.AbortPolicy());
+                new LinkedBlockingQueue<>(1000), build, new ThreadPoolExecutor.AbortPolicy());
 
         return threadPoolExecutor;
     }
