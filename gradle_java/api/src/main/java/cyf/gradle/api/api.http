@@ -28,8 +28,8 @@ GET {{url}}/async/handle
 Accept: */*
 Cache-Control: no-cache
 
-### api FutureTask
-GET {{url}}/future/futureHandle
+### api FutureTask commonHandle   futureHandle
+GET {{url}}/future/commonHandle
 Accept: */*
 Cache-Control: no-cache
 

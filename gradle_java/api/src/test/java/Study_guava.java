@@ -514,7 +514,6 @@ public class Study_guava {
         boolean contains = Range.closed(1, 4).intersection(Range.closed(2, 5)).contains(3);
         System.out.println(contains);
 
-
     }
 
     @Test
