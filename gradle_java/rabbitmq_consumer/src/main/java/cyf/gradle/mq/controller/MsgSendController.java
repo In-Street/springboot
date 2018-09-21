@@ -47,7 +47,19 @@ public class MsgSendController {
         String jsonString = FastJsonUtils.toJSONString(messageDto);
         String time = FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(new Date());
         LogUtil.debug(log, "发送延时消息：时间：{} ,消息体：{} ,threadlocal：{}", time, jsonString,Thread.currentThread().getName());
-        amqpTemplate.convertAndSend(Constants.DEAD_LETTER_EXCHANGE_, Constants.DEAD_LETTER_ROUTING_KEY, FastJsonUtils.toJSONString(messageDto));
+        amqpTemplate.convertAndSend(Constants.DEAD_LETTER_EXCHANGE, Constants.DEAD_LETTER_ROUTING_KEY, FastJsonUtils.toJSONString(messageDto));
+        return new Response();
+    }
+
+    @RequestMapping("/sendGeneral")
+    public Response sendGeneral() {
+        MessageDto messageDto = new MessageDto();
+        messageDto.setPrimaryKey(3);
+        messageDto.setType(MessageDto.Type.TOPIC);
+        String jsonString = FastJsonUtils.toJSONString(messageDto);
+        String time = FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(new Date());
+        LogUtil.debug(log, "发送会异常的消息：时间：{} ,消息体：{} ,threadlocal：{}", time, jsonString,Thread.currentThread().getName());
+        amqpTemplate.convertAndSend(Constants.COMMON_EXCHANGE, Constants.GENERAL_ROUTING_KEY, FastJsonUtils.toJSONString(messageDto));
         return new Response();
     }
 }

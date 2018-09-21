@@ -77,4 +77,9 @@ Cache-Control: no-cache
 GET {{url}}/sendDelay
 Accept: */*
 Cache-Control: no-cache
+
+### mq 异常消息存入死信
+GET {{url}}/sendGeneral
+Accept: */*
+Cache-Control: no-cache
 ###

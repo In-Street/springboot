@@ -19,13 +19,22 @@ spring:
     publisher-confirms: true
     listener:
       simple:
+
       #手动确认
         acknowledge-mode: MANUAL
       # listener 最少启用2线程
         concurrency: 2
         # 每个线程每次消费3条消息
         prefetch: 3
-
+        #异常消息存入死信队列
+        default-requeue-rejected: false
+        #重试机制
+        retry:
+          enabled: true
+          #最大重试次数
+          max-attempts: 3
+          #重试间隔
+          initial-interval: 2000
 
 #而当我们需要使用CGLIB来实现AOP的时候，需要配置 spring.aop.proxy-target-class=true ，不然默认使用的是标准Java的实现
 spring.aop.proxy-target-class: true

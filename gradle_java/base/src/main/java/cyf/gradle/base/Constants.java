@@ -20,10 +20,13 @@ public interface Constants {
     String COMMON_QUEUE = "common_queue";
     String COMMON_ROUTING_KEY = "common_routing_key";
 
+    String GENERAL_QUEUE = "general_queue";
+    String GENERAL_ROUTING_KEY = "general_routing_key";
+
     /**
      * 死信
      */
-    String DEAD_LETTER_EXCHANGE_ = "dead_letter_exchange";
+    String DEAD_LETTER_EXCHANGE = "dead_letter_exchange";
     String DEAD_LETTER_ROUTING_KEY = "dead_letter_routing_key";
     String DEAD_LETTER_QUEUE= "dead_letter_queue";
     /**
