@@ -1,7 +1,6 @@
 package cyf.gradle.api.service;
 
 import com.google.common.base.Stopwatch;
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +10,8 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-import java.util.concurrent.FutureTask;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Cheng Yufei
@@ -26,9 +23,8 @@ public class FutureTaskService {
 
     @Autowired
     private ThreadPoolExecutor threadPoolExecutor;
-//    private static AtomicInteger sumAtomic = new AtomicInteger(0);
 
-    public void futureHandle() throws ExecutionException, InterruptedException {
+    public void futureHandle()  {
         Stopwatch stopwatch = Stopwatch.createStarted();
 //        List<FutureTask> list = Lists.newArrayList();
         List<Future<Long>> futureList = Lists.newArrayList();
@@ -39,9 +35,7 @@ public class FutureTaskService {
         }
         futureList.parallelStream().forEach(task -> {
             try {
-//                if (task.isDone()) {
-                    sum[0] += task.get();
-//                }
+                sum[0] += task.get();
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
@@ -76,5 +70,15 @@ public class FutureTaskService {
         log.info("common 结果：{}", sum);
         log.info("common 耗时：{} s", stopwatch.elapsed(TimeUnit.SECONDS));
     }
+
+    /**
+     * FutureTask 耗时：4 s，结果：49999995000000000
+     * 2018-09-21 10:19:41.702  INFO 3996 --- [nio-8090-exec-3] cyf.gradle.api.configuration.AopHandler  : <<< 结束请求: /future/futureHandle,futureHandle(),耗时:4477ms with result =
+     * 2018-09-21 10:19:50.529  INFO 3996 --- [nio-8090-exec-5] cyf.gradle.api.configuration.AopHandler  : >>> 开始请求: /future/commonHandle,commonHandle() with argument[s] = []
+     * 2018-09-21 10:20:08.122  INFO 3996 --- [nio-8090-exec-5] c.gradle.api.service.FutureTaskService   : common 结果：49999995000000000
+     * 2018-09-21 10:20:08.122  INFO 3996 --- [nio-8090-exec-5] c.gradle.api.service.FutureTaskService   : common 耗时：17 s
+     * 2018-09-21 10:20:08.123  INFO 3996 --- [nio-8090-exec-5] cyf.gradle.api.configuration.AopHandler  : <<< 结束请求: /future/commonHandle,commonHandle(),耗时:17594ms with result =
+     */
+
 
 }
