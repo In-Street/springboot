@@ -82,4 +82,10 @@ Cache-Control: no-cache
 GET {{url}}/sendGeneral
 Accept: */*
 Cache-Control: no-cache
+
+### pay
+GET {{url}}/pay/wxUnifyOrder
+Accept: */*
+Cache-Control: no-cache
+
 ###

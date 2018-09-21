@@ -1,0 +1,6 @@
+dependencies {
+    compile group: 'com.egzosn', name: 'pay-java-wx', version: '2.10.2'
+
+    compile project(':util')
+    compile project(':base')
+}

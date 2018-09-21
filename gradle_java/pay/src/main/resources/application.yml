@@ -1,0 +1,24 @@
+server:
+  port: 7072
+
+spring:
+  application.name: pay
+  profiles.active: pay
+
+wx.pay:
+  appId: "AAA"
+  mchId: "BBBB"
+  notifyUrl: "CCC"
+  kerPrivate: "DDDD"
+
+---
+spring:
+  profiles:
+    include: pay
+
+
+
+
+
+
+
