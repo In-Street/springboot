@@ -21,7 +21,7 @@ spring:
       simple:
 
       #手动确认
-        acknowledge-mode: MANUAL
+        acknowledge-mode: manual
       # listener 最少启用2线程
         concurrency: 2
         # 每个线程每次消费3条消息
@@ -34,7 +34,7 @@ spring:
           #最大重试次数
           max-attempts: 3
           #重试间隔
-          initial-interval: 2000
+#          initial-interval: 2000ms
 
 #而当我们需要使用CGLIB来实现AOP的时候，需要配置 spring.aop.proxy-target-class=true ，不然默认使用的是标准Java的实现
 spring.aop.proxy-target-class: true
