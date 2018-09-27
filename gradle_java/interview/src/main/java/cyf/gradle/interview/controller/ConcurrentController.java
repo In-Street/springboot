@@ -1,8 +1,8 @@
 package cyf.gradle.interview.controller;
 
+import cyf.gradle.interview.service.concurrent.CompletableFutureService;
 import cyf.gradle.interview.service.concurrent.SingleEnumDemo;
 import cyf.gradle.interview.service.concurrent.SynChronizedService;
-import cyf.gradle.interview.service.concurrent.TestUtil;
 import cyf.gradle.interview.service.concurrent.TestUtil2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author Cheng Yufei
@@ -22,6 +23,8 @@ public class ConcurrentController {
 
     @Autowired
     private SynChronizedService synChronizedService;
+    @Autowired
+    private CompletableFutureService completableFutureService;
 
 
 
@@ -44,8 +47,10 @@ public class ConcurrentController {
 
         TestUtil2 util2 = TestUtil2.getInstance();
         System.out.println(util2);
-
-
     }
 
+    @GetMapping("/completableFuture")
+    public void completableFuture() throws ExecutionException, InterruptedException {
+        completableFutureService.concurrent();
+    }
 }

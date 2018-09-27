@@ -1,6 +1,7 @@
 package cyf.gradle.interview.modle;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -11,12 +12,21 @@ import lombok.ToString;
  **/
 @Getter
 @Setter
-//@ToString
+@ToString
 @AllArgsConstructor
+@Builder
 public class User {
 
     private Integer id;
 
     private String name;
 
+    private String tag;
+
+    private String city;
+
+    public User(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }

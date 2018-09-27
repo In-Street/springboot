@@ -43,6 +43,11 @@ GET {{url}}/concurrent/singleton
 Accept: */*
 Cache-Control: no-cache
 
+### interview - CompletableFuture
+GET {{url}}/concurrent/completableFuture
+Accept: */*
+Cache-Control: no-cache
+
 ### batch 10w 130s
 GET {{url}}/batch/execute
 Accept: */*
