@@ -51,6 +51,7 @@ public class ConcurrentController {
 
     @GetMapping("/completableFuture")
     public void completableFuture() throws ExecutionException, InterruptedException {
-        completableFutureService.concurrent();
+//        completableFutureService.concurrent();
+        completableFutureService.concurrent2();
     }
 }
