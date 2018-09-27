@@ -3,16 +3,13 @@ package cyf.gradle.interview.service.concurrent;
 import com.google.common.collect.Lists;
 import cyf.gradle.interview.modle.User;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 利用 CompletableFuture 完成并行处理，或者采用CountDownLantch 、CyclicBarrier
