@@ -48,6 +48,11 @@ GET {{url}}/concurrent/completableFuture
 Accept: */*
 Cache-Control: no-cache
 
+### interview - forkJoinTask
+GET {{url}}/concurrent/forkJoinTask
+Accept: */*
+Cache-Control: no-cache
+
 ### batch 10w 130s
 GET {{url}}/batch/execute
 Accept: */*

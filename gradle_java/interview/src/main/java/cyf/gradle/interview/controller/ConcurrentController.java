@@ -1,6 +1,8 @@
 package cyf.gradle.interview.controller;
 
+import cyf.gradle.interview.modle.User;
 import cyf.gradle.interview.service.concurrent.CompletableFutureService;
+import cyf.gradle.interview.service.concurrent.ForkJoinTaskService;
 import cyf.gradle.interview.service.concurrent.SingleEnumDemo;
 import cyf.gradle.interview.service.concurrent.SynChronizedService;
 import cyf.gradle.interview.service.concurrent.TestUtil2;
@@ -25,6 +27,8 @@ public class ConcurrentController {
     private SynChronizedService synChronizedService;
     @Autowired
     private CompletableFutureService completableFutureService;
+    @Autowired
+    private ForkJoinTaskService forkJoinTaskService;
 
 
 
@@ -51,7 +55,12 @@ public class ConcurrentController {
 
     @GetMapping("/completableFuture")
     public void completableFuture() throws ExecutionException, InterruptedException {
-//        completableFutureService.concurrent();
-        completableFutureService.concurrent2();
+        completableFutureService.concurrent();
+//        completableFutureService.concurrent2();
+    }
+
+    @GetMapping("/forkJoinTask")
+    public User forkJoinTask() throws ExecutionException, InterruptedException {
+        return forkJoinTaskService.taskCompute();
     }
 }

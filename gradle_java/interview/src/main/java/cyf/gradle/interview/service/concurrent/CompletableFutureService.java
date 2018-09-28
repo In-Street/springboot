@@ -47,9 +47,12 @@ public class CompletableFutureService {
         result.add(nameResult);
 
         //汇聚任务结果
-        CompletableFuture<Void> allDoneFuture = CompletableFuture.allOf(result.toArray(new CompletableFuture[result.size()]));
+       /* CompletableFuture<Void> allDoneFuture = CompletableFuture.allOf(result.toArray(new CompletableFuture[result.size()]));
         //get()阻塞等待汇聚的所有任务完成
-        allDoneFuture.get();
+        allDoneFuture.get();*/
+
+       //只等待Id处理完成，不管name处理情况
+//        resultId.get();
         log.info("User:{}",userBuilder.build());
     }
 
