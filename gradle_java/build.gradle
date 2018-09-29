@@ -84,7 +84,7 @@ subprojects {
         compile "org.springframework.boot:spring-boot-devtools"
 
         compile group: 'com.alibaba', name: 'fastjson', version: '1.2.47'
-
+        compile group: 'com.ctrip.framework.apollo', name: 'apollo-client', version: '1.0.0'
 
     }
 
