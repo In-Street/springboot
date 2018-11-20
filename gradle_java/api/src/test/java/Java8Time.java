@@ -56,7 +56,7 @@ public class Java8Time {
 
         //LocalDate 转 Date
         Date date = Date.from(from.atZone(ZoneId.systemDefault()).toInstant());
-        System.out.println(date);
+        System.out.println("LocalDate 转 Date:   "+date);
 
         //俩个日期的相差的年月日
         Period period = Period.between(parse1, localDate);
@@ -75,7 +75,7 @@ public class Java8Time {
         Instant now = Instant.now();
         System.out.println("Instant.now:" + now);
         Date date1 = Date.from(now);
-        System.out.println(date1);
+        System.out.println("Instant 与 Date 转换: "+date1);
 
         //Date 转 LocalDate
         Date date2 = new Date();

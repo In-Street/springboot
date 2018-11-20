@@ -79,6 +79,7 @@ public class Study_guava {
         //language=JSON
         String str = "{\"id\":1,\"name\":\"str\"}";
         System.out.println(str);
+        String s = "{\"name\": \"n\",\"id\":\"23\"}";
     }
 
 
@@ -128,7 +129,6 @@ public class Study_guava {
 
         Function<PraiseEnum, RemoveMatchReason> function = s -> new RemoveMatchReason(s.getCode(), s.getName());
         List<RemoveMatchReason> collect = Arrays.stream(values).map(function).collect(Collectors.toList());
-
         System.out.println(collect);
     }
 
@@ -190,7 +190,7 @@ public class Study_guava {
 
         Map<String, LikeDto> map = Maps.newHashMap();
         map.put("aa", likeDto);
-        Optional.ofNullable(map.get("aa")).ifPresent(s -> s.setAvatar("http://www.xxxxxx"));
+        Optional.ofNullable(map.get("b")).ifPresent(s -> s.setAvatar("http://www.xxxxxx"));
         System.out.println("5---" + map.get("aa"));
 
         //Stream接口里带静态方法,用于创建Stream
@@ -199,7 +199,7 @@ public class Study_guava {
         String[] strings = new String[]{"cyf", "taylor"};
         Object[] objects = Stream.of(strings).map(s -> s.toUpperCase()).toArray();
         for (Object object : objects) {
-            System.out.println(object);
+            System.out.println("6---" + object);
         }
 
         //IntStream 结合集合下标操作
@@ -214,13 +214,13 @@ public class Study_guava {
         //flatMap: 类中属性含有集合的成员变量，flatMap中function第二个参数为stream 可直接操作属性的集合
         List<UserTest> userTests = Lists.newArrayList(new UserTest(1, "a", Lists.newArrayList("t1")), new UserTest(2, "b", Lists.newArrayList("t2")), new UserTest(3, "c", Lists.newArrayList("t3")));
         List<String> collect2 = userTests.stream().flatMap(s -> s.getTags().stream()).map(s -> s + "cc").collect(Collectors.toList());
-        System.out.println();
+        System.out.println("7---"+collect2);
 
         //peek: 生成一个包含原Stream的所有元素的新Stream，同时会提供一个消费函数（Consumer实例），新Stream每个元素被消费的时候都会执行给定的消费函数；
         Consumer<LikeDto> consumer = s -> s.setVipLevel(1000);
         Consumer<LikeDto> consumer_1 = s -> s.getId();
-        List<LikeDto> collect1 = groups.stream().peek(consumer_1).collect(Collectors.toList());
-        System.out.println();
+        List<LikeDto> collect1 = groups.stream().peek(consumer).collect(Collectors.toList());
+        System.out.println("8---"+collect1);
 
         //汇聚，将上次汇聚的结果作为参数传入下次汇聚
         Integer integer = groups.stream().map(LikeDto::getId).reduce((i, j) -> i + j).get();
@@ -259,13 +259,11 @@ public class Study_guava {
         multimap.put("A", "飞");
         Set<Object> set1 = multimap.get("A");
         System.out.println("HashMultimap -- " + set1);
-
         //键值可以是 ""、null
         Map<String, Integer> map = Maps.newHashMap();
         map.put("B", 1);
         map.put("", null);
         map.put(null, 2);
-
 
         //BiMap: 键值与value值都不可重复
         HashBiMap<Object, Object> hashBiMap = HashBiMap.create();
@@ -280,7 +278,6 @@ public class Study_guava {
         basedTable.put("A", "C", 2);
         Object o = basedTable.get("A", "C");
         System.out.println("双键Map" + o);
-
         //Joiner
         //a-b-c
         List<String> list = Lists.newArrayList("a", "b", "c");
@@ -493,7 +490,6 @@ public class Study_guava {
         //Ints
         List<Integer> integers = Ints.asList(1, 2, 3, 0, 10, 21, 11);
         Ints.max(1, 2, 4, 3, 19, 0, 2);
-
         //获取集合最大值
         Integer max1 = Collections.max(integers);
         Integer max = Ordering.natural().max(integers);

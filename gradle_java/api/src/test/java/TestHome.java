@@ -335,7 +335,7 @@ public class TestHome {
         role.setId(2000);
         role.setRole("B角色");
         clone.setSysRole(role);
-        System.out.println(user.getSysRole() + "    " + user.getSysRole().getId());
+        System.out.println(user.getSysRole() + "    " + user.getSysRole().getId()+ "    " +user.getId());
         System.out.println(clone + "     id:" + clone.getId() + "     name:" + clone.getUsername() + "     sysrole:" + clone.getSysRole() + "    " + clone.getSysRole().getId());
 
         //浅克隆打印结果：
@@ -419,8 +419,11 @@ public class TestHome {
         System.out.println(i);
 
         AtomicInteger count = new AtomicInteger(1);
+        // 1
         System.out.println(count.get());
-//        System.out.println(count.getAndIncrement()+"------"+count.get());
+        // 1  2
+        System.out.println(count.getAndIncrement()+"------"+count.get());
+        // 3  3
         System.out.println(count.incrementAndGet() + "------" + count.get());
 
         System.out.println(MessageFormat.format("时间：{0}", System.currentTimeMillis()));
