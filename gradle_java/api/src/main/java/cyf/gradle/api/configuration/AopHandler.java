@@ -28,7 +28,7 @@ public class AopHandler {
 
 
     /**
-     * syn_1
+     * syn_2
      * 打印Controller层日志
      *
      * @param pjp            切点
