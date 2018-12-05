@@ -28,9 +28,9 @@ public class GuavaCacheController {
         return this.cacheService.get(key);
     }
 
-    @GetMapping("/future")
+    @GetMapping("/futureCallback")
     public String future(@RequestParam String value)  {
-//        return cacheService.futureCallback(value);
-        return "";
+        return cacheService.futureCallback(value);
+//        return "";
     }
 }

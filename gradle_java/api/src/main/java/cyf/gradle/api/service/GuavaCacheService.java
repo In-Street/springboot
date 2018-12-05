@@ -56,7 +56,7 @@ public class GuavaCacheService {
         long hitCount = stats.hitCount();
         double hitRate = stats.hitRate();
         double loadTime = stats.averageLoadPenalty();
-        log.info("缓存命中次数/率：{}/{}，新缓存加载时间：{}", hitCount, hitRate,loadTime);
+        log.info("缓存命中次数/率：{}/{}，新缓存加载时间：{}", hitCount, hitRate, loadTime);
 
         // jemter 测试线程池(ThreadPoolExecutor)
        /* Future<?> submitFuture = threadPoolExecutor.submit(new Runnable() {
@@ -115,7 +115,7 @@ public class GuavaCacheService {
             public void onFailure(Throwable t) {
                 return;
             }
-        });
+        }, threadPoolExecutor);
         return str;
 
     }
