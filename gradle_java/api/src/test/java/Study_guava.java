@@ -6,6 +6,8 @@ import com.google.common.cache.LoadingCache;
 import com.google.common.collect.*;
 import com.google.common.math.IntMath;
 import com.google.common.primitives.Ints;
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.common.util.concurrent.MoreExecutors;
 import com.vdurmont.emoji.Emoji;
 import com.vdurmont.emoji.EmojiManager;
 import com.vdurmont.emoji.EmojiParser;
@@ -32,7 +34,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -214,13 +218,13 @@ public class Study_guava {
         //flatMap: 类中属性含有集合的成员变量，flatMap中function第二个参数为stream 可直接操作属性的集合
         List<UserTest> userTests = Lists.newArrayList(new UserTest(1, "a", Lists.newArrayList("t1")), new UserTest(2, "b", Lists.newArrayList("t2")), new UserTest(3, "c", Lists.newArrayList("t3")));
         List<String> collect2 = userTests.stream().flatMap(s -> s.getTags().stream()).map(s -> s + "cc").collect(Collectors.toList());
-        System.out.println("7---"+collect2);
+        System.out.println("7---" + collect2);
 
         //peek: 生成一个包含原Stream的所有元素的新Stream，同时会提供一个消费函数（Consumer实例），新Stream每个元素被消费的时候都会执行给定的消费函数；
         Consumer<LikeDto> consumer = s -> s.setVipLevel(1000);
         Consumer<LikeDto> consumer_1 = s -> s.getId();
         List<LikeDto> collect1 = groups.stream().peek(consumer).collect(Collectors.toList());
-        System.out.println("8---"+collect1);
+        System.out.println("8---" + collect1);
 
         //汇聚，将上次汇聚的结果作为参数传入下次汇聚
         Integer integer = groups.stream().map(LikeDto::getId).reduce((i, j) -> i + j).get();

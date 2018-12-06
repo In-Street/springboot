@@ -96,7 +96,7 @@ public class CommandUserForAnnotation {
 
     @HystrixCommand(fallbackMethod = "fallback",
             commandProperties = {
-                    @HystrixProperty(name = "execution.isolation.strategy", value = "SEMAPHORE"),
+                    @HystrixProperty(name = "execution.isolation.strategy", value = "THREAD"),
             },
             threadPoolProperties = {
                     @HystrixProperty(name = "coreSize", value = "5"),

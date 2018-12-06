@@ -23,11 +23,13 @@ import java.io.IOException;
 import java.math.RoundingMode;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +43,7 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * @author Cheng Yufei
@@ -335,7 +338,7 @@ public class TestHome {
         role.setId(2000);
         role.setRole("B角色");
         clone.setSysRole(role);
-        System.out.println(user.getSysRole() + "    " + user.getSysRole().getId()+ "    " +user.getId());
+        System.out.println(user.getSysRole() + "    " + user.getSysRole().getId() + "    " + user.getId());
         System.out.println(clone + "     id:" + clone.getId() + "     name:" + clone.getUsername() + "     sysrole:" + clone.getSysRole() + "    " + clone.getSysRole().getId());
 
         //浅克隆打印结果：
@@ -422,7 +425,7 @@ public class TestHome {
         // 1
         System.out.println(count.get());
         // 1  2
-        System.out.println(count.getAndIncrement()+"------"+count.get());
+        System.out.println(count.getAndIncrement() + "------" + count.get());
         // 3  3
         System.out.println(count.incrementAndGet() + "------" + count.get());
 
@@ -445,7 +448,26 @@ public class TestHome {
 
     }
 
+    @Test
+    public void stream1() throws IOException {
+        Path path = Paths.get("D:/A.txt");
+        Stream<String> lines = Files.lines(path);
+        System.out.println(lines.collect(Collectors.toList()));
 
+        String collect = Stream.of("A", "B").collect(Collectors.joining(","));
+        //A,B
+        System.out.println(collect);
+
+
+        IntStream intStream = IntStream.of(2, 1, 4, 3, 5);
+        int max = intStream.min().getAsInt();
+        System.out.println(max);
+
+        Comparator comparator = (o1, o2) -> (int) o1 > (int) o2 ? 1 : -1;
+        Object o = Stream.of(2, 1, 4, 3, 5).max(comparator).get();
+        System.out.println(o);
+
+    }
 }
 
 /**
@@ -454,27 +476,26 @@ public class TestHome {
  * getAndIncrement
  * BeanUtils.copyProperties
  * 深克隆、浅克隆
- *localDate.plus(1, ChronoUnit.WEEKS)
+ * localDate.plus(1, ChronoUnit.WEEKS)
  * LocalTime
  * DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
  * LocalDateTime
  * Date date = Date.from(from.atZone(ZoneId.systemDefault()).toInstant());
  * LocalDate localDate1 = LocalDate.from(date2.toInstant().atZone(ZoneId.systemDefault()));
- *  ChronoUnit.DAYS.between(from, time);
- *  Optional.ofNullable  orElse  ifPresent
- *  stream flatMap
- *  Multiset
- *  HashMultimap
- *  HashBiMap
- *  HashBasedTable
- *  Joiner Splitter
- *  ImmutableMap.of("B", 1, "C", null);
- *  Iterables.filter transform any concat frequency elementsEqual
- *  Sets.difference union  intersection
- *  EnumUtils
- *  Collections.max
- *  Ordering.natural().greatestOf(integers, 2);
- *  Range.closed
- *  Lists.partition
- *
+ * ChronoUnit.DAYS.between(from, time);
+ * Optional.ofNullable  orElse  ifPresent
+ * stream flatMap
+ * Multiset
+ * HashMultimap
+ * HashBiMap
+ * HashBasedTable
+ * Joiner Splitter
+ * ImmutableMap.of("B", 1, "C", null);
+ * Iterables.filter transform any concat frequency elementsEqual
+ * Sets.difference union  intersection
+ * EnumUtils
+ * Collections.max
+ * Ordering.natural().greatestOf(integers, 2);
+ * Range.closed
+ * Lists.partition
  */
