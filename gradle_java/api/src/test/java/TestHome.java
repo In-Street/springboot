@@ -27,15 +27,20 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.EnumMap;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.LongAdder;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -468,6 +473,34 @@ public class TestHome {
         System.out.println(o);
 
     }
+
+
+    @Test
+    public void arrays() {
+        Integer[] i = new Integer[]{1, 2, 3};
+        List<Integer> ints = Arrays.asList(i);
+        //转换的为 Arrays内部类 ArrayList ，对元素操作：java.lang.UnsupportedOperationException
+        ints.add(4);
+        System.out.println(ints);
+    }
+
+    @Test
+    public void instant() {
+        int i = ThreadLocalRandom.current().nextInt(5);
+        System.out.println(i);
+
+//        LongAdder 对象，比 AtomicLong 性能更好（减少乐观锁的重试次数）。
+        LongAdder longAdder = new LongAdder();
+        longAdder.add(1);
+        longAdder.add(1);
+        longAdder.add(1);
+        int intValue = longAdder.intValue();
+        System.out.println(intValue);
+        long sum = longAdder.sum();
+        System.out.println(sum);
+
+    }
+
 }
 
 /**

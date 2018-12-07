@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.concurrent.ExecutionException;
-
 /**
  * @author Cheng Yufei
  * @create 2018-01-08 下午9:52
@@ -25,7 +23,7 @@ public class FutureTaskController {
     /**
      */
     @GetMapping("/futureHandle")
-    public void futureHandle() throws ExecutionException, InterruptedException {
+    public void futureHandle() {
         futureTaskService.futureHandle();
     }
 

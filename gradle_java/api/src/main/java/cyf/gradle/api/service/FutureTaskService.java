@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -24,7 +25,7 @@ public class FutureTaskService {
     @Autowired
     private ThreadPoolExecutor threadPoolExecutor;
 
-    public void futureHandle()  {
+    public void futureHandle() {
         Stopwatch stopwatch = Stopwatch.createStarted();
 //        List<FutureTask> list = Lists.newArrayList();
         List<Future<Long>> futureList = Lists.newArrayList();
@@ -35,12 +36,12 @@ public class FutureTaskService {
         }
         futureList.parallelStream().forEach(task -> {
             try {
-                sum[0] += task.get();
+                System.out.println(task.get());
+                    sum[0] += task.get();
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
         });
-
         log.info("FutureTask 耗时：{} s，结果：{}", stopwatch.elapsed(TimeUnit.SECONDS), sum[0]);
     }
 

@@ -29,7 +29,7 @@ Accept: */*
 Cache-Control: no-cache
 
 ### api FutureTask commonHandle   futureHandle
-GET {{url}}/future/commonHandle
+GET {{url}}/future/futureHandle
 Accept: */*
 Cache-Control: no-cache
 

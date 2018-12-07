@@ -27,8 +27,8 @@ public class UserTest {
 
     private List<String> tags;
 
-    private Integer age;
-    private Date date;
+    private Integer age = 10;
+    private Date date = new Date();
 
     public UserTest(Date date) {
         this.date = date;
