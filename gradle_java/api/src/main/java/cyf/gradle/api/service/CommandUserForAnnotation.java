@@ -98,6 +98,7 @@ public class CommandUserForAnnotation {
             commandProperties = {
                     @HystrixProperty(name = "execution.isolation.strategy", value = "THREAD"),
             },
+            threadPoolKey = "syn_handle",
             threadPoolProperties = {
                     @HystrixProperty(name = "coreSize", value = "5"),
                     @HystrixProperty(name = "maxQueueSize", value = "7"),
@@ -115,7 +116,13 @@ public class CommandUserForAnnotation {
         return "---------用户模块降级处理：" + userName + " ---------";
     }
 
-    @HystrixCommand
+    @HystrixCommand(threadPoolKey = "asyn_handle",
+            threadPoolProperties = {
+                    @HystrixProperty(name = "coreSize", value = "5"),
+                    @HystrixProperty(name = "maxQueueSize", value = "7"),
+                    @HystrixProperty(name = "keepAliveTimeMinutes", value = "5"),
+                    @HystrixProperty(name = "queueSizeRejectionThreshold", value = "50")
+            })
     public Future<String> async(String userName){
 
         return new AsyncResult<String>() {

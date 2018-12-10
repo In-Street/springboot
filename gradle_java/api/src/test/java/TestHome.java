@@ -531,4 +531,32 @@ public class TestHome {
  * Ordering.natural().greatestOf(integers, 2);
  * Range.closed
  * Lists.partition
+ *
+ * FutureTask futureTask = new FutureTask(new MyCallable());
+ * FutureTask 为 Future接口的实现，创建对象后可以作为submit参数，也可取到执行的结果 threadPoolExecutor.submit(futureTask);
+ *
+ * @HystrixCommand(fallbackMethod = "fallback",
+ *             commandProperties = {
+ *                     @HystrixProperty(name = "execution.isolation.strategy", value = "THREAD"),
+ *             },
+ *             threadPoolProperties = {
+ *                     @HystrixProperty(name = "coreSize", value = "5"),
+ *                     @HystrixProperty(name = "maxQueueSize", value = "7"),
+ *                     @HystrixProperty(name = "keepAliveTimeMinutes", value = "5"),
+ *                     @HystrixProperty(name = "queueSizeRejectionThreshold", value = "50")
+ *             })
+ *同步利用模块用自己的线程池执行方法，出错不会影响全局线程池； 若要异步，方法返回结果需为 AsyncResult
+ *
+ * 事件机制：EventBus 、 AsyncEventBus post / @Subscribe 业务处理
+ *
+ * Guava-cache ：
+ *  @Bean(name = "asyncRefreshLoadingCache")
+ *  CacheBuilder.newBuilder(). refreshAfterWrite(1, TimeUnit.MINUTES).build 重写load 、reload方法{MoreExecutors.listeningDecorator(getThreadPoolExecutor())}
+ *
+ *  异步回调：
+ *      ListenableFuture<String> listenableFuture = MoreExecutors.listeningDecorator(threadPoolExecutor).submit(new Callable)
+ *      Futures.addCallback(listenableFuture, new FutureCallback<String>(){override onSuccess(){}},threadPoolExecutor)
+ *
+ *
+ *
  */

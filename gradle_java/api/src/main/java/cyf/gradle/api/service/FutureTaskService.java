@@ -31,8 +31,11 @@ public class FutureTaskService {
         List<Future<Long>> futureList = Lists.newArrayList();
         final long[] sum = {0};
         for (int i = 0; i < 1000; i++) {
-//            FutureTask task = new FutureTask(new MyCallable());
             futureList.add(threadPoolExecutor.submit(new MyCallable()));
+            //FutureTask 为 Future接口的实现，创建对象后可以作为submit参数，也可取到执行的结果
+           /* FutureTask futureTask = new FutureTask(new MyCallable());
+            threadPoolExecutor.submit(futureTask);
+            futureTask.get();    */
         }
         futureList.parallelStream().forEach(task -> {
             try {
