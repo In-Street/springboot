@@ -14,7 +14,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 @SpringBootApplication(
         scanBasePackages = {"cyf.gradle.interview"}
 )
-@EnableApolloConfig
+//@EnableApolloConfig
 public class InterviewApplication {
 
     public static void main(String[] args) {

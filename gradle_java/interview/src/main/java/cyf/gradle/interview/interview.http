@@ -1,0 +1,28 @@
+### interview 代理
+GET {{url}}/proxy/jdk?msg=taylor
+Accept: */*
+Cache-Control: no-cache
+
+### interview - 获取单例
+GET {{url}}/concurrent/singleton
+Accept: */*
+Cache-Control: no-cache
+
+### interview - forkJoinTask
+GET {{url}}/concurrent/forkJoinTask
+Accept: */*
+Cache-Control: no-cache
+
+######## --- review --- ########
+
+# 1 充值 2 消费
+GET {{url}}/concurrent/AtomicStampedReference/2
+Accept: */*
+Cache-Control: no-cache
+
+### Parallel 并行
+GET {{url}}/concurrent/completableFuture/4
+Accept: */*
+Cache-Control: no-cache
+
+###

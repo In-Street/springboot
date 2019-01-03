@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 public class ThreadPoolConfig {
 
-    @Bean(name = "ThreadPoolExecutor")
+    @Bean(name = "threadPool")
     public ThreadPoolExecutor executor() {
         ThreadFactory build = new ThreadFactoryBuilder().setNameFormat("demo_pool_%d").build();
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(5, 30,

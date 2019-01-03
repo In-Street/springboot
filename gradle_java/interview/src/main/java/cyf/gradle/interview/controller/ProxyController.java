@@ -59,7 +59,6 @@ public class ProxyController {
         Enhancer enhancer = new Enhancer();
         enhancer.setSuperclass(new Apple().getClass());
         enhancer.setCallback(new CGLibProxy());
-
         //获取代理对象，所有非final方法调用转发到 intercept()
         Apple o = (Apple)enhancer.create();
         o.color(msg);

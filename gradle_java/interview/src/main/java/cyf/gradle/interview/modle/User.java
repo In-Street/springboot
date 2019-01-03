@@ -25,6 +25,8 @@ public class User {
 
     private String city;
 
+    private Integer money;
+
     public User(Integer id, String name) {
         this.id = id;
         this.name = name;
