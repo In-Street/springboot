@@ -1,18 +1,12 @@
 package cyf.gradle.interview.service.concurrent;
 
 import com.google.common.collect.Lists;
-import com.google.common.util.concurrent.FutureCallback;
-import com.google.common.util.concurrent.Futures;
-import com.google.common.util.concurrent.ListenableFuture;
-import com.google.common.util.concurrent.MoreExecutors;
 import cyf.gradle.interview.modle.User;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CompletableFuture;
@@ -36,7 +30,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class ParallelService {
 
     @Autowired
-    private ThreadPoolExecutor executor;
+    private ThreadPoolExecutor threadPool;
 
     private CountDownLatch countDownLatch = new CountDownLatch(7);
 
@@ -49,13 +43,13 @@ public class ParallelService {
         CompletableFuture<Void> resultId = CompletableFuture.runAsync(() -> {
             log.info("id 处理：{}", Thread.currentThread().getName());
             userBuilder.id(100);
-        }, executor);
+        }, threadPool);
         result.add(resultId);
 
         CompletableFuture<Void> nameResult = CompletableFuture.runAsync(() -> {
             log.info("name 处理：{}", Thread.currentThread().getName());
             userBuilder.name("Taylor Swift");
-        }, executor);
+        }, threadPool);
         result.add(nameResult);
 
         //汇聚任务结果
@@ -68,7 +62,7 @@ public class ParallelService {
         log.info("User:{}", userBuilder.build());
     }
 
-    public void completableFutureConcurrent2() throws InterruptedException {
+    public void completableFutureConcurrent2() {
         User.UserBuilder userBuilder = User.builder();
         //各个计算结果集合
         List<CompletableFuture<User.UserBuilder>> result = Lists.newArrayList();
@@ -77,19 +71,19 @@ public class ParallelService {
                 () -> {
                     log.info("id 处理：{}, User:{}", Thread.currentThread().getName(), userBuilder.build());
                     return userBuilder.id(200);
-                }, executor);
+                }, threadPool);
 
         CompletableFuture<User.UserBuilder> resultName = CompletableFuture.supplyAsync(
                 () -> {
                     log.info("name 处理：{} ，User:{}", Thread.currentThread().getName(), userBuilder.build());
                     return userBuilder.name("Candice");
-                }, executor);
+                }, threadPool);
 
         //thenAccept:请求线程处理;  thenAcceptAsync: 异步处理，不指定线程池时默认使用 ForkJoinPool.commonPool
         resultId.thenAcceptAsync(b -> {
             b.city("北京");
             log.info("resultId -- thenAcceptAsync 处理：{}，User:{}", Thread.currentThread().getName(), userBuilder.build());
-        }, executor);
+        }, threadPool);
 
 //        TimeUnit.NANOSECONDS.sleep(200);
         log.info("User:{}", userBuilder.build());
@@ -100,7 +94,7 @@ public class ParallelService {
 
         for (int i = 0; i < 7; i++) {
             int finalI = i;
-            Future<Integer> future = executor.submit(() -> {
+            Future<Integer> future = threadPool.submit(() -> {
                 log.info("Thread ：{} 完成任务：{}", Thread.currentThread().getName(), finalI);
                 return finalI;
             });
@@ -113,51 +107,33 @@ public class ParallelService {
         log.info("全部任务完成");
     }
 
-    public void cyclicBarrier() throws ExecutionException, InterruptedException, BrokenBarrierException {
-
+    public void cyclicBarrier()  {
+        /**
+         * 请求线程不阻塞，结束请求；
+         * 异步线程业务处理后，到达await 阻塞，等待其他线程到达屏障
+         * 所有线程都到达后执行 CyclicBarrier 里的任务。
+         *
+         * 注意：
+         *      线程池核心数量5 ，队列：100
+         *      7个任务，核心线程执行5个，await()后核心线程阻塞，
+         *      2个任务进队列，队列未满，不会创建新的线程执行，等待核心线程执行，但核心线程一直阻塞，无限期等待
+         */
         CyclicBarrier cyclicBarrier = new CyclicBarrier(7, () -> {
             log.info("分批任务已全部完成");
         });
 
         for (int i = 0; i < 7; i++) {
             int finalI = i;
-            executor.execute(() -> {
-                log.info("Thread ：{} ", Thread.currentThread().getName());
+//            log.info("阻塞等待线程数：{}",cyclicBarrier.getNumberWaiting());
+            threadPool.execute(() -> {
+                log.info("Thread ：{} ，完成任务：{}", Thread.currentThread().getName(),finalI);
                 try {
                     cyclicBarrier.await();
                 } catch (InterruptedException |BrokenBarrierException e) {
                     e.printStackTrace();
                 }
-                log.info("完成任务：{}", finalI);
             });
-
         }
-
-
-        /*for (int i = 0; i < 7; i++) {
-            int finalI = i;
-            Future<Integer> future = executor.submit(() -> {
-                log.info("Thread ：{} ", Thread.currentThread().getName());
-                cyclicBarrier.await();
-                return finalI;
-            });
-            if (future.get()>=0) {
-            log.info("完成任务：{}", finalI);
-            }
-        }*/
-
-       /* for (int i = 1; i <= 7; i++) {
-            int finalI = i;
-            new Thread(() -> {
-                System.out.println("第" + finalI + "位法师已到来");
-                try {
-                    cyclicBarrier.await();
-                } catch (InterruptedException | BrokenBarrierException e) {
-                    e.printStackTrace();
-                }
-            },"Thread_" + i).start();
-        }*/
-
     }
 
 

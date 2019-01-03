@@ -58,7 +58,7 @@ public class ConcurrentController {
     }
 
     @GetMapping("/completableFuture/{method}")
-    public void completableFuture(@PathVariable Integer method) throws ExecutionException, InterruptedException, BrokenBarrierException {
+    public void completableFuture(@PathVariable Integer method) throws ExecutionException, InterruptedException {
         switch (method) {
             case 1:
                 parallelService.completableFutureConcurrent();
