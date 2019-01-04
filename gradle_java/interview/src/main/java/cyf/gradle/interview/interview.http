@@ -9,7 +9,7 @@ Accept: */*
 Cache-Control: no-cache
 
 ### interview - forkJoinTask
-GET {{url}}/concurrent/forkJoinTask
+GET {{url}}/concurrent/forkJoinTask/1/54
 Accept: */*
 Cache-Control: no-cache
 
@@ -21,7 +21,7 @@ Accept: */*
 Cache-Control: no-cache
 
 ### Parallel 并行
-GET {{url}}/concurrent/completableFuture/4
+GET {{url}}/concurrent/completableFuture/3
 Accept: */*
 Cache-Control: no-cache
 

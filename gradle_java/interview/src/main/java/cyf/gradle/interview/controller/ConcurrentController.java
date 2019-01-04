@@ -77,9 +77,9 @@ public class ConcurrentController {
         }
     }
 
-    @GetMapping("/forkJoinTask")
-    public User forkJoinTask() throws ExecutionException, InterruptedException {
-        return forkJoinTaskService.taskCompute();
+    @GetMapping("/forkJoinTask/{start}/{end}")
+    public Object forkJoinTask(@PathVariable Integer start, @PathVariable Integer end) throws ExecutionException, InterruptedException {
+        return forkJoinTaskService.sumTask(start, end);
     }
 
     ///////////////////////////////////////------------- review -----------------///////////////////////////////////////

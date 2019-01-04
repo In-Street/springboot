@@ -49,6 +49,7 @@
         
 * CompletableFuture
     1.  完成并行处理，或者采用CountDownLatch 、CyclicBarrier
+    2. 未指定自定义线程池时，使用 ForkJoinPool.commonPool-worker-1 线程池；
     ```
     CompletableFuture<Void> nameResult = CompletableFuture.runAsync(() -> {
                 log.info("name 处理：{}", Thread.currentThread().getName());
@@ -76,3 +77,51 @@
              },executor);    
          
     ```    
+    
+* CountDownLatch:
+    1. 请求线程阻塞，线程池异步完成后，结束请求。
+    2. 不能再利用
+    ```
+    for (int i = 0; i < 7; i++) {
+                int finalI = i;
+                Future<Integer> future = threadPool.submit(() -> {
+                    log.info("Thread ：{} 完成任务：{}", Thread.currentThread().getName(), finalI);
+                    return finalI;
+                });
+                if (future.get() >= 0) {
+                    countDownLatch.countDown();
+                }
+            }
+            //请求线程阻塞，异步线程完成后，结束请求
+            countDownLatch.await();
+            log.info("全部任务完成");
+    ```
+    
+* CyclicBarrier:
+     1. 请求线程不阻塞，结束请求；    
+     2. 线程池异步线程业务处理后，到达await 阻塞，等待其他线程到达屏障
+     3. 所有线程都到达屏障后执行 CyclicBarrier 里的任务。
+     4. cyclicBarrier.reset(); 可循环使用
+     #####注意：
+        线程池核心数量5 ，队列：100
+        7个任务，核心线程执行5个，await()后核心线程阻塞，
+        2个任务进队列，队列未满，不会创建新的线程执行，等待核心线程执行，但核心线程一直阻塞，无限期等待
+     ```
+      CyclicBarrier cyclicBarrier = new CyclicBarrier(7, () -> {
+                 log.info("分批任务已全部完成");
+             });
+     
+             for (int i = 0; i < 7; i++) {
+                 int finalI = i;
+     //            log.info("阻塞等待线程数：{}",cyclicBarrier.getNumberWaiting());
+                 threadPool.execute(() -> {
+                     log.info("Thread ：{} ，完成任务：{}", Thread.currentThread().getName(),finalI);
+                     try {
+                         cyclicBarrier.await();
+                     } catch (InterruptedException |BrokenBarrierException e) {
+                         e.printStackTrace();
+                     }
+                 });
+             }
+     ```   
+        

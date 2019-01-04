@@ -1,6 +1,8 @@
 package cyf.gradle.interview.service.concurrent;
 
+import cyf.gradle.interview.modle.Task;
 import cyf.gradle.interview.modle.User;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -109,5 +111,13 @@ public class ForkJoinTaskService {
             log.info("UserNameTask - {}，User:{}", Thread.currentThread().getName(), user);
             return user;
         }
+    }
+
+    @SneakyThrows({ExecutionException.class, InterruptedException.class})
+    public Object sumTask(Integer start, Integer end) {
+        Task task = new Task(start, end);
+        ForkJoinPool pool = new ForkJoinPool();
+        Object o = pool.submit(task).get();
+        return o;
     }
 }
