@@ -10,7 +10,8 @@ import org.springframework.stereotype.Service;
 public class SynChronizedService {
 
         private volatile int count = 3;
-    private static int countSyn = 3;
+//    private static int countSyn = 3;
+    private int countSyn = 3;
 
     /**
      * 保证共享变量的一致性间接保证可见性
@@ -59,23 +60,23 @@ public class SynChronizedService {
         SynChronizedService synService = new SynChronizedService();
 
         new Thread(()->{
-            new SynChronizedService().handle();
-//            synService.handleV();
+//            new SynChronizedService().handle();
+            synService.handle();
         }).start();
 
         new Thread(()->{
-            new SynChronizedService().handle();
-//            synService.handleV();
+//            new SynChronizedService().handle();
+            synService.handle();
         }).start();
 
         new Thread(()->{
-            new SynChronizedService().handle();
-//            synService.handleV();
+//            new SynChronizedService().handle();
+            synService.handle();
         }).start();
 
         new Thread(()->{
-            new SynChronizedService().handle();
-//            synService.handleV();
+//            new SynChronizedService().handle();
+            synService.handle();
         }).start();
 
        //父子类锁继承

@@ -79,7 +79,7 @@
     ```    
     
 * CountDownLatch:
-    1. 请求线程阻塞，线程池异步完成后，结束请求。
+    1. **请求线程阻塞**，线程池异步完成后，结束请求。[计数器减为0后，执行await()后的代码]
     2. 不能再利用
     ```
     for (int i = 0; i < 7; i++) {
@@ -124,4 +124,131 @@
                  });
              }
      ```   
+  
+* ForkJoin
+    
+    1. 将任务分割成若干个小任务执行
+    2. extends RecursiveTask (有返回值)、 RecursiveAction (无返回值)
+    ```
+        @Override
+        protected Integer compute() {
+            //任务分割数
+            int hold = (end - start) / threshold;
+            int sum = 0;
+            //最小直接执行
+            if (hold <= 1) {
+                for (int i = start; i <= end; i++) {
+                    sum += i;
+                }
+            } else {
+                int mid = (end - start) / hold;
+                int e = end;
+                for (int i = 0; i < hold; i++) {
+                    log.info("Thread:{},第 {} 个 Task", Thread.currentThread().getName(), i);
+                    end = start + mid > e ? e : start + mid;
+                    Task task = new Task(start, end);
+                    
+                    // join() 、 get() 阻塞获取执行结果
+                    sum += (Integer) task.fork().join();
+                    log.info("start:{} - end:{}", start, end);
+                    start = end + 1;
+                }
+            }
+            return sum;
+        }
+       
+       
+          Task task = new Task(start, end);
+          ForkJoinPool pool = new ForkJoinPool();
+          Object o = pool.submit(task).get();
+    ```        
+ * ReentrantLock、Condition:
+    1. condition可指定某个具体的condition获取锁，而不是参与锁竞争时获取的不确定性
+    2. 读读互斥
+    ```
+        ReentrantLock lock = new ReentrantLock();
+        Condition conditionA = lock.newCondition();
+        Condition conditionB = lock.newCondition();
         
+        if (lock.tryLock()) {
+            conditionA.await(3000, TimeUnit.MILLISECONDS);
+            lock.unlock();
+        }
+        
+         if (lock.tryLock()) {
+                    conditionA.single();
+                    lock.unlock();
+                }
+    ```
+
+* ReentrantReadWritLock:
+    
+   1. 读读不互斥，还有写情况互斥
+   
+   ```
+    ReentrantReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+    
+     try {
+                readWriteLock.readLock().lock();
+    //            读锁不允许获取Condition、写锁可以
+    //            Condition condition = readWriteLock.readLock().newCondition();
+                System.out.println(Thread.currentThread().getName() + "获取读锁" + System.currentTimeMillis());
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                //不释放锁其他线程无法获取到对象锁
+                readWriteLock.readLock().unlock();
+            }
+            
+            
+           try {
+                    readWriteLock.writeLock().lock();
+                    System.out.println(Thread.currentThread().getName() + "获取写锁" + System.currentTimeMillis());
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
+                    readWriteLock.writeLock().unlock();
+                }
+                
+                
+           new Thread(()->{
+                     demo.writHandle();
+                 },"Thread_3").start();
+         
+                 new Thread(()->{
+                     demo.writHandle();
+                 },"Thread_4").start();                   
+   ```    
+  
+* 单例：
+    1. 枚举型
+    2. 静态内部类: 
+        1. 只有调用getInstance() 时才会创建单例
+        2. 第一次调用静态字段时，触发类加载器（同一个类只加载一次），静态内部类同理；
+        3. 利用类加载器创建对象时，jvm会加锁，同步多个线程对同一个类的初始化，进而保证单例对象的唯一性（由类加载器负责加锁，保证线程安全性）
+    
+    ```
+        public class SingletonDemo {
+        
+           private static class SingletonHolder{
+                private static final SingletonDemo singletonDemo = new SingletonDemo();
+            }
+        
+            private SingletonDemo() {
+            }
+        
+            public static final SingletonDemo getInstance() {
+                return SingletonHolder.singletonDemo;
+            }
+        }
+    ```    
+    
+* synchronized:
+    
+     1. 重入性：获取对象锁后再次请求仍会得到锁。【一个对象一把锁】
+     2. 继承性：子类synchronized方法中调用父类的synchronized方法，仍会执行。
+     3. 5个线程同时操作synchronized方法：
+        1. 若new 出操作对象后，5个线程共用，则共享变量无需设置成static，结果仍正确
+        2. 若每个线程都是自己new 的操作对象，各自都持有对象锁，此时共享变量必须设置为static，才能结果正确
