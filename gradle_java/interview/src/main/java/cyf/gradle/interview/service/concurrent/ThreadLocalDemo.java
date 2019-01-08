@@ -30,18 +30,16 @@ public class ThreadLocalDemo {
         new Thread(() -> {
 
             List<String> list = Lists.newArrayList("A", "B", "C");
-//            ThreadLocalDemo demo = new ThreadLocalDemo();
             demo.setThreadLocal(list);
             demo.getThreadLocal();
-        }).start();
+        },"Thread_A").start();
 
         Thread.sleep(1000);
         new Thread(() -> {
             List<String> list = Lists.newArrayList("D", "E");
-//            ThreadLocalDemo demo = new ThreadLocalDemo();
             demo.setThreadLocal(list);
             demo.getThreadLocal();
-        }).start();
+        },"Thread_B").start();
     }
 
 }

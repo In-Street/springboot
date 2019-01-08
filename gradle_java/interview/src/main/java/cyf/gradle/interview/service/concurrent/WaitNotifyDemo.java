@@ -131,7 +131,7 @@ public class WaitNotifyDemo {
             demo.put("F");
         }).start();
 
-        Thread.sleep(1000);
+//        Thread.sleep(1000);
 
         new Thread(() -> {
             demo.get();
@@ -163,7 +163,7 @@ public class WaitNotifyDemo {
          * 元素添加：9
          * ThreadA - wait end:20:24:34
          */
-        new Thread(() -> {
+       /* new Thread(() -> {
             ThreadA threadA = new ThreadA(demo);
             threadA.aHandle();
         }).start();
@@ -173,7 +173,7 @@ public class WaitNotifyDemo {
         new Thread(() -> {
             ThreadB threadB = new ThreadB(demo);
             threadB.bHandle();
-        }).start();
+        }).start();*/
 
     }
 }

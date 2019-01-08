@@ -31,13 +31,13 @@ public class ThreadInterrupt {
     /**
      * Thread.interrupted():  判断当前线程是否被中断，并清除中断状态
      * eg:     System.out.println("main :" + Thread.interrupted());    - true
-     *          System.out.println("main :" + Thread.currentThread().isInterrupted());     -false
+     * System.out.println("main :" + Thread.currentThread().isInterrupted());     -false
      * Thread.currentThread().isInterrupted() ：判断当前线程的中断状态 ，但不会清除状态
      * eg:      System.out.println("main :" + Thread.currentThread().isInterrupted());    - true
-     *            System.out.println("main :" + Thread.currentThread().isInterrupted());  - true
+     * System.out.println("main :" + Thread.currentThread().isInterrupted());  - true
      */
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         /**
          * interrupt:
          *          1.若不是当前线程会校验权限：SecurityException
@@ -48,9 +48,9 @@ public class ThreadInterrupt {
         System.out.println("main :" + Thread.interrupted());
         System.out.println("main :" + Thread.currentThread().isInterrupted());
         System.out.println("main :" + Thread.currentThread().isInterrupted());*/
-
        /* try {
             Thread.currentThread().interrupt();
+            //清空中断状态
             Thread.sleep(1000);
             System.out.println("main 中断状态 : " + Thread.currentThread().isInterrupted());
             System.out.println("执行结束");
@@ -64,6 +64,7 @@ public class ThreadInterrupt {
         MyThread myThread = new MyThread();
         myThread.start();
         //中断不会使线程停止运行，可自行判断状态然后处理
+        Thread.sleep(1);
         myThread.interrupt();
         System.out.println("myThread 中断状态 : " + myThread.isInterrupted());
     }
