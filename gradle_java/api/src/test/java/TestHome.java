@@ -27,13 +27,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -485,7 +481,7 @@ public class TestHome {
     }
 
     @Test
-    public void instant() {
+    public void LongAdder() {
         int i = ThreadLocalRandom.current().nextInt(5);
         System.out.println(i);
 
@@ -493,14 +489,15 @@ public class TestHome {
         LongAdder longAdder = new LongAdder();
         longAdder.add(1);
         longAdder.add(1);
-        longAdder.add(1);
+        longAdder.add(2);
         int intValue = longAdder.intValue();
+        //4
         System.out.println(intValue);
         long sum = longAdder.sum();
+        //4
         System.out.println(sum);
 
     }
-
 }
 
 /**
@@ -531,32 +528,29 @@ public class TestHome {
  * Ordering.natural().greatestOf(integers, 2);
  * Range.closed
  * Lists.partition
- *
+ * <p>
  * FutureTask futureTask = new FutureTask(new MyCallable());
  * FutureTask 为 Future接口的实现，创建对象后可以作为submit参数，也可取到执行的结果 threadPoolExecutor.submit(futureTask);
  *
  * @HystrixCommand(fallbackMethod = "fallback",
- *             commandProperties = {
- *                     @HystrixProperty(name = "execution.isolation.strategy", value = "THREAD"),
- *             },
- *             threadPoolProperties = {
- *                     @HystrixProperty(name = "coreSize", value = "5"),
- *                     @HystrixProperty(name = "maxQueueSize", value = "7"),
- *                     @HystrixProperty(name = "keepAliveTimeMinutes", value = "5"),
- *                     @HystrixProperty(name = "queueSizeRejectionThreshold", value = "50")
- *             })
- *同步利用模块用自己的线程池执行方法，出错不会影响全局线程池； 若要异步，方法返回结果需为 AsyncResult
- *
+ * commandProperties = {
+ * @HystrixProperty(name = "execution.isolation.strategy", value = "THREAD"),
+ * },
+ * threadPoolProperties = {
+ * @HystrixProperty(name = "coreSize", value = "5"),
+ * @HystrixProperty(name = "maxQueueSize", value = "7"),
+ * @HystrixProperty(name = "keepAliveTimeMinutes", value = "5"),
+ * @HystrixProperty(name = "queueSizeRejectionThreshold", value = "50")
+ * })
+ * 同步利用模块用自己的线程池执行方法，出错不会影响全局线程池； 若要异步，方法返回结果需为 AsyncResult
+ * <p>
  * 事件机制：EventBus 、 AsyncEventBus post / @Subscribe 业务处理
- *
+ * <p>
  * Guava-cache ：
- *  @Bean(name = "asyncRefreshLoadingCache")
- *  CacheBuilder.newBuilder(). refreshAfterWrite(1, TimeUnit.MINUTES).build 重写load 、reload方法{MoreExecutors.listeningDecorator(getThreadPoolExecutor())}
- *
- *  异步回调：
- *      ListenableFuture<String> listenableFuture = MoreExecutors.listeningDecorator(threadPoolExecutor).submit(new Callable)
- *      Futures.addCallback(listenableFuture, new FutureCallback<String>(){override onSuccess(){}},threadPoolExecutor)
- *
- *
- *
+ * @Bean(name = "asyncRefreshLoadingCache")
+ * CacheBuilder.newBuilder(). refreshAfterWrite(1, TimeUnit.MINUTES).build 重写load 、reload方法{MoreExecutors.listeningDecorator(getThreadPoolExecutor())}
+ * <p>
+ * 异步回调：
+ * ListenableFuture<String> listenableFuture = MoreExecutors.listeningDecorator(threadPoolExecutor).submit(new Callable)
+ * Futures.addCallback(listenableFuture, new FutureCallback<String>(){override onSuccess(){}},threadPoolExecutor)
  */
