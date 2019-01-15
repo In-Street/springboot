@@ -24,8 +24,8 @@ public class HttpService {
         HttpRequest request = HttpRequest.get("https://aip.baidubce.com/oauth/2.0/token")
                 .query(
                         "grant_type", "client_credentials",
-                        "client_id", "",
-                        "client_secret", ""
+                        "client_id", "SYDFpsDisZsy2S6y6hS18m0m",
+                        "client_secret", "NVgCTKlxSpmdI3XWkYTYkMCBSePfwBaR"
                 );
         HttpResponse response = request.send();
         Map<String, Object> map = JSONObject.parseObject(response.body()).getInnerMap();
@@ -40,7 +40,7 @@ public class HttpService {
     public Map<String, Object> detect() {
         HttpRequest request = HttpRequest.post("https://aip.baidubce.com/rest/2.0/face/v3/detect")
                 .form(
-                        "access_token", "",
+                        "access_token", "24.9c359f436fb488437e68047d3c4170e9.2592000.1550040601.282335-15413918",
                         "image", "https://xclub.oss-cn-shanghai.aliyuncs.com/3000/image/header/2018/5/25/4a657724-4f71-11e8-a7e9-109836a3b20f.jpg",
                         "image_type", "URL",
                         "face_field", "quality,eye_status,emotion,face_shape,gender,glasses",
@@ -69,12 +69,12 @@ public class HttpService {
     public Map<String, Object> faceAudit(String url) {
 
 //        Files.readAllBytes()
-        byte[] bytes = FileUtil.readBytes("D:/卡同头像.jpeg");
+        byte[] bytes = FileUtil.readBytes("D:/素描头像.jpg");
         String encode = Base64Utils.encodeToString(bytes);
 
         HttpRequest request = HttpRequest.post("https://aip.baidubce.com/rest/2.0/solution/v1/face_audit")
                 .form(
-                        "access_token", "",
+                        "access_token", "24.9c359f436fb488437e68047d3c4170e9.2592000.1550040601.282335-15413918",
 //                        "imgUrls", url
                         "images",encode
                 ).header("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
