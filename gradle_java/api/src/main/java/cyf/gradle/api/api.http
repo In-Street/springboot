@@ -33,25 +33,6 @@ GET {{url}}/future/futureHandle
 Accept: */*
 Cache-Control: no-cache
 
-### interview 代理
-GET {{url}}/proxy/jdk?msg=taylor
-Accept: */*
-Cache-Control: no-cache
-
-### interview - 获取单例
-GET {{url}}/concurrent/singleton
-Accept: */*
-Cache-Control: no-cache
-
-### interview - CompletableFuture
-GET {{url}}/concurrent/completableFuture
-Accept: */*
-Cache-Control: no-cache
-
-### interview - forkJoinTask
-GET {{url}}/concurrent/forkJoinTask
-Accept: */*
-Cache-Control: no-cache
 
 ### batch 10w 130s
 GET {{url}}/batch/execute
@@ -95,6 +76,12 @@ Cache-Control: no-cache
 
 ### pay
 GET {{url}}/pay/wxUnifyOrder
+Accept: */*
+Cache-Control: no-cache
+
+
+### jodd
+GET {{url}}/jodd/faceAudit?url=https://xclub.oss-cn-shanghai.aliyuncs.com/3000/image/header/2018/5/25/225b8a1a-4f72-11e8-a7e9-109836a3b20f.jpg
 Accept: */*
 Cache-Control: no-cache
 
