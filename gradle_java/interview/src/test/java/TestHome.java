@@ -2,14 +2,7 @@ import org.junit.Test;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
+import java.util.*;
 
 /**
  * @author Cheng Yufei
@@ -103,7 +96,7 @@ public class TestHome {
 
         System.out.println(new Date().getTime());
 
-        System.out.println( LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
+        System.out.println(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
 
         Calendar calendar = Calendar.getInstance();
         System.out.println(calendar.getTimeInMillis());
@@ -111,7 +104,7 @@ public class TestHome {
         /**
          * 获取 秒数
          */
-        System.out.println( LocalDateTime.now().atZone(ZoneId.systemDefault()).toEpochSecond());
+        System.out.println(LocalDateTime.now().atZone(ZoneId.systemDefault()).toEpochSecond());
 
         LocalDateTime.from(new Date().toInstant());
 
