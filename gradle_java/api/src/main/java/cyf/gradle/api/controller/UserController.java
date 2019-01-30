@@ -103,9 +103,9 @@ public class UserController {
     }
 
     //查询时条件不一样 也会 进行缓存添加
-    @GetMapping(value = "/select1/{id}")
+    @GetMapping(value = "/select1")
     @ApiIgnore
-    public Response select1(@PathVariable int id) {
+    public Response select1(@RequestParam int id) {
 
         Header header = LocalData.HEADER.get();
         Integer uid = header.getUid();
@@ -113,10 +113,10 @@ public class UserController {
     }
 
     //查询时条件不一样 也会 进行缓存添加
-    @PostMapping(value = "/select2/{name}")
+
+    @PostMapping(value = "/select2")
     @ApiIgnore
-//    @Encrypt
-    public Response select2(@PathVariable String name) {
+    public Response select2(@RequestParam String name) {
 
         Header header = LocalData.HEADER.get();
         Integer uid = header.getUid();
