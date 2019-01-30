@@ -73,7 +73,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from t_user
+    from user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -92,15 +92,15 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from t_user
+    from user
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from t_user
+    delete from user
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="cyf.gradle.dao.model.UserExample">
-    delete from t_user
+    delete from user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -109,14 +109,14 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into t_user (username, pwd)
+    insert into user (username, pwd)
     values (#{username,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cyf.gradle.dao.model.User">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into t_user
+    insert into user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="username != null">
         username,
@@ -135,13 +135,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="cyf.gradle.dao.model.UserExample" resultType="java.lang.Long">
-    select count(*) from t_user
+    select count(*) from user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update t_user
+    update user
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
@@ -158,7 +158,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update t_user
+    update user
     set id = #{record.id,jdbcType=INTEGER},
       username = #{record.username,jdbcType=VARCHAR},
       pwd = #{record.pwd,jdbcType=VARCHAR}
@@ -167,7 +167,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="cyf.gradle.dao.model.User">
-    update t_user
+    update user
     <set>
       <if test="username != null">
         username = #{username,jdbcType=VARCHAR},
@@ -179,13 +179,13 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="cyf.gradle.dao.model.User">
-    update t_user
+    update user
     set username = #{username,jdbcType=VARCHAR},
       pwd = #{pwd,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="selfPlusMinus">
-    update t_user
+    update user
  	  set ${columnName} = ${columnName} ${operator}  ${count} 
 	  <if test="_parameter != null">
 		<include refid="Update_By_Example_Where_Clause" />

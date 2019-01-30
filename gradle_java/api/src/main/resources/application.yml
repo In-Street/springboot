@@ -21,7 +21,9 @@ spring:
         # 字段排序参数名 默认为 sort
       sort:
         sort-parameter: orderBy
-
+# 接口数据加密key值
+  encrypt:
+    key: abcdef0123456789
 async:
      pool:
         #核心线程数
@@ -43,6 +45,8 @@ spring.jackson:
   date-format: "yyyy-MM-dd HH:mm:ss"
   default-property-inclusion: NON_NULL
   time-zone: GMT+8
+
+
 ---
 spring.profiles: dev
 spring.profiles.include: dao-dev

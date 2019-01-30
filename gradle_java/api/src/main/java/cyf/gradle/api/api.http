@@ -1,3 +1,10 @@
+### api user 数据加密
+#POST {{url}}/user/select2/yu
+GET {{url}}/user/select1/1
+Accept: */*
+Cache-Control: no-cache
+
+
 ### api Hystrix 注解模式
 GET {{url}}/command/user?username=hystrix&orderName=order
 Accept: */*
@@ -79,9 +86,8 @@ GET {{url}}/pay/wxUnifyOrder
 Accept: */*
 Cache-Control: no-cache
 
-
 ### jodd
-GET {{url}}/jodd/faceAudit?url=https://xclub.oss-cn-shanghai.aliyuncs.com/3000/image/header/2018/5/25/225b8a1a-4f72-11e8-a7e9-109836a3b20f.jpg
+GET {{url}}/jodd/faceAudit?url=http://xclub.oss-cn-shanghai.aliyuncs.com/3000/image/client/2018/8/16/218B0542F31A44FA95357E842EB93C70.jpg
 Accept: */*
 Cache-Control: no-cache
 

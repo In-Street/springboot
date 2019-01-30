@@ -1,4 +1,5 @@
 import cn.hutool.core.util.RandomUtil;
+import com.cxytiandi.encrypt.util.AesEncryptUtils;
 import com.google.common.collect.Maps;
 import com.google.common.primitives.Ints;
 import cyf.gradle.api.Enums.UserTest;
@@ -55,11 +56,13 @@ public class TestHome {
 
 
     @Test
-    public void md5() {
+    public void md5() throws Exception {
         String str = "123456";
         Md5Hash md5Hash = Md5Hash.fromHexString(str);
         String hex = md5Hash.toHex();
-        System.out.println(hex);
+//        System.out.println(hex);
+        String decrypt = AesEncryptUtils.aesDecrypt("5JvVDvyJCOSdxCiN0TicbA==", "abcdef0123456789");
+        System.out.println(decrypt);
     }
 
     @Test

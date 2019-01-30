@@ -1,16 +1,15 @@
 package cyf.gradle.api;
 
+import com.cxytiandi.encrypt.springboot.annotation.EnableEncrypt;
 import org.springframework.beans.factory.support.DefaultBeanNameGenerator;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.MultipartConfigElement;
 
@@ -35,6 +34,7 @@ import javax.servlet.MultipartConfigElement;
  *                              与在application.yml 中标注：spring.aop.proxy-target-class: true 效果一样
  */
 @EnableAspectJAutoProxy(proxyTargetClass = true,exposeProxy = true)
+@EnableEncrypt
 public class ApiApplication {
 
     public static void main(String[] args) {

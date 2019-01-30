@@ -37,12 +37,17 @@ public class HttpService {
      *
      * @return
      */
+    @SneakyThrows(IOException.class)
     public Map<String, Object> detect() {
+        byte[] bytes = FileUtil.readBytes("D:/卡同头像.jpeg");
+        String encode = Base64Utils.encodeToString(bytes);
         HttpRequest request = HttpRequest.post("https://aip.baidubce.com/rest/2.0/face/v3/detect")
                 .form(
                         "access_token", "24.9c359f436fb488437e68047d3c4170e9.2592000.1550040601.282335-15413918",
-                        "image", "https://xclub.oss-cn-shanghai.aliyuncs.com/3000/image/header/2018/5/25/4a657724-4f71-11e8-a7e9-109836a3b20f.jpg",
-                        "image_type", "URL",
+                      /*  "image", "https://xclub.oss-cn-shanghai.aliyuncs.com/3000/image/header/2018/5/25/4a657724-4f71-11e8-a7e9-109836a3b20f.jpg",
+                        "image_type", "URL",*/
+                      "image",encode,
+                        "image_type", "BASE64",
                         "face_field", "quality,eye_status,emotion,face_shape,gender,glasses",
                         //最多处理人脸的数目
                         "max_face_num", "1",
@@ -69,7 +74,7 @@ public class HttpService {
     public Map<String, Object> faceAudit(String url) {
 
 //        Files.readAllBytes()
-        byte[] bytes = FileUtil.readBytes("D:/素描头像.jpg");
+        byte[] bytes = FileUtil.readBytes("D:/带微信号.jpg");
         String encode = Base64Utils.encodeToString(bytes);
 
         HttpRequest request = HttpRequest.post("https://aip.baidubce.com/rest/2.0/solution/v1/face_audit")
@@ -83,4 +88,15 @@ public class HttpService {
         return map;
     }
 
+    public void faceMatch() {
+
+       /* Map<String, Object> map = new HashMap<>();
+        map.put()*/
+
+
+        HttpRequest request = HttpRequest.post("https://aip.baidubce.com/rest/2.0/face/v3/match")
+                .form("","").header("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+        HttpResponse response = request.send();
+        Map<String, Object> map = JSONObject.parseObject(response.bodyText()).getInnerMap();
+    }
 }

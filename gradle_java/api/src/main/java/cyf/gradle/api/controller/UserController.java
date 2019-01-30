@@ -15,7 +15,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.text.DateFormat;
@@ -95,7 +103,7 @@ public class UserController {
     }
 
     //查询时条件不一样 也会 进行缓存添加
-    @RequestMapping(value = "/select1/{id}", method = {RequestMethod.POST, RequestMethod.GET})
+    @GetMapping(value = "/select1/{id}")
     @ApiIgnore
     public Response select1(@PathVariable int id) {
 
@@ -105,9 +113,10 @@ public class UserController {
     }
 
     //查询时条件不一样 也会 进行缓存添加
-    @RequestMapping(value = "/select2/{name}", method = {RequestMethod.POST, RequestMethod.GET})
+    @PostMapping(value = "/select2/{name}")
     @ApiIgnore
-    public Response select1(@PathVariable String name) {
+//    @Encrypt
+    public Response select2(@PathVariable String name) {
 
         Header header = LocalData.HEADER.get();
         Integer uid = header.getUid();
