@@ -111,4 +111,22 @@ public class TestHome {
 
     }
 
+    @Test
+    public void string() {
+        String s = new String("1");
+        //将值放入常量池，返回引用后并没有进行赋值，
+        s.intern();
+
+        //常量池引用赋值给s1
+        String s1 = new String("1").intern();
+        String s2 = "1";
+        //false
+        System.out.println(s == s1);
+        //false
+        System.out.println(s == s2);
+        //true
+        System.out.println(s1 == s2);
+
+    }
+
 }
