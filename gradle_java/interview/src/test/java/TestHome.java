@@ -1,3 +1,5 @@
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
@@ -126,6 +128,24 @@ public class TestHome {
         System.out.println(s == s2);
         //true
         System.out.println(s1 == s2);
+
+    }
+    
+    @Test
+        public void immutableList() {
+        //可变集合
+        ArrayList<String> strings = Lists.newArrayList("A", "B");
+        strings.add("C");
+        System.out.println(strings);
+
+        //不可变集合，再次add时：java.lang.UnsupportedOperationException
+        List<String> strings1 = Arrays.asList("D", "E");
+//        strings1.add("F");
+        System.out.println(strings1);
+
+        //不可变集合
+        ImmutableList<String> strings2 = ImmutableList.of("G", "H");
+        System.out.println(strings2);
 
     }
 
