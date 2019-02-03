@@ -1,5 +1,6 @@
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
+import cyf.gradle.interview.service.base.abstractandinterface.SonClass;
 import cyf.gradle.interview.service.base.innerclass.Robot;
 import org.junit.Test;
 
@@ -158,6 +159,8 @@ public class TestHome {
         Robot.InnerRobot innerRobot = new Robot.InnerRobot();
 
         Robot.RobotRepair robotRepair = new Robot().new RobotRepair();
+
+        SonClass sonClass = new SonClass();
 
     }
 
