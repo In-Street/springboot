@@ -1,5 +1,6 @@
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
+import cyf.gradle.interview.service.base.innerclass.Robot;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
@@ -130,9 +131,9 @@ public class TestHome {
         System.out.println(s1 == s2);
 
     }
-    
+
     @Test
-        public void immutableList() {
+    public void immutableList() {
         //可变集合
         ArrayList<String> strings = Lists.newArrayList("A", "B");
         strings.add("C");
@@ -146,6 +147,17 @@ public class TestHome {
         //不可变集合
         ImmutableList<String> strings2 = ImmutableList.of("G", "H");
         System.out.println(strings2);
+
+    }
+
+    @Test
+    public void innerClass() {
+        /**
+         * 在外部类之外创建静态内部类、普通内部类方式
+         */
+        Robot.InnerRobot innerRobot = new Robot.InnerRobot();
+
+        Robot.RobotRepair robotRepair = new Robot().new RobotRepair();
 
     }
 

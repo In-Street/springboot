@@ -118,10 +118,10 @@ public class Robot extends Guide {
 
     public static void main(String[] args) {
         RobotRepair repair = new Robot().new RobotRepair();
+        InnerRobot innerRobot = new InnerRobot();
 
         Robot robot = Robot.robotFactory.get();
 
-        InnerRobot innerRobot = new InnerRobot();
 
     }
 }
