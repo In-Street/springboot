@@ -116,7 +116,7 @@ public class TestHome {
     @Test
     public void string() {
         String s = new String("1");
-        //将值放入常量池，返回引用后并没有进行赋值，
+        //将值放入常量池，返回引用后并没有进行赋值
         s.intern();
 
         //常量池引用赋值给s1

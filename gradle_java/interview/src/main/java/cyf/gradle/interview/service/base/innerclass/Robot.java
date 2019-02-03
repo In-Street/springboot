@@ -1,9 +1,11 @@
-package cyf.gradle.interview.service.base;
+package cyf.gradle.interview.service.base.innerclass;
 
 /**
  * @author Cheng Yufei
  * @create 2019-01-28 21:21
  **/
+
+import cyf.gradle.interview.service.base.abstractandinterface.RobotFactory;
 
 /**
  * 1. 通过内部类方式实现多继承

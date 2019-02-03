@@ -1,4 +1,4 @@
-package cyf.gradle.interview.service.base;
+package cyf.gradle.interview.service.base.innerclass;
 
 /**
  * @author Cheng Yufei
