@@ -22,7 +22,17 @@ public class Robot extends Guide {
 
     private static String country;
     private String city;
-    public static RobotFactory robotFactory = () -> new Robot();
+    public static RobotFactory robotFactory = new RobotFactory() {
+        @Override
+        public Robot get() {
+            return null;
+        }
+
+        @Override
+        public void walk() {
+
+        }
+    };
 
     public void guide(String name) {
         doGuide(name);
@@ -40,12 +50,15 @@ public class Robot extends Guide {
 
 
     /**
-     * 普通内部类
+     * 普通内部类:
+     *
+     * 只能定义普通的 成员变量/方法
+     *
+     * 可访问外部类的普通/静态的成员变量和方法
      */
     public class RobotRepair extends Repair {
 
         private String body;
-
 
         public void innerRepair(String name) {
             // 外部类引用
@@ -58,10 +71,17 @@ public class Robot extends Guide {
 
             doRepair(name);
         }
+
     }
 
     /**
-     * 静态内部类
+     * 静态内部类:
+     *
+     * 可定义普通、静态的 成员变量/方法；
+     *
+     * 只能访问外部类的静态成员变量和方法
+     *
+     *
      */
     public static class InnerRobot {
         public String name;
@@ -70,6 +90,10 @@ public class Robot extends Guide {
 
         public static void run() {
             walk();
+        }
+
+        public void a() {
+            System.out.println(country);
         }
 
     }
