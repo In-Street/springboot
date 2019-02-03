@@ -11,11 +11,13 @@ public abstract class AbstractClass {
     private String name;
     private static Integer age;
 
+    public AbstractClass(){}
     /**
      * 有构造器，但不能通过new 创建
      */
-   public AbstractClass() {
-       System.out.println("AbstractClass - init");
+   public AbstractClass(String name) {
+       this.name = name;
+       System.out.println("AbstractClass - init-"+name);
     }
 
     /**

@@ -8,7 +8,11 @@ import cyf.gradle.interview.service.base.innerclass.Robot;
  **/
 public class A extends AbstractClass {
 
-    public A() {
+    public A(String name) {
+        /**
+         * 显示调用父类有参构造器
+         */
+        super(name);
         System.out.println("A -- init");
     }
 
@@ -24,5 +28,9 @@ public class A extends AbstractClass {
     @Override
     public void walk() {
 
+    }
+
+    public static void main(String[] args) {
+        A a = new A("Taylor");
     }
 }

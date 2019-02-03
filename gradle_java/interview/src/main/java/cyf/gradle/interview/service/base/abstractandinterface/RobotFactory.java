@@ -27,4 +27,11 @@ public interface RobotFactory {
 
     default  void work() {}
 
+    /**
+     * 内部类默认静态
+     */
+    static class C{
+
+    }
+
 }

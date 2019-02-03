@@ -5,6 +5,7 @@ package cyf.gradle.interview.service.base.innerclass;
  * @create 2019-01-28 21:21
  **/
 
+import cyf.gradle.interview.service.base.abstractandinterface.AbstractClass;
 import cyf.gradle.interview.service.base.abstractandinterface.RobotFactory;
 
 /**
@@ -22,7 +23,24 @@ public class Robot extends Guide {
 
     private static String country;
     private String city;
+
+    /**
+     * 匿名内部类:
+     *  通过接口、抽象类创建
+     */
     public static RobotFactory robotFactory = new RobotFactory() {
+        @Override
+        public Robot get() {
+            return null;
+        }
+
+        @Override
+        public void walk() {
+
+        }
+    };
+
+    AbstractClass abstractClass = new AbstractClass(city) {
         @Override
         public Robot get() {
             return null;
