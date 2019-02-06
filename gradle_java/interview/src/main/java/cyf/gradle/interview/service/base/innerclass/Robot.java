@@ -27,8 +27,11 @@ public class Robot extends Guide {
     /**
      * 匿名内部类:
      *  通过接口、抽象类创建
+     *  不能定义静态成员变量、方法、类
      */
     public static RobotFactory robotFactory = new RobotFactory() {
+
+        public  String name;
         @Override
         public Robot get() {
             return null;
