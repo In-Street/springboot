@@ -1,7 +1,9 @@
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import cyf.gradle.interview.service.base.abstractandinterface.SonClass;
 import cyf.gradle.interview.service.base.innerclass.Robot;
+import org.apache.commons.collections.CollectionUtils;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
@@ -115,6 +117,9 @@ public class TestHome {
 
     }
 
+    /**
+     * String : intern 位置不同结果不同
+     */
     @Test
     public void string() {
         String s = new String("1");
@@ -133,6 +138,9 @@ public class TestHome {
 
     }
 
+    /**
+     * 可变、不可变集合
+     */
     @Test
     public void immutableList() {
         //可变集合
@@ -161,6 +169,43 @@ public class TestHome {
         Robot.RobotRepair robotRepair = new Robot().new RobotRepair();
 
         SonClass sonClass = new SonClass();
+
+    }
+
+    /**
+     * CollectionUtils.collect 、Iterables.transform  对集合元素的转换操作
+     */
+    @Test
+    public void lambda() {
+
+        ArrayList<String> strings = Lists.newArrayList("1", "2", "3");
+        ArrayList<String> strings2 = Lists.newArrayList("aa", "bb", "cc");
+
+        ArrayList<String> strings3 = Lists.newArrayListWithExpectedSize(3);
+        CollectionUtils.collect(strings2, s -> ((String) s).toUpperCase(), strings3);
+        System.out.println(strings3);
+
+        Iterable<Integer> transform = Iterables.transform(strings, s -> Integer.valueOf(s) + 1);
+        System.out.println(transform);
+
+    }
+
+    /**
+     * 集合元素 运算
+     */
+    @Test
+    public void intSummaryStatistics() {
+
+        ArrayList<Integer> ints = Lists.newArrayList(1, 2, 3);
+
+        IntSummaryStatistics statistics = ints.stream().mapToInt(i -> i).summaryStatistics();
+
+        statistics.getAverage();
+        statistics.getSum();
+        statistics.getMax();
+        statistics.getMin();
+
+
 
     }
 
