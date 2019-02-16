@@ -501,6 +501,13 @@ public class TestHome {
         System.out.println(sum);
 
     }
+
+    @Test
+    public void decrypt() throws Exception {
+        String decrypt = AesEncryptUtils.aesDecrypt("F1vCMTfpq5w7jvWDzgbDrilBJg6+uCMtF5Ll1qnEqKwuAAgyjzeKtN4LS32mLkkhcE4O5IRXf1WEBrhyJMhS7yg3bQfqEnHH1wlmc3ArvEU=", "abcdef0123456789");
+        System.out.println(decrypt);
+    }
+
 }
 
 /**

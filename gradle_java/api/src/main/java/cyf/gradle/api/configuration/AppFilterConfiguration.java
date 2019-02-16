@@ -1,8 +1,12 @@
 package cyf.gradle.api.configuration;
 
 
+import com.cxytiandi.encrypt.core.EncryptionConfig;
+import com.cxytiandi.encrypt.core.EncryptionFilter;
+import com.google.common.collect.Lists;
 import cyf.gradle.base.Constants;
 import cyf.gradle.base.enums.RespStatusEnum;
+import cyf.gradle.base.model.Header;
 import cyf.gradle.base.model.LocalData;
 import cyf.gradle.base.model.Response;
 import cyf.gradle.dao.model.User;
@@ -24,9 +28,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Field;
-import java.util.Enumeration;
-
-import cyf.gradle.base.model.Header;
 
 /**
  * 过滤器配置类
@@ -202,6 +203,23 @@ public class AppFilterConfiguration {
         registration.setOrder(110);
         registration.setName("apploginFilterRegistration");
         return registration;
+    }
+
+    @Bean
+    public FilterRegistrationBean encryptFilter() {
+
+        EncryptionConfig config = new EncryptionConfig();
+        config.setKey("abcdef0123456789");
+        config.setResponseEncryptUriList(Lists.newArrayList(
+                "/user/select/*",
+                "/byId/*"
+        ));
+//        config.setRequestDecyptUriList();
+        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        registrationBean.setFilter(new EncryptionFilter(config));
+        registrationBean.addUrlPatterns("/*");
+        registrationBean.setOrder(1);
+        return registrationBean;
     }
 
 

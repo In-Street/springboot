@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import springfox.documentation.annotations.ApiIgnore;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -45,7 +44,6 @@ public class UserController {
     @Autowired
     StringRedisTemplate redisTemplate;
 
-    @ApiIgnore
     @RequestMapping(value = "/save", method = {RequestMethod.POST, RequestMethod.GET})
     public Response save() {
 
@@ -94,7 +92,6 @@ public class UserController {
 
     //先执行 clear() ，然后执行sql 操作数据库
     @RequestMapping(value = "/update/{id}/{pwd}", method = {RequestMethod.POST, RequestMethod.GET})
-    @ApiIgnore
     public Response update(@PathVariable int id,@PathVariable String pwd) {
 
         userService.update(id,pwd);
@@ -103,8 +100,7 @@ public class UserController {
     }
 
     //查询时条件不一样 也会 进行缓存添加
-    @GetMapping(value = "/select1")
-    @ApiIgnore
+    @GetMapping(value = "/byId")
     public Response select1(@RequestParam int id) {
 
         Header header = LocalData.HEADER.get();
@@ -114,8 +110,7 @@ public class UserController {
 
     //查询时条件不一样 也会 进行缓存添加
 
-    @PostMapping(value = "/select2")
-    @ApiIgnore
+    @PostMapping(value = "/byName")
     public Response select2(@RequestParam String name) {
 
         Header header = LocalData.HEADER.get();
@@ -124,7 +119,6 @@ public class UserController {
     }
 
     @RequestMapping(value = "/save1/{id}", method = {RequestMethod.POST, RequestMethod.GET})
-    @ApiIgnore
     public Response save1(@PathVariable int id) {
         User user = userService.select1(id).get(0);
         redisTemplate.opsForValue().set(Constants.USER_LOGIN_KEY + "451DAE598CB14AB4B21BB19F113F9293",FastJsonUtils.toJSONString(user));

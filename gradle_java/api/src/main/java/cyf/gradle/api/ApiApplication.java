@@ -1,6 +1,5 @@
 package cyf.gradle.api;
 
-import com.cxytiandi.encrypt.springboot.annotation.EnableEncrypt;
 import org.springframework.beans.factory.support.DefaultBeanNameGenerator;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
@@ -34,7 +33,7 @@ import javax.servlet.MultipartConfigElement;
  *                              与在application.yml 中标注：spring.aop.proxy-target-class: true 效果一样
  */
 @EnableAspectJAutoProxy(proxyTargetClass = true,exposeProxy = true)
-@EnableEncrypt
+//@EnableEncrypt
 public class ApiApplication {
 
     public static void main(String[] args) {
@@ -49,6 +48,8 @@ public class ApiApplication {
         MultipartConfigFactory factory = new MultipartConfigFactory();
         factory.setMaxFileSize("-1");
         factory.setMaxRequestSize("-1");
+        //设置上传文件时临时路径
+//        factory.setLocation();
         return factory.createMultipartConfig();
     }
 }

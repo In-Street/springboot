@@ -21,9 +21,6 @@ spring:
         # 字段排序参数名 默认为 sort
       sort:
         sort-parameter: orderBy
-# 接口数据加密key值
-  encrypt:
-    key: abcdef0123456789
 async:
      pool:
         #核心线程数
