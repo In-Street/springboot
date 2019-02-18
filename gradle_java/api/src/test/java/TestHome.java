@@ -5,7 +5,6 @@ import com.google.common.primitives.Ints;
 import cyf.gradle.api.Enums.UserTest;
 import cyf.gradle.api.service.CommandOrder;
 import cyf.gradle.api.service.CommandUser;
-import cyf.gradle.base.dto.LomDto;
 import cyf.gradle.base.dto.UserDto;
 import cyf.gradle.dao.model.SysRole;
 import cyf.gradle.dao.model.User;
@@ -22,7 +21,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.math.RoundingMode;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -508,6 +506,51 @@ public class TestHome {
     public void decrypt() throws Exception {
         String decrypt = AesEncryptUtils.aesDecrypt("F1vCMTfpq5w7jvWDzgbDrilBJg6+uCMtF5Ll1qnEqKwuAAgyjzeKtN4LS32mLkkhcE4O5IRXf1WEBrhyJMhS7yg3bQfqEnHH1wlmc3ArvEU=", "abcdef0123456789");
         System.out.println(decrypt);
+    }
+
+    @Test
+    public void Class() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+
+        /**
+         *  newInstance: 没有直接生成目标对象实例
+         */
+        Class<?> user = Class.forName("cyf.gradle.dao.model.User");
+        Object obj = user.newInstance();
+
+        //////////////////////////////////////////////
+
+        Class<User> userClass = User.class;
+        User user1 = userClass.newInstance();
+
+        //////////////////////////////////////////////
+
+        /**
+         * Number及其子类
+         */
+        Class<? extends Number> obj2 = int.class;
+        obj2 = double.class;
+        obj = long.class;
+        obj2 = Number.class;
+
+        Class<String> stringClass = String.class;
+        //////////////////////////////////////////////
+
+        /**
+         * dClass 获取父类时，不能直接指定 Class<C>, 需写成 Class<? super D>
+         *     D 及其父类
+         */
+//        public class C extends D{}
+        Class<D> dClass = D.class;
+        Class<? super D> superclass = dClass.getSuperclass();
+
+        superclass = D.class;
+        superclass = C.class;
+
+        //////////////////////////////////////////////
+
+        Class<Einterface> einterfaceClass = Einterface.class;
+
+
     }
 
     @Test
