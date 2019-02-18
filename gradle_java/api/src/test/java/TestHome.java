@@ -5,6 +5,7 @@ import com.google.common.primitives.Ints;
 import cyf.gradle.api.Enums.UserTest;
 import cyf.gradle.api.service.CommandOrder;
 import cyf.gradle.api.service.CommandUser;
+import cyf.gradle.base.dto.LomDto;
 import cyf.gradle.base.dto.UserDto;
 import cyf.gradle.dao.model.SysRole;
 import cyf.gradle.dao.model.User;
@@ -21,6 +22,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.math.RoundingMode;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -506,6 +508,31 @@ public class TestHome {
     public void decrypt() throws Exception {
         String decrypt = AesEncryptUtils.aesDecrypt("F1vCMTfpq5w7jvWDzgbDrilBJg6+uCMtF5Ll1qnEqKwuAAgyjzeKtN4LS32mLkkhcE4O5IRXf1WEBrhyJMhS7yg3bQfqEnHH1wlmc3ArvEU=", "abcdef0123456789");
         System.out.println(decrypt);
+    }
+
+    @Test
+    public void lombok() {
+
+        /**
+         *  @Accessors(chain = true)
+         *  @Accessors(fluent = true)
+         *  @FieldDefaults(level = AccessLevel.PRIVATE) 默认属性修饰符
+         */
+
+        LomDto lomDto = new LomDto();
+       /* @Accessors(chain = true)
+        lomDto.setId(2).setNickname("Swift");*/
+
+        /* @Accessors(fluent = true)*/
+        lomDto.id(3).name("Candice");
+
+        //返回所有属性
+        Field[] declaredFields = lomDto.getClass().getDeclaredFields();
+
+        //返回public修饰的属性
+        Field[] fields = lomDto.getClass().getFields();
+
+        System.out.println(lomDto);
     }
 
 }
