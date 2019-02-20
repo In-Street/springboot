@@ -3,8 +3,12 @@ import com.cxytiandi.encrypt.util.AesEncryptUtils;
 import com.google.common.collect.Maps;
 import com.google.common.primitives.Ints;
 import cyf.gradle.api.Enums.UserTest;
+import cyf.gradle.api.controller.C;
+import cyf.gradle.api.controller.D;
+import cyf.gradle.api.controller.Einterface;
 import cyf.gradle.api.service.CommandOrder;
 import cyf.gradle.api.service.CommandUser;
+import cyf.gradle.base.dto.LomDto;
 import cyf.gradle.base.dto.UserDto;
 import cyf.gradle.dao.model.SysRole;
 import cyf.gradle.dao.model.User;
@@ -556,9 +560,15 @@ public class TestHome {
     @Test
     public void lombok() {
 
+        //返回所有属性
+//        Field[] declaredFields = lomDto.getClass().getDeclaredFields();
+
+        //返回public修饰的属性
+//        Field[] fields = lomDto.getClass().getFields();
+
         /**
          *  @Accessors(chain = true)
-         *  @Accessors(fluent = true)
+         *  @Accessors(fluent = true)  手动提供getter 方法 ，@Getter 不起作用
          *  @FieldDefaults(level = AccessLevel.PRIVATE) 默认属性修饰符
          */
 
@@ -568,14 +578,10 @@ public class TestHome {
 
         /* @Accessors(fluent = true)*/
         lomDto.id(3).name("Candice");
-
-        //返回所有属性
-        Field[] declaredFields = lomDto.getClass().getDeclaredFields();
-
-        //返回public修饰的属性
-        Field[] fields = lomDto.getClass().getFields();
-
         System.out.println(lomDto);
+
+        LomDto dto = null;
+        System.out.println(dto);
     }
 
 }
