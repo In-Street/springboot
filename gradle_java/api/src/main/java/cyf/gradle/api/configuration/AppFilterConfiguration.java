@@ -1,9 +1,6 @@
 package cyf.gradle.api.configuration;
 
 
-import com.cxytiandi.encrypt.core.EncryptionConfig;
-import com.cxytiandi.encrypt.core.EncryptionFilter;
-import com.google.common.collect.Lists;
 import cyf.gradle.base.Constants;
 import cyf.gradle.base.enums.RespStatusEnum;
 import cyf.gradle.base.model.Header;
@@ -210,7 +207,7 @@ public class AppFilterConfiguration {
      *  不支持 * 符号，所以请求参数不能是 @PathVariable形式
      * @return
      */
-    @Bean
+   /* @Bean
     public FilterRegistrationBean encryptFilter() {
 
         EncryptionConfig config = new EncryptionConfig();
@@ -228,7 +225,7 @@ public class AppFilterConfiguration {
         registrationBean.addUrlPatterns(new String[]{"/*"});
         registrationBean.setOrder(1);
         return registrationBean;
-    }
+    }*/
 
 
 

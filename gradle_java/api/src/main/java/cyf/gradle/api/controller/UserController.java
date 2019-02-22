@@ -77,14 +77,14 @@ public class UserController {
 
     // 会先到MyBatisRedis - redis 中，getObject() 查看是否有缓存，如果有不执行数据库操作 否则执行sql语句并且 putObject() 加入redis缓存
     @ApiOperation(value="根据UID获取用户", notes="根据url的id来获取信息")
-    @RequestMapping(value = "/select/{uid}", method = { RequestMethod.GET})
+    @RequestMapping(value = "/select", method = { RequestMethod.GET})
 //    @ApiImplicitParam(name = "uid",value = "用户ID",paramType = "path",dataType = "int",required = true)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "uid",value = "用户ID",paramType = "path",dataType = "int",required = true ),
             @ApiImplicitParam(name = "appId",value = "appId",paramType = "header",dataType = "string",required = false),
             @ApiImplicitParam(name = "username",value = "用户名",paramType = "query",dataType = "string",required = true),
     })
-    public Response select(@PathVariable  Integer uid,@RequestHeader(required = false) String appId,@RequestParam String username) {
+    public Response select(@RequestParam  Integer uid,@RequestHeader(required = false) String appId,@RequestParam String username) {
 
         log.debug(String.format("参数 appId :【%s】",appId));
         return userService.select(uid,username);
