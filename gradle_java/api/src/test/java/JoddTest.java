@@ -38,9 +38,9 @@ public class JoddTest {
         String content = wishText.get(random);
 
         HashMap<String, String> maps = new HashMap<>(4);
-        map.put("brotherOrSister", "小哥哥");
-        map.put("heOrShe", "他");
-        map.put("nickname", "九天");
+        maps.put("brotherOrSister", "小哥哥");
+        maps.put("heOrShe", "他");
+        maps.put("nickname", "九天");
 
         String result = parser.parse(content, s -> maps.get(s));
         System.out.println(result);
