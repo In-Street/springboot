@@ -205,19 +205,27 @@ public class AppFilterConfiguration {
         return registration;
     }
 
+    /**
+     *  Filter 模式实现数据加密
+     *  不支持 * 符号，所以请求参数不能是 @PathVariable形式
+     * @return
+     */
     @Bean
     public FilterRegistrationBean encryptFilter() {
 
         EncryptionConfig config = new EncryptionConfig();
         config.setKey("abcdef0123456789");
+
         config.setResponseEncryptUriList(Lists.newArrayList(
-                "/user/select/*",
-                "/byId/*"
+//                "/user/select",
+                "/user/byId","/user/byName"
         ));
-//        config.setRequestDecyptUriList();
+        //config.setRequestDecyptUriList();
+        config.setUrlPatterns(new String[]{"/*"});
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         registrationBean.setFilter(new EncryptionFilter(config));
-        registrationBean.addUrlPatterns("/*");
+        registrationBean.setEnabled(true);
+        registrationBean.addUrlPatterns(new String[]{"/*"});
         registrationBean.setOrder(1);
         return registrationBean;
     }

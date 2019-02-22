@@ -1,4 +1,5 @@
 import cn.hutool.core.util.RandomUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.cxytiandi.encrypt.util.AesEncryptUtils;
 import com.google.common.collect.Maps;
 import com.google.common.primitives.Ints;
@@ -10,6 +11,7 @@ import cyf.gradle.api.service.CommandOrder;
 import cyf.gradle.api.service.CommandUser;
 import cyf.gradle.base.dto.LomDto;
 import cyf.gradle.base.dto.UserDto;
+import cyf.gradle.base.model.Response;
 import cyf.gradle.dao.model.SysRole;
 import cyf.gradle.dao.model.User;
 import lombok.Cleanup;
@@ -509,7 +511,7 @@ public class TestHome {
     @Test
     public void decrypt() throws Exception {
         String decrypt = AesEncryptUtils.aesDecrypt("F1vCMTfpq5w7jvWDzgbDrilBJg6+uCMtF5Ll1qnEqKwuAAgyjzeKtN4LS32mLkkhcE4O5IRXf1WEBrhyJMhS7yg3bQfqEnHH1wlmc3ArvEU=", "abcdef0123456789");
-        System.out.println(decrypt);
+        System.out.println(JSONObject.parseObject(decrypt, Response.class));
     }
 
     @Test
