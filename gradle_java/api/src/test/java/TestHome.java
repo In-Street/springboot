@@ -27,6 +27,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.math.RoundingMode;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -514,50 +516,8 @@ public class TestHome {
         System.out.println(JSONObject.parseObject(decrypt, Response.class));
     }
 
-    @Test
-    public void Class() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
-
-        /**
-         *  newInstance: 没有直接生成目标对象实例
-         */
-        Class<?> user = Class.forName("cyf.gradle.dao.model.User");
-        Object obj = user.newInstance();
-
-        //////////////////////////////////////////////
-
-        Class<User> userClass = User.class;
-        User user1 = userClass.newInstance();
-
-        //////////////////////////////////////////////
-
-        /**
-         * Number及其子类
-         */
-        Class<? extends Number> obj2 = int.class;
-        obj2 = double.class;
-        obj = long.class;
-        obj2 = Number.class;
-
-        Class<String> stringClass = String.class;
-        //////////////////////////////////////////////
-
-        /**
-         * dClass 获取父类时，不能直接指定 Class<C>, 需写成 Class<? super D>
-         *     D 及其父类
-         */
-//        public class C extends D{}
-        Class<D> dClass = D.class;
-        Class<? super D> superclass = dClass.getSuperclass();
-
-        superclass = D.class;
-        superclass = C.class;
-
-        //////////////////////////////////////////////
-
-        Class<Einterface> einterfaceClass = Einterface.class;
 
 
-    }
 
     @Test
     public void lombok() {
