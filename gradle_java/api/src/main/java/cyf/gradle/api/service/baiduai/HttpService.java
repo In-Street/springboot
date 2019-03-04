@@ -95,7 +95,7 @@ public class HttpService {
 
 
         HttpRequest request = HttpRequest.post("https://aip.baidubce.com/rest/2.0/face/v3/match")
-                .form("","").header("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+                .form("", "").header("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
         HttpResponse response = request.send();
         Map<String, Object> map = JSONObject.parseObject(response.bodyText()).getInnerMap();
     }
