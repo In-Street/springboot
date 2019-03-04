@@ -46,6 +46,10 @@ public class ParallelService {
         }, threadPool);
         result.add(resultId);
 
+        //添加回调
+//        resultId.whenComplete()
+
+
         CompletableFuture<Void> nameResult = CompletableFuture.runAsync(() -> {
             log.info("name 处理：{}", Thread.currentThread().getName());
             userBuilder.name("Taylor Swift");
