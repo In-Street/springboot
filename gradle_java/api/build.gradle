@@ -19,9 +19,10 @@ dependencies{
     compile group: 'org.jodd', name: 'jodd-core', version: '5.0.6'
 
     compile group: 'org.jodd', name: 'jodd-http', version: '5.0.6'
-
-
-
+    //字符串操作
+    compile group: 'com.shekhargulati', name: 'strman', version: '0.4.0'
+    //内存 key-value 存储
+    compile group: 'net.openhft', name: 'chronicle-map', version: '3.17.1'
 
     compile project(':dao')
     compile project(':util')
