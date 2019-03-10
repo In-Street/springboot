@@ -3,6 +3,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.cxytiandi.encrypt.util.AesEncryptUtils;
 import com.google.common.collect.Maps;
 import com.google.common.primitives.Ints;
+import cyf.gradle.api.Enums.PushType;
 import cyf.gradle.api.Enums.UserTest;
 import cyf.gradle.api.controller.C;
 import cyf.gradle.api.controller.D;
@@ -36,13 +37,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.LongAdder;
@@ -517,8 +512,6 @@ public class TestHome {
     }
 
 
-
-
     @Test
     public void lombok() {
 
@@ -546,6 +539,13 @@ public class TestHome {
         System.out.println(dto);
     }
 
+    @Test
+    public void enums() {
+
+        EnumMap<PushType, String> enumMap = new EnumMap<>(PushType.class);
+        enumMap.put(PushType.CHAT, "");
+        enumMap.put(PushType.MATCH_SUCCESSFUL, "");
+    }
 }
 
 /**
