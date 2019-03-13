@@ -33,12 +33,17 @@ import javax.servlet.MultipartConfigElement;
  * 4. proxyTargetClass = true ：参数设为true时,表示使用CGLIB来为目标对象创建代理子类实现AOP，否则使用jdk基于接口的代理；
  *                              与在application.yml 中标注：spring.aop.proxy-target-class: true 效果一样
  */
-@EnableAspectJAutoProxy(proxyTargetClass = true,exposeProxy = true)
+@EnableAspectJAutoProxy(proxyTargetClass = true, exposeProxy = true)
 /**
  * 使用filter形式无需添加此注解
  * 配置文件形式、
  */
 @EnableEncrypt
+/**
+ * 监控
+ */
+/*@EnablePrometheusEndpoint
+@EnableSpringBootMetricsCollector*/
 public class ApiApplication {
 
     public static void main(String[] args) {
@@ -57,4 +62,9 @@ public class ApiApplication {
 //        factory.setLocation();
         return factory.createMultipartConfig();
     }
+
+   /* @Bean
+    MeterRegistryCustomizer<MeterRegistry> configurer(@Value("${spring.application.name}")String applicationName) {
+        return registry -> registry.config().commonTags("application", applicationName);
+    }*/
 }
