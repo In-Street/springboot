@@ -1,7 +1,10 @@
 package cyf.gradle.api;
 
 import com.cxytiandi.encrypt.springboot.annotation.EnableEncrypt;
+import io.micrometer.core.instrument.MeterRegistry;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.support.DefaultBeanNameGenerator;
+import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
@@ -63,8 +66,8 @@ public class ApiApplication {
         return factory.createMultipartConfig();
     }
 
-   /* @Bean
+    @Bean
     MeterRegistryCustomizer<MeterRegistry> configurer(@Value("${spring.application.name}")String applicationName) {
         return registry -> registry.config().commonTags("application", applicationName);
-    }*/
+    }
 }
