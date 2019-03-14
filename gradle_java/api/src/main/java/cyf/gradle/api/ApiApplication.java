@@ -39,7 +39,7 @@ import javax.servlet.MultipartConfigElement;
 @EnableAspectJAutoProxy(proxyTargetClass = true, exposeProxy = true)
 /**
  * 使用filter形式无需添加此注解
- * 配置文件形式、
+ * 配置文件形式、  java -javaagent:/usr/local/soft/prometheus/jmx_prometheus_javaagent-0.11.0.jar=3010:/usr/local/soft/prometheus/jmx_exporter.yml -jar yourJar.jar
  */
 @EnableEncrypt
 /**

@@ -58,6 +58,9 @@ management:
 spring.profiles: dev
 spring.profiles.include: dao-dev
 
+---
+spring.profiles: prod
+spring.profiles.include: dao-prod
 #---
 #spring.profiles: test
 #spring.profiles.include: dao-test,wechat-test,search-test
