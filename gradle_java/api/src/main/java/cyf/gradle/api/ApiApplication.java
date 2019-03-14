@@ -42,11 +42,6 @@ import javax.servlet.MultipartConfigElement;
  * 配置文件形式、  java -javaagent:/usr/local/soft/prometheus/jmx_prometheus_javaagent-0.11.0.jar=3010:/usr/local/soft/prometheus/jmx_exporter.yml -jar yourJar.jar
  */
 @EnableEncrypt
-/**
- * 监控
- */
-/*@EnablePrometheusEndpoint
-@EnableSpringBootMetricsCollector*/
 public class ApiApplication {
 
     public static void main(String[] args) {
