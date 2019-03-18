@@ -21,6 +21,11 @@ spring:
         # 字段排序参数名 默认为 sort
       sort:
         sort-parameter: orderBy
+#monitor
+  boot:
+    admin:
+      client:
+        url: http://127.0.0.1:6060
 async:
      pool:
         #核心线程数
@@ -41,7 +46,7 @@ spring.jackson:
   date-format: "yyyy-MM-dd HH:mm:ss"
   default-property-inclusion: NON_NULL
   time-zone: GMT+8
-
+#Prometheus
 management:
   endpoints:
     web:

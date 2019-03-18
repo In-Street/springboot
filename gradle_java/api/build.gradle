@@ -23,6 +23,8 @@ dependencies{
     compile group: 'com.shekhargulati', name: 'strman', version: '0.4.0'
     //内存 key-value 存储
     compile group: 'net.openhft', name: 'chronicle-map', version: '3.17.1'
+    compile group: 'de.codecentric', name: 'spring-boot-admin-starter-client', version: '2.0.5'
+
 
     compile project(':dao')
     compile project(':util')

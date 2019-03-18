@@ -15,4 +15,5 @@ include 'websocket'
 include 'batch'
 include 'pay'
 include 'apollo'
+include 'admin'
 
