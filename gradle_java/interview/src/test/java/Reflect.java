@@ -1,8 +1,7 @@
-import cyf.gradle.api.Enums.PushType;
-import cyf.gradle.api.controller.C;
-import cyf.gradle.api.controller.D;
-import cyf.gradle.api.controller.Einterface;
-import cyf.gradle.dao.model.User;
+import cyf.gradle.interview.modle.C;
+import cyf.gradle.interview.modle.D;
+import cyf.gradle.interview.modle.Einterface;
+import cyf.gradle.interview.modle.User;
 import org.junit.Test;
 
 import java.lang.reflect.*;
