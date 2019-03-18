@@ -14,3 +14,4 @@ base/out/
 rabbitmq_consumer/out/
 /.idea/
 /api/src/main/resources/META-INF/
+/gradle_java.iml
