@@ -1,11 +1,8 @@
 package cyf.gradle.api.runner;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.context.ApplicationContext;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -18,11 +15,12 @@ import org.springframework.stereotype.Component;
 @Order(100)
 public class Close implements ApplicationRunner {
 
-    @Autowired
-    ApplicationContext application;
+  /*  @Autowired
+    ApplicationContext application;*/
     @Override
     public void run(ApplicationArguments args) throws Exception {
         log.info("close >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> runner");
-        System.exit(SpringApplication.exit(application));
+//        System.exit(SpringApplication.exit(application));
+        System.exit(1);
     }
 }
