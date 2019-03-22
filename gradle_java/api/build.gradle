@@ -25,6 +25,12 @@ dependencies{
     compile group: 'net.openhft', name: 'chronicle-map', version: '3.17.1'
     compile group: 'de.codecentric', name: 'spring-boot-admin-starter-client', version: '2.0.5'
 
+    //sentinel 用于监控面板收集数据
+    compile group: 'com.alibaba.csp', name: 'sentinel-transport-simple-http', version: '1.5.0'
+    //sentinel 注解限流
+    compile group: 'com.alibaba.csp', name: 'sentinel-annotation-aspectj', version: '1.5.0'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-alibaba-sentinel', version: '0.2.1.RELEASE'
+
 
     compile project(':dao')
     compile project(':util')

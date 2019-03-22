@@ -1,5 +1,6 @@
 package cyf.gradle.api.service;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import cyf.gradle.base.model.Response;
 import cyf.gradle.dao.mapper.UserMapper;
 import cyf.gradle.dao.model.User;
@@ -45,6 +46,8 @@ public class UserService {
         List<User> list = userMapper.selectByExample(example);
         return list;
     }
+
+    @SentinelResource(value = "byName")
     public  List<User> select2(String name) {
         UserExample example = new UserExample();
         UserExample.Criteria criteria = example.createCriteria();

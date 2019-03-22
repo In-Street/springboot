@@ -1,5 +1,6 @@
 package cyf.gradle.api.controller;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import cyf.gradle.api.service.UserService;
 import cyf.gradle.base.Constants;
 import cyf.gradle.base.model.Header;
@@ -111,6 +112,7 @@ public class UserController {
     //查询时条件不一样 也会 进行缓存添加
 
     @PostMapping(value = "/byName")
+
     public Response select2(@RequestParam String name) {
 
         Header header = LocalData.HEADER.get();

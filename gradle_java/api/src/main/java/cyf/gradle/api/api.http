@@ -1,6 +1,6 @@
 ### api user 数据加密
-#POST {{url}}/user/byName?name=yu
-GET {{url}}/user/byId?id=2
+POST {{url}}/user/byName?name=yu
+#GET {{url}}/user/byId?id=2
 #GET {{url}}/user/select?username=if&uid=2
 Accept: */*
 Cache-Control: no-cache

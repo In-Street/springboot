@@ -21,11 +21,18 @@ spring:
         # 字段排序参数名 默认为 sort
       sort:
         sort-parameter: orderBy
-#monitor
+
+#springboot-admin-monitor
   boot:
     admin:
       client:
         url: http://127.0.0.1:6060
+
+# 指定sentinel 面板地址
+  cloud:
+    sentinel:
+      transport:
+        dashboard: http://39.106.118.71:8333
 async:
      pool:
         #核心线程数
@@ -58,6 +65,7 @@ management:
   metrics:
     tags:
       application: ${spring.application.name}
+
 
 ---
 spring.profiles: dev

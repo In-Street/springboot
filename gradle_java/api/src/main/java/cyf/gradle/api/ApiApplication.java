@@ -1,5 +1,8 @@
 package cyf.gradle.api;
 
+import com.alibaba.csp.sentinel.slots.block.RuleConstant;
+import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
+import com.alibaba.csp.sentinel.slots.block.flow.FlowRuleManager;
 import com.cxytiandi.encrypt.springboot.annotation.EnableEncrypt;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +18,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 import javax.servlet.MultipartConfigElement;
+import java.util.ArrayList;
 
 /**
  * boot入口
@@ -45,6 +49,7 @@ import javax.servlet.MultipartConfigElement;
 public class ApiApplication {
 
     public static void main(String[] args) {
+        initSentinelRule();
         new SpringApplicationBuilder(ApiApplication.class)
                 //类名重复bean的处理
                 .beanNameGenerator(new DefaultBeanNameGenerator())
@@ -61,8 +66,38 @@ public class ApiApplication {
         return factory.createMultipartConfig();
     }
 
+    /**
+     * prometheus 监控
+     * @param applicationName
+     * @return
+     */
     @Bean
     MeterRegistryCustomizer<MeterRegistry> configurer(@Value("${spring.application.name}")String applicationName) {
         return registry -> registry.config().commonTags("application", applicationName);
+    }
+
+    /**
+     * sentinel 限流
+     *
+     * 一条FlowRule有以下几个重要的属性组成：
+     *
+     * resource：规则的资源名
+     * grade：限流阈值类型，qps 或线程数
+     * count：限流的阈值
+     * limitApp：被限制的应用，授权时候为逗号分隔的应用集合，限流时为单个应用
+     * strategy：基于调用关系的流量控制
+     * controlBehavior：流控策略
+     * 参考：https://github.com/all4you/sentinel-tutorial/blob/master/sentinel-practice/sentinel-flow-control/sentinel-flow-control.md
+     */
+    private static void initSentinelRule() {
+        ArrayList<FlowRule> flowRules = new ArrayList<>();
+        FlowRule rule = new FlowRule();
+        rule.setRefResource("byName");
+        rule.setGrade(RuleConstant.FLOW_GRADE_QPS);
+        rule.setCount(2);
+
+        flowRules.add(rule);
+        FlowRuleManager.loadRules(flowRules);
+
     }
 }
