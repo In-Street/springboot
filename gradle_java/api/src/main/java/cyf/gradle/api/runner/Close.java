@@ -21,6 +21,6 @@ public class Close implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         log.info("close >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> runner");
 //        System.exit(SpringApplication.exit(application));
-        System.exit(1);
+//        System.exit(1);
     }
 }
