@@ -47,7 +47,7 @@ public class UserService {
         return list;
     }
 
-    @SentinelResource(value = "byName")
+    @SentinelResource(value = "userByName")
     public  List<User> select2(String name) {
         UserExample example = new UserExample();
         UserExample.Criteria criteria = example.createCriteria();

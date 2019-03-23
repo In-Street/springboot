@@ -92,7 +92,7 @@ public class ApiApplication {
     private static void initSentinelRule() {
         ArrayList<FlowRule> flowRules = new ArrayList<>();
         FlowRule rule = new FlowRule();
-        rule.setRefResource("byName");
+        rule.setRefResource("userByName");
         rule.setGrade(RuleConstant.FLOW_GRADE_QPS);
         rule.setCount(2);
 

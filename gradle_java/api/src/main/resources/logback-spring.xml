@@ -16,7 +16,7 @@
         </layout>
     </appender>
 
-    <appender name="FILE_PROD" class="ch.qos.logback.core.rolling.RollingFileAppender">
+   <!-- <appender name="FILE_PROD" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <File>/data/logs/springboot/api-prod.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <FileNamePattern>/data/logs/blog-api-prod-%d{yyyy-MM-dd}.log</FileNamePattern>
@@ -25,7 +25,7 @@
         <layout class="ch.qos.logback.classic.PatternLayout">
             <pattern>${FILE_LOG_PATTERN}</pattern>
         </layout>
-    </appender>
+    </appender>-->
 
 <!--    <appender name="FILE_PRE" class="ch.qos.logback.core.FileAppender">
         <File>D:/topvideo-api-pre.log</File>
@@ -50,18 +50,18 @@
 
 
     <!-- prod环境 -->
-    <springProfile name="prod">
+  <!--  <springProfile name="prod">
 
         <logger name="cyf.gradle.api" level="debug"/>
         <logger name="cyf.gradle.dao" level="debug" />
-        <!--<logger name="org.apache.ibatis.cache" level="info" />-->
-        <!--<logger name="org.apache.ibatis.executor" level="debug" />-->
+        &lt;!&ndash;<logger name="org.apache.ibatis.cache" level="info" />&ndash;&gt;
+        &lt;!&ndash;<logger name="org.apache.ibatis.executor" level="debug" />&ndash;&gt;
 
         <root level="INFO">
             <appender-ref ref="CONSOLE" />
             <appender-ref ref="FILE_PROD" />
         </root>
-    </springProfile>
+    </springProfile>-->
 
     <!-- 生产环境 -->
 <!--    <springProfile name="prod">
