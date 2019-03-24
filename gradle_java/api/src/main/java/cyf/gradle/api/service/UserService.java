@@ -47,6 +47,11 @@ public class UserService {
         return list;
     }
 
+    /**
+     * 添加资源名，控制面板添加流控
+     * @param name
+     * @return
+     */
     @SentinelResource(value = "userByName")
     public  List<User> select2(String name) {
         UserExample example = new UserExample();

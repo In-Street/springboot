@@ -93,6 +93,7 @@ public class ApiApplication {
         ArrayList<FlowRule> flowRules = new ArrayList<>();
         FlowRule rule = new FlowRule();
         rule.setRefResource("userByName");
+        //此处添加流控未生效
         rule.setGrade(RuleConstant.FLOW_GRADE_QPS);
         rule.setCount(1);
 
