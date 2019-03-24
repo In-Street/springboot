@@ -23,9 +23,10 @@ dependencies{
     compile group: 'com.shekhargulati', name: 'strman', version: '0.4.0'
     //内存 key-value 存储
     compile group: 'net.openhft', name: 'chronicle-map', version: '3.17.1'
+    //springboot admin监控
     compile group: 'de.codecentric', name: 'spring-boot-admin-starter-client', version: '2.0.5'
 
-    //sentinel 用于监控面板收集数据
+    //transport 用于客户端与监控面板通信
     compile group: 'com.alibaba.csp', name: 'sentinel-transport-simple-http', version: '1.5.0'
     //sentinel 注解限流
     compile group: 'com.alibaba.csp', name: 'sentinel-annotation-aspectj', version: '1.5.0'

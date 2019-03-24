@@ -94,7 +94,7 @@ public class ApiApplication {
         FlowRule rule = new FlowRule();
         rule.setRefResource("userByName");
         rule.setGrade(RuleConstant.FLOW_GRADE_QPS);
-        rule.setCount(2);
+        rule.setCount(1);
 
         flowRules.add(rule);
         FlowRuleManager.loadRules(flowRules);
