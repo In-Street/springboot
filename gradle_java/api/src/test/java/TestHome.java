@@ -5,9 +5,6 @@ import com.google.common.collect.Maps;
 import com.google.common.primitives.Ints;
 import cyf.gradle.api.Enums.PushType;
 import cyf.gradle.api.Enums.UserTest;
-import cyf.gradle.api.controller.C;
-import cyf.gradle.api.controller.D;
-import cyf.gradle.api.controller.Einterface;
 import cyf.gradle.api.service.CommandOrder;
 import cyf.gradle.api.service.CommandUser;
 import cyf.gradle.base.dto.LomDto;
@@ -28,8 +25,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.math.RoundingMode;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -41,11 +36,7 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.LongAdder;
-import java.util.function.BiFunction;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
+import java.util.function.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -545,6 +536,34 @@ public class TestHome {
         EnumMap<PushType, String> enumMap = new EnumMap<>(PushType.class);
         enumMap.put(PushType.CHAT, "");
         enumMap.put(PushType.MATCH_SUCCESSFUL, "");
+    }
+
+    @Test
+    public void constants() {
+        Integer i1 = new Integer(40);
+        Integer i6 = new Integer(40);
+        Integer i2 = new Integer(0);
+
+        Integer i3 = 40;
+
+        Integer i4 = 40;
+
+        Integer i5 = 0;
+
+        System.out.println("i3==i1      "+(i3==i1));
+
+        System.out.println("i3 == i4+i5     "+(i3==i4+i5));
+
+        System.out.println("i1== i4+i5     " + (i1 == i4 + i5));
+
+        System.out.println("i1== i6+i2     " + (i1 == i6 + i2));
+
+
+        //Double\Float 没有常量池
+        Float d1 = 2.1f;
+        Float d2 = 2.1f;
+        System.out.println(d1==d2);
+
     }
 }
 

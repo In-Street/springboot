@@ -2,8 +2,9 @@ package cyf.gradle.dao.mapper;
 
 import cyf.gradle.dao.model.User;
 import cyf.gradle.dao.model.UserExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface UserMapper {
     long countByExample(UserExample example);
