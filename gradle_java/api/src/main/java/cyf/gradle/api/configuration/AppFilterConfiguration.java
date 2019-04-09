@@ -120,7 +120,7 @@ public class AppFilterConfiguration {
                 Field[] fields = header.getClass().getDeclaredFields();
                 for (Field field : fields) {
                     String name = field.getName();
-                    field.setAccessible(true);//设置允许访问
+                    field.setAccessible(true);
                     try {
                         field.set(header, request.getHeader(name));
                     } catch (IllegalAccessException e) {
