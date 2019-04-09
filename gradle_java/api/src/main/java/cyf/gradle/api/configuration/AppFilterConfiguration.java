@@ -149,7 +149,7 @@ public class AppFilterConfiguration {
             }
         };
 //        registration.addUrlPatterns("/v1/*","/app/*");
-        registration.addUrlPatterns("/user/*");
+        registration.addUrlPatterns("/user/*","/sentinel/*");
         registration.setFilter(filter);
         registration.setName("headerFilterRegistration");
         registration.setOrder(1);
