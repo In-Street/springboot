@@ -5,6 +5,10 @@ POST {{url}}/user/byName?name=yu
 Accept: */*
 Cache-Control: no-cache
 
+### api sentinel 限流
+POST {{url}}/sentinel/byName?name=yu
+Accept: */*
+Cache-Control: no-cache
 
 ### api Hystrix 注解模式
 GET {{url}}/command/user?username=hystrix&orderName=order
