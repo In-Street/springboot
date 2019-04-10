@@ -26,7 +26,7 @@ public class SentinelController {
     public Response select2(@RequestParam String name) {
 
         Header header = LocalData.HEADER.get();
-        Integer uid = header.getUid();
+        Integer uid =Integer.valueOf( header.getUid());
         return new Response(sentinelService.selectByName(name));
     }
 }
