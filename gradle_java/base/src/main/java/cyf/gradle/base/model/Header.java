@@ -16,7 +16,7 @@ public class Header {
 
     private String sessionId;
 
-    private String uid;
+    private Integer uid;
 
     private String version;
     private String screen;
