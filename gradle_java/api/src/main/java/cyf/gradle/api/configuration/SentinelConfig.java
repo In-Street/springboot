@@ -10,10 +10,10 @@ import org.springframework.context.annotation.Configuration;
  *
  * 注解限流配置
  **/
-@Configuration
+//@Configuration
 public class SentinelConfig {
 
-    @Bean
+    //@Bean
     public SentinelResourceAspect sentinelResourceAspect() {
         return new SentinelResourceAspect();
     }

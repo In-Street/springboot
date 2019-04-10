@@ -29,10 +29,10 @@ spring:
         url: http://127.0.0.1:6060
 
 # 指定sentinel 面板地址 ,此方式没生效，通过启动添加VM Option: -Dcsp.sentinel.dashboard.server=39.106.118.71:8333 生效
-#  cloud:
-#    sentinel:
-#      transport:
-#        dashboard: 39.106.118.71:8333
+  cloud:
+    sentinel:
+      transport:
+        dashboard: 127.0.0.1:8333
 async:
      pool:
         #核心线程数

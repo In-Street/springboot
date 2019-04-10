@@ -22,7 +22,7 @@ public class SentinelService {
     private UserMapper userMapper;
 
 
-    @SentinelResource(value = "ByName")
+    //@SentinelResource(value = "ByName")
     public List<User> selectByName(String name) {
         UserExample example = new UserExample();
         UserExample.Criteria criteria = example.createCriteria();
