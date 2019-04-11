@@ -1,6 +1,7 @@
 package cyf.gradle.api.service;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import cyf.gradle.api.configuration.SentinelBlockException;
 import cyf.gradle.dao.mapper.UserMapper;
 import cyf.gradle.dao.model.User;
 import cyf.gradle.dao.model.UserExample;
@@ -23,17 +24,12 @@ public class SentinelService {
     private UserMapper userMapper;
 
 
-    @SentinelResource(value = "SentinelByName",fallback = "selectByNameFallback")
+    @SentinelResource(value = "SentinelByName",blockHandlerClass ={SentinelBlockException.class},blockHandler = "blockHandle")
     public List<User> selectByName(String name) {
         UserExample example = new UserExample();
         UserExample.Criteria criteria = example.createCriteria();
         criteria.andPwdEqualTo(name);
         List<User> list = userMapper.selectByExample(example);
         return list;
-    }
-    public List<User> selectByNameFallback(String name){
-
-        log.info("SentinelByName>>>>>>>>>>>>>>降级处理");
-        return Collections.EMPTY_LIST;
     }
 }
