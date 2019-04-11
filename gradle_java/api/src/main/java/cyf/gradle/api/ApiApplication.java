@@ -49,7 +49,7 @@ import java.util.ArrayList;
 public class ApiApplication {
 
     public static void main(String[] args) {
-        initSentinelRule();
+        //initSentinelRule();
         new SpringApplicationBuilder(ApiApplication.class)
                 //类名重复bean的处理
                 .beanNameGenerator(new DefaultBeanNameGenerator())
