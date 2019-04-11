@@ -1,5 +1,7 @@
+import org.apache.commons.lang3.time.FastDateFormat;
 import org.junit.Test;
 
+import java.text.ParseException;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -10,7 +12,10 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAccessor;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Cheng Yufei
@@ -47,6 +52,7 @@ public class Java8Time {
         LocalDateTime time = LocalDateTime.now();
         System.out.println(time);
 
+        //格式化
         DateTimeFormatter pattern = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String format = time.format(pattern);
         System.out.println(format);
@@ -56,7 +62,7 @@ public class Java8Time {
 
         //LocalDate 转 Date
         Date date = Date.from(from.atZone(ZoneId.systemDefault()).toInstant());
-        System.out.println("LocalDate 转 Date:   "+date);
+        System.out.println("LocalDate 转 Date:   " + date);
 
         //俩个日期的相差的年月日
         Period period = Period.between(parse1, localDate);
@@ -75,12 +81,71 @@ public class Java8Time {
         Instant now = Instant.now();
         System.out.println("Instant.now:" + now);
         Date date1 = Date.from(now);
-        System.out.println("Instant 与 Date 转换: "+date1);
+        System.out.println("Instant 与 Date 转换: " + date1);
 
         //Date 转 LocalDate
         Date date2 = new Date();
         LocalDate localDate1 = LocalDate.from(date2.toInstant().atZone(ZoneId.systemDefault()));
-        System.out.println(localDate1.getYear()+"    "+localDate1.getMonthValue()+"      "+localDate1.getDayOfMonth());
+        System.out.println(localDate1.getYear() + "    " + localDate1.getMonthValue() + "      " + localDate1.getDayOfMonth());
 
     }
+
+    @Test
+    public void format() throws ParseException {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDateTime.now().format(formatter);
+        LocalDateTime.parse("", formatter);
+
+        Date date = FastDateFormat.getInstance("yyyy-MM-dd").parse("1993-09-29");
+
+        /**
+         *  线程安全类：DateTimeFormatter、FastDateFormat
+         *
+         *   SimpleDateFormat 线程不安全：
+         *
+         *   1. 不能设置static 【 format(Date date) 方法 中  calendar.setTime(date); calendar是共享的，A线程设置完后，还没运行完此方法，B线程进入，设置成其他时间,A时间计算错误】
+         *
+         *   2. 设置static 同时需要加锁
+         *
+         *   3. 使用ThreadLocal 实现：
+         *          ThreadLocal<SimpleDateFormat> sdf = new ThreadLocal<SimpleDateFormat>() {
+         *             @Override
+         *             protected SimpleDateFormat initialValue() {
+         *                 return new SimpleDateFormat("yyyy-MM-dd");
+         *             }
+         *         };
+         */
+
+    }
+
+
+    @Test
+    public void theConstellation() throws ParseException {
+        List<String> starList = Arrays.asList("摩羯座", "水瓶座", "双鱼座", "白羊座", "金牛座", "双子座", "巨蟹座", "狮子座", "处女座", "天秤座", "天蝎座", "射手座", "摩羯座");
+        int[] DayArr = {21, 20, 21, 21, 22, 22, 23, 24, 24, 24, 23, 22};
+
+        String dateStr = "1993-03-29";
+
+        LocalDate localDate = LocalDate.parse(dateStr);
+        int index = localDate.getMonthValue() - 1;
+
+        if (localDate.getDayOfMonth() >= DayArr[index]) {
+            index = index + 1;
+        }
+        System.out.println(starList.get(index));
+
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(FastDateFormat.getInstance("yyyy-MM-dd").parse(dateStr));
+        int month = cal.get(Calendar.MONTH) + 1;
+        int index2 = month;
+        int day = cal.get(Calendar.DATE);
+        // 所查询日期在分割日之前，索引-1，否则不变
+        if (day < DayArr[month - 1]) {
+            index2 = index2 - 1;
+        }
+        System.out.println(starList.get(index2));
+    }
+
 }
