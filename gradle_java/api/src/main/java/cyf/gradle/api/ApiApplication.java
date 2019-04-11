@@ -49,7 +49,7 @@ import java.util.ArrayList;
 public class ApiApplication {
 
     public static void main(String[] args) {
-        //initSentinelRule();
+        initSentinelRule();
         new SpringApplicationBuilder(ApiApplication.class)
                 //类名重复bean的处理
                 .beanNameGenerator(new DefaultBeanNameGenerator())
@@ -92,7 +92,7 @@ public class ApiApplication {
     private static void initSentinelRule() {
         ArrayList<FlowRule> flowRules = new ArrayList<>();
         FlowRule rule = new FlowRule();
-        rule.setRefResource("userByName");
+        rule.setRefResource("ByName");
         //此处添加流控未生效
         rule.setGrade(RuleConstant.FLOW_GRADE_QPS);
         rule.setCount(1);
