@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,12 +23,17 @@ public class SentinelService {
     private UserMapper userMapper;
 
 
-    @SentinelResource(value = "SentinelByName")
+    @SentinelResource(value = "SentinelByName",fallback = "selectByNameFallback")
     public List<User> selectByName(String name) {
         UserExample example = new UserExample();
         UserExample.Criteria criteria = example.createCriteria();
         criteria.andPwdEqualTo(name);
         List<User> list = userMapper.selectByExample(example);
         return list;
+    }
+    public List<User> selectByNameFallback(String name){
+
+        log.info("SentinelByName>>>>>>>>>>>>>>降级处理");
+        return Collections.EMPTY_LIST;
     }
 }
