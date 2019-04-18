@@ -15,7 +15,7 @@ import java.util.List;
 public class SentinelBlockException {
 
     public static List<User> blockHandle(String name, BlockException ex){
-        log.info("SentinelBlockException>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        log.error("SentinelBlockException>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         return Collections.EMPTY_LIST;
     }
 }

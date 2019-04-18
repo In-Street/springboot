@@ -92,7 +92,7 @@ public class ApiApplication {
      * strategy：基于调用关系的限流策略
      * controlBehavior：流量控制效果（直接拒绝、Warm Up、匀速排队）
      *                 1. 直接拒绝：超过阀值新请求拒绝，抛出FlowException,【通过压测，已知系统确切处理能力的情况下】
-     *                 2. warm up: 冷启动，系统通过流量缓慢增加，在一定时间内达到阀值 【系统长期处于低水位，流量突然增加，瞬间压垮】
+     *                 2. warm up: 慢启动预热，系统通过流量缓慢增加，在一定时间内达到阀值 【系统长期处于低水位，流量突然增加，瞬间压垮】
      *                 3. 匀速排队： 请求匀速通过
      *
      * 可通过：http://localhost:8719/cnode?id=资源名 查看通过线程及阻塞线程个数
@@ -105,10 +105,12 @@ public class ApiApplication {
         ArrayList<FlowRule> flowRules = new ArrayList<>();
         FlowRule rule = new FlowRule();
         rule.setResource("SentinelByName");
-        //此处添加流控未生效
         rule.setGrade(RuleConstant.FLOW_GRADE_QPS);
-        rule.setCount(3);
-        rule.setControlBehavior(RuleConstant.CONTROL_BEHAVIOR_RATE_LIMITER);
+        rule.setCount(10);
+        rule.setControlBehavior(RuleConstant.CONTROL_BEHAVIOR_WARM_UP_RATE_LIMITER);
+        //匀速通过时设置最大排队时间，超过时长请求拒绝
+        rule.setMaxQueueingTimeMs(1000);
+        rule.setWarmUpPeriodSec(15);
 
         flowRules.add(rule);
         FlowRuleManager.loadRules(flowRules);
