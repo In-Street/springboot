@@ -27,4 +27,10 @@ public class SentinelController {
 
         return new Response(sentinelService.selectByName(name));
     }
+
+    @PostMapping(value = "/byName2")
+    public Response select(@RequestParam String name) throws InterruptedException {
+
+        return new Response(sentinelService.selectByName2(name));
+    }
 }
