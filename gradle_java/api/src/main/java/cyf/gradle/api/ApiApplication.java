@@ -102,7 +102,7 @@ public class ApiApplication {
         //此处添加流控未生效
         rule.setGrade(RuleConstant.FLOW_GRADE_QPS);
         rule.setCount(1);
-        rule.setControlBehavior(RuleConstant.CONTROL_BEHAVIOR_DEFAULT);
+        rule.setControlBehavior(RuleConstant.CONTROL_BEHAVIOR_RATE_LIMITER);
 
         flowRules.add(rule);
         FlowRuleManager.loadRules(flowRules);
