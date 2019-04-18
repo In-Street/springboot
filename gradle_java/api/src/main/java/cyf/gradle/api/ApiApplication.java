@@ -92,6 +92,8 @@ public class ApiApplication {
      *                 2. warm up: 冷启动，系统通过流量缓慢增加，在一定时间内达到阀值 【系统长期处于低水位，流量突然增加，瞬间压垮】
      *                 3. 匀速排队： 请求匀速通过
      *
+     * 可通过：http://localhost:8719/cnode?id=资源名 查看通过线程及阻塞线程个数
+     *
      * 参考：https://github.com/all4you/sentinel-tutorial/blob/master/sentinel-practice/sentinel-flow-control/sentinel-flow-control.md
      *      https://github.com/alibaba/Sentinel/wiki/%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6
      */
@@ -101,7 +103,7 @@ public class ApiApplication {
         rule.setResource("SentinelByName");
         //此处添加流控未生效
         rule.setGrade(RuleConstant.FLOW_GRADE_QPS);
-        rule.setCount(1);
+        rule.setCount(3);
         rule.setControlBehavior(RuleConstant.CONTROL_BEHAVIOR_RATE_LIMITER);
 
         flowRules.add(rule);
