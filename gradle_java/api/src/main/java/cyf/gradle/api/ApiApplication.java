@@ -3,6 +3,7 @@ package cyf.gradle.api;
 import com.alibaba.csp.sentinel.slots.block.RuleConstant;
 import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
 import com.alibaba.csp.sentinel.slots.block.flow.FlowRuleManager;
+import com.alibaba.csp.sentinel.slots.block.flow.FlowSlot;
 import com.cxytiandi.encrypt.springboot.annotation.EnableEncrypt;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Value;
@@ -84,21 +85,26 @@ public class ApiApplication {
      * resource：规则的资源名
      * grade：限流阈值类型，qps 或线程数
      * count：限流的阈值
-     * limitApp：被限制的应用，授权时候为逗号分隔的应用集合，限流时为单个应用
-     * strategy：基于调用关系的流量控制
-     * controlBehavior：流控策略
+     * limitApp：流控针对的调用来源，若为 default 则不区分调用来源,多个 , 分割
+     * strategy：基于调用关系的限流策略
+     * controlBehavior：流量控制效果（直接拒绝、Warm Up、匀速排队）
+     *                 1. 直接拒绝：超过阀值新请求拒绝，抛出FlowException,【通过压测，已知系统确切处理能力的情况下】
+     *                 2. warm up: 冷启动，系统通过流量缓慢增加，在一定时间内达到阀值 【系统长期处于低水位，流量突然增加，瞬间压垮】
+     *                 3. 匀速排队： 请求匀速通过
+     *
      * 参考：https://github.com/all4you/sentinel-tutorial/blob/master/sentinel-practice/sentinel-flow-control/sentinel-flow-control.md
+     *      https://github.com/alibaba/Sentinel/wiki/%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6
      */
     private static void initSentinelRule() {
         ArrayList<FlowRule> flowRules = new ArrayList<>();
         FlowRule rule = new FlowRule();
-        rule.setRefResource("SentinelByName");
+        rule.setResource("SentinelByName");
         //此处添加流控未生效
         rule.setGrade(RuleConstant.FLOW_GRADE_QPS);
-        rule.setCount(2);
+        rule.setCount(1);
+        rule.setControlBehavior(RuleConstant.CONTROL_BEHAVIOR_DEFAULT);
+
         flowRules.add(rule);
-
         FlowRuleManager.loadRules(flowRules);
-
     }
 }
