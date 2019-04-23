@@ -57,7 +57,6 @@ public class SentinelService {
         return Collections.EMPTY_LIST;
     }
 
-    @SentinelResource(blockHandlerClass = {SentinelBlockException.class}, blockHandler = "blockHandle")
     public List<User> selectByName3(String name, String origin) {
         String resource = "SentinelByName3";
         ContextUtil.enter(resource, origin);
