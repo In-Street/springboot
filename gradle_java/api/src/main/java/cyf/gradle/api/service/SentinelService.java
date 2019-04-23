@@ -58,12 +58,12 @@ public class SentinelService {
     @SentinelResource(value = "SentinelByName3", blockHandlerClass = {SentinelBlockException.class}, blockHandler = "blockHandle")
     public List<User> selectByName3(String name, String origin) {
 
-      /*  ContextUtil.enter("name", origin).setOrigin(origin);
-        ContextUtil.exit();*/
+        ContextUtil.enter("name", origin);
         UserExample example = new UserExample();
         UserExample.Criteria criteria = example.createCriteria();
         criteria.andPwdEqualTo(name);
         List<User> list = userMapper.selectByExample(example);
+        ContextUtil.exit();
         return list;
     }
 }
