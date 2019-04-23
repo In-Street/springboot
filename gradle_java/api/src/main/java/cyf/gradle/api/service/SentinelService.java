@@ -1,9 +1,11 @@
 package cyf.gradle.api.service;
 
 import com.alibaba.csp.sentinel.Entry;
+import com.alibaba.csp.sentinel.SphU;
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.csp.sentinel.context.Context;
 import com.alibaba.csp.sentinel.context.ContextUtil;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import cyf.gradle.api.configuration.SentinelBlockException;
 import cyf.gradle.dao.mapper.UserMapper;
 import cyf.gradle.dao.model.User;
@@ -55,15 +57,29 @@ public class SentinelService {
         return Collections.EMPTY_LIST;
     }
 
-    @SentinelResource(value = "SentinelByName3", blockHandlerClass = {SentinelBlockException.class}, blockHandler = "blockHandle")
+    @SentinelResource(blockHandlerClass = {SentinelBlockException.class}, blockHandler = "blockHandle")
     public List<User> selectByName3(String name, String origin) {
-
-        ContextUtil.enter("name", origin);
-        UserExample example = new UserExample();
-        UserExample.Criteria criteria = example.createCriteria();
-        criteria.andPwdEqualTo(name);
-        List<User> list = userMapper.selectByExample(example);
-        ContextUtil.exit();
+        String resource = "SentinelByName3";
+        ContextUtil.enter(resource, origin);
+        List<User> list = null;
+        Entry entry = null;
+        try {
+            entry = SphU.entry(resource);
+            System.out.println(String.format("Passed for resource %s, origin is %s", resource, origin));
+            UserExample example = new UserExample();
+            UserExample.Criteria criteria = example.createCriteria();
+            criteria.andPwdEqualTo(name);
+            list = userMapper.selectByExample(example);
+        } catch (BlockException e) {
+            System.err.println(String.format("Blocked for resource %s, origin is %s", resource, origin));
+        } finally {
+            if (entry != null) {
+                entry.exit();
+            }
+            ContextUtil.exit();
+        }
         return list;
+
+
     }
 }

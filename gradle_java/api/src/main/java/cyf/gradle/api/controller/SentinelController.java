@@ -1,6 +1,7 @@
 package cyf.gradle.api.controller;
 
 import com.alibaba.csp.sentinel.context.ContextUtil;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import cyf.gradle.api.service.SentinelService;
 import cyf.gradle.base.model.Header;
 import cyf.gradle.base.model.LocalData;
@@ -36,11 +37,11 @@ public class SentinelController {
     }
 
     @PostMapping(value = "/byName3")
-    public Response select3(@RequestParam String name) {
+    public Response select3(@RequestParam String name) throws BlockException {
         return new Response(sentinelService.selectByName3(name,"blackApp"));
     }
     @PostMapping(value = "/byName4")
-    public Response select4(@RequestParam String name) {
+    public Response select4(@RequestParam String name) throws BlockException {
         return new Response(sentinelService.selectByName3(name,"whiteApp"));
     }
 }

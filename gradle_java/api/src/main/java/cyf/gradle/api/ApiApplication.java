@@ -149,16 +149,16 @@ public class ApiApplication {
      * 黑白名单
      */
     private static  void authorityRule3() {
-      /*  AuthorityRule writeRule = new AuthorityRule();
+        AuthorityRule writeRule = new AuthorityRule();
         writeRule.setResource("SentinelByName3");
         writeRule.setStrategy(RuleConstant.AUTHORITY_WHITE);
         //多个来源用,分割
-        writeRule.setLimitApp("whiteApp");*/
+        writeRule.setLimitApp("whiteApp");
 
         AuthorityRule blackRule = new AuthorityRule();
         blackRule.setResource("SentinelByName3");
         blackRule.setStrategy(RuleConstant.AUTHORITY_BLACK);
         blackRule.setLimitApp("blackApp");
-        AuthorityRuleManager.loadRules(Lists.newArrayList(/*writeRule,*/blackRule));
+        AuthorityRuleManager.loadRules(Lists.newArrayList(writeRule,blackRule));
     }
 }
