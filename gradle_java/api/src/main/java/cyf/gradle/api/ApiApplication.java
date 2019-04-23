@@ -1,6 +1,8 @@
 package cyf.gradle.api;
 
 import com.alibaba.csp.sentinel.slots.block.RuleConstant;
+import com.alibaba.csp.sentinel.slots.block.authority.AuthorityRule;
+import com.alibaba.csp.sentinel.slots.block.authority.AuthorityRuleManager;
 import com.alibaba.csp.sentinel.slots.block.degrade.DegradeRule;
 import com.alibaba.csp.sentinel.slots.block.degrade.DegradeRuleManager;
 import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
@@ -53,8 +55,9 @@ import java.util.ArrayList;
 public class ApiApplication {
 
     public static void main(String[] args) {
-        initSentinelRule();
-        initSentinelRule2();
+        flowRule();
+        degradeRule2();
+        authorityRule3();
         new SpringApplicationBuilder(ApiApplication.class)
                 //类名重复bean的处理
                 .beanNameGenerator(new DefaultBeanNameGenerator())
@@ -101,7 +104,7 @@ public class ApiApplication {
      * 参考：https://github.com/all4you/sentinel-tutorial/blob/master/sentinel-practice/sentinel-flow-control/sentinel-flow-control.md
      *      https://github.com/alibaba/Sentinel/wiki/%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6
      */
-    private static void initSentinelRule() {
+    private static void flowRule() {
         ArrayList<FlowRule> flowRules = new ArrayList<>();
         FlowRule rule = new FlowRule();
         rule.setResource("SentinelByName");
@@ -131,7 +134,7 @@ public class ApiApplication {
      *               近1分钟内的异常数超过count, 自动熔断
      */
 
-    private static void initSentinelRule2() {
+    private static void degradeRule2() {
         DegradeRule degradeRule = new DegradeRule();
         degradeRule.setResource("SentinelByName2");
         degradeRule.setCount(5);
@@ -140,5 +143,22 @@ public class ApiApplication {
         //降级发生时，恢复正常的时间（s）
         degradeRule.setTimeWindow(10);
         DegradeRuleManager.loadRules(Lists.newArrayList(degradeRule));
+    }
+
+    /**
+     * 黑白名单
+     */
+    private static  void authorityRule3() {
+      /*  AuthorityRule writeRule = new AuthorityRule();
+        writeRule.setResource("SentinelByName3");
+        writeRule.setStrategy(RuleConstant.AUTHORITY_WHITE);
+        //多个来源用,分割
+        writeRule.setLimitApp("whiteApp");*/
+
+        AuthorityRule blackRule = new AuthorityRule();
+        blackRule.setResource("SentinelByName3");
+        blackRule.setStrategy(RuleConstant.AUTHORITY_BLACK);
+        blackRule.setLimitApp("blackApp");
+        AuthorityRuleManager.loadRules(Lists.newArrayList(/*writeRule,*/blackRule));
     }
 }

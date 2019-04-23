@@ -1,5 +1,6 @@
 package cyf.gradle.api.controller;
 
+import com.alibaba.csp.sentinel.context.ContextUtil;
 import cyf.gradle.api.service.SentinelService;
 import cyf.gradle.base.model.Header;
 import cyf.gradle.base.model.LocalData;
@@ -32,5 +33,14 @@ public class SentinelController {
     public Response select(@RequestParam String name) throws InterruptedException {
 
         return new Response(sentinelService.selectByName2(name));
+    }
+
+    @PostMapping(value = "/byName3")
+    public Response select3(@RequestParam String name) {
+        return new Response(sentinelService.selectByName3(name,"blackApp"));
+    }
+    @PostMapping(value = "/byName4")
+    public Response select4(@RequestParam String name) {
+        return new Response(sentinelService.selectByName3(name,"whiteApp"));
     }
 }

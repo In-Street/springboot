@@ -6,7 +6,7 @@ Accept: */*
 Cache-Control: no-cache
 
 ### api sentinel 限流
-POST {{url}}/sentinel/byName?name=yu
+POST {{url}}/sentinel/byName3?name=yu
 #uid: 2
 Accept: */*
 Cache-Control: no-cache

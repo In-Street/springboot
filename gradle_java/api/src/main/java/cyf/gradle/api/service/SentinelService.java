@@ -1,6 +1,9 @@
 package cyf.gradle.api.service;
 
+import com.alibaba.csp.sentinel.Entry;
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.alibaba.csp.sentinel.context.Context;
+import com.alibaba.csp.sentinel.context.ContextUtil;
 import cyf.gradle.api.configuration.SentinelBlockException;
 import cyf.gradle.dao.mapper.UserMapper;
 import cyf.gradle.dao.model.User;
@@ -26,7 +29,7 @@ public class SentinelService {
 
     private AtomicInteger atomicInteger = new AtomicInteger();
 
-    @SentinelResource(value = "SentinelByName",blockHandlerClass ={SentinelBlockException.class},blockHandler = "blockHandle")
+    @SentinelResource(value = "SentinelByName", blockHandlerClass = {SentinelBlockException.class}, blockHandler = "blockHandle")
     public List<User> selectByName(String name) {
         UserExample example = new UserExample();
         UserExample.Criteria criteria = example.createCriteria();
@@ -35,9 +38,9 @@ public class SentinelService {
         return list;
     }
 
-    @SentinelResource(value = "SentinelByName2",fallback = "fallback")
+    @SentinelResource(value = "SentinelByName2", fallback = "fallback")
     public List<User> selectByName2(String name) throws InterruptedException {
-        if (atomicInteger.incrementAndGet()<7) {
+        if (atomicInteger.incrementAndGet() < 7) {
             Thread.sleep(10);
         }
         UserExample example = new UserExample();
@@ -47,8 +50,20 @@ public class SentinelService {
         return list;
     }
 
-    public  List<User> fallback(String name) {
+    public List<User> fallback(String name) {
         log.error(">>>>>>>>fallback: 降级");
         return Collections.EMPTY_LIST;
+    }
+
+    @SentinelResource(value = "SentinelByName3", blockHandlerClass = {SentinelBlockException.class}, blockHandler = "blockHandle")
+    public List<User> selectByName3(String name, String origin) {
+
+      /*  ContextUtil.enter("name", origin).setOrigin(origin);
+        ContextUtil.exit();*/
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        criteria.andPwdEqualTo(name);
+        List<User> list = userMapper.selectByExample(example);
+        return list;
     }
 }
