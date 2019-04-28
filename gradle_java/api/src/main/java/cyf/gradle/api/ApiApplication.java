@@ -156,4 +156,12 @@ public class ApiApplication {
         blackRule.setLimitApp("blackApp");
         AuthorityRuleManager.loadRules(Lists.newArrayList(blackRule));
     }
+
+    /**
+     * sentinel 动态规则扩展：
+     *              使用API （loadRules）设定规则；
+     *              使用数据源[使用推模式，不采用拉模式]： zookeeper  nacos  apollo 三种规则
+     *
+     * 集群流控？？？
+     */
 }

@@ -23,6 +23,8 @@ import java.util.Date;
  *
  * 不管你嵌套了多少层方法调用，只有代理对象proxy 直接调用的那一个方法才是真正的走代理的
  *
+ * 分析： https://mp.weixin.qq.com/s/g56mu4OFS7x0rFGKSXZz7Q
+ *
  **/
 @Service
 @Slf4j
