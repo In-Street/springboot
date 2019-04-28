@@ -25,4 +25,9 @@ GET {{url}}/concurrent/completableFuture/3
 Accept: */*
 Cache-Control: no-cache
 
+### 策略模式
+GET {{url}}/order/handle/2
+Accept: */*
+Cache-Control: no-cache
+
 ###
