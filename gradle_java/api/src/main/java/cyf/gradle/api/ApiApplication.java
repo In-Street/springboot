@@ -21,6 +21,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 import javax.servlet.MultipartConfigElement;
@@ -52,6 +53,10 @@ import java.util.ArrayList;
  * 配置文件形式、  java -javaagent:/usr/local/soft/prometheus/jmx_prometheus_javaagent-0.11.0.jar=3010:/usr/local/soft/prometheus/jmx_exporter.yml -jar yourJar.jar
  */
 @EnableEncrypt
+/**
+ * 指定外部配置位置
+ */
+//@PropertySource()
 public class ApiApplication {
 
     public static void main(String[] args) {
