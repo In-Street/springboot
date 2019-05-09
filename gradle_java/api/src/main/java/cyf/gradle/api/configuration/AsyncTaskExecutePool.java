@@ -64,6 +64,9 @@ public class AsyncTaskExecutePool implements AsyncConfigurer {
         //ThreadFactory 生产线程
         executor.setThreadFactory(new ThreadFactoryBuilder().setNameFormat("task_demo_pool_%d").build());
 //        executor.setThreadNamePrefix();
+
+        //保持和请求线程一致的requestId
+        executor.setTaskDecorator(new MdcTaskDecorator());
         //初始化
         executor.initialize();
 

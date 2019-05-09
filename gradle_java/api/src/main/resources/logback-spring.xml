@@ -27,6 +27,13 @@
         </layout>
     </appender>
 
+<!-- 添加自定义 请求参数： requestId  -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!--  %logger{56}.%method:%L-->
+            <Pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level - [%X{requestId}] - %msg%n</Pattern>
+        </encoder>
+    </appender>
 
     <!-- 开发环境 -->
     <springProfile name="dev,test">
@@ -37,7 +44,8 @@
         <!--<logger name="org.apache.ibatis.executor" level="debug" />-->
 
         <root level="INFO">
-            <appender-ref ref="CONSOLE" />
+<!--            <appender-ref ref="CONSOLE" />-->
+            <appender-ref ref="STDOUT" />
             <appender-ref ref="FILE" />
         </root>
     </springProfile>
