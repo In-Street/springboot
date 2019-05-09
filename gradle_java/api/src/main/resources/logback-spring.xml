@@ -69,8 +69,8 @@
         <!--<logger name="org.apache.ibatis.executor" level="debug" />-->
 
         <root level="INFO">
-<!--            <appender-ref ref="CONSOLE" />-->
-            <appender-ref ref="STDOUT" />
+            <appender-ref ref="CONSOLE" />
+<!--            <appender-ref ref="STDOUT" />-->
             <appender-ref ref="FILE" />
         </root>
     </springProfile>
