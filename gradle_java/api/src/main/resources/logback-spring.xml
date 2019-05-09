@@ -2,6 +2,8 @@
 <configuration>
 
     <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+    <property name="CONSOLE_LOG_PATTERN"
+              value="%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level - [%X{requestId}] - %msg%n"/>
     <property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}/spring.log}"/>
     <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
 
@@ -28,12 +30,35 @@
     </appender>
 
 <!-- 添加自定义 请求参数： requestId  -->
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+   <!-- <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <!--  %logger{56}.%method:%L-->
+            &lt;!&ndash;  %logger{56}.%method:%L&ndash;&gt;
+
+        &lt;!&ndash;<encoder>表示对日志进行编码：
+            %d{HH:mm:ss.SSS}——日志输出时间
+            %thread——输出日志的进程名字，这在Web应用以及异步任务处理中很有用
+            %-5level——日志级别，并且使用5个字符靠左对齐
+            %logger{36}——日志输出者的名字
+            %msg——日志消息
+            %n——平台的换行符&ndash;&gt;
             <Pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level - [%X{requestId}] - %msg%n</Pattern>
         </encoder>
+    </appender>-->
+
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                ${CONSOLE_LOG_PATTERN}
+            </pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <!--此日志appender是为开发使用，只配置最底级别，控制台输出的日志级别是大于或等于此级别的日志信息-->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>debug</level>
+        </filter>
     </appender>
+
 
     <!-- 开发环境 -->
     <springProfile name="dev,test">
