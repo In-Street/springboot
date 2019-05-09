@@ -46,7 +46,7 @@
     </appender>-->
 
 
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>
                 ${CONSOLE_LOG_PATTERN}
