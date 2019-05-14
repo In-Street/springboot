@@ -97,4 +97,14 @@ GET {{url}}/jodd/faceAudit?url=http://xclub.oss-cn-shanghai.aliyuncs.com/3000/im
 Accept: */*
 Cache-Control: no-cache
 
+### 外部配置文件获取
+GET {{url}}/config/get
+Accept: */*
+Cache-Control: no-cache
+
+### 外部配置文件刷新
+GET {{url}}/config/refresh
+Accept: */*
+Cache-Control: no-cache
+
 ###
