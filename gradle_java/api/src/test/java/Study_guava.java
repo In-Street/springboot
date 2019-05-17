@@ -502,6 +502,9 @@ public class Study_guava {
         //获取最大2个数据
         List<Integer> integers1 = Ordering.natural().greatestOf(integers, 2);
         System.out.println(integers1);
+        //最小的4个
+        List<Integer> leastList = Ordering.natural().leastOf(integers.iterator(), 4);
+        System.out.println(leastList);
 
         String str = "";
         System.out.println(Strings.emptyToNull(str));
