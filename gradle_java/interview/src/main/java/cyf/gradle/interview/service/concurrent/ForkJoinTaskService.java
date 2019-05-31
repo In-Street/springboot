@@ -1,5 +1,6 @@
 package cyf.gradle.interview.service.concurrent;
 
+import com.google.common.base.Stopwatch;
 import cyf.gradle.interview.modle.Task;
 import cyf.gradle.interview.modle.User;
 import lombok.SneakyThrows;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveTask;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -115,9 +117,11 @@ public class ForkJoinTaskService {
 
     @SneakyThrows({ExecutionException.class, InterruptedException.class})
     public Object sumTask(Integer start, Integer end) {
+        Stopwatch stopwatch = Stopwatch.createStarted();
         Task task = new Task(start, end);
         ForkJoinPool pool = new ForkJoinPool();
         Object o = pool.submit(task).get();
+        System.out.println(stopwatch.elapsed(TimeUnit.MILLISECONDS));
         return o;
     }
 }

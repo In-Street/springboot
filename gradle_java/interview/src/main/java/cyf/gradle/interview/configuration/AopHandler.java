@@ -1,5 +1,6 @@
 package cyf.gradle.interview.configuration;
 
+import com.google.common.base.Stopwatch;
 import cyf.gradle.util.FastJsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -7,6 +8,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -15,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * AOP
@@ -36,13 +40,14 @@ public class AopHandler {
     @Around("@annotation(org.springframework.web.bind.annotation.RequestMapping)||@annotation(org.springframework.web.bind.annotation.GetMapping) " +
             "||@annotation(org.springframework.web.bind.annotation.PostMapping) ")
     public Object printMethodsExecutionTime(ProceedingJoinPoint pjp/*, RequestMapping requestMapping*/) throws Throwable {
-        long start = System.currentTimeMillis();
 
+        Stopwatch watch = Stopwatch.createStarted();
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
         String requestURI = request.getRequestURI();
 
-
+        String key = "requestId";
+        MDC.put(key, UUID.randomUUID().toString());
         log.info(">>> 开始请求: {},{}() with argument[s] = {}", requestURI, pjp.getSignature().getName(), Arrays.toString(pjp.getArgs()));
 
         Object result = pjp.proceed();
@@ -51,8 +56,8 @@ public class AopHandler {
         if (result != null) {
             json = FastJsonUtils.toJSONString(result);
         }
-        long usedTime = System.currentTimeMillis() - start;
-        log.info("<<< 结束请求: {},{}(),耗时:{}ms with result = {}", requestURI, pjp.getSignature().getName(), usedTime, json);
+        log.info("<<< 结束请求: {},{}(),耗时:{}ms with result = {}", requestURI, pjp.getSignature().getName(), watch.elapsed(TimeUnit.MILLISECONDS), json);
+        MDC.remove(key);
 
         return result;
     }

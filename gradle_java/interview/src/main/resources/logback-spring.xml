@@ -15,7 +15,21 @@
             <pattern>${FILE_LOG_PATTERN}</pattern>
         </layout>
     </appender>-->
-    
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!--  %logger{56}.%method:%L-->
+
+            <!--<encoder>表示对日志进行编码：
+                %d{HH:mm:ss.SSS}——日志输出时间
+                %thread——输出日志的进程名字，这在Web应用以及异步任务处理中很有用
+                %-5level——日志级别，并且使用5个字符靠左对齐
+                %logger{36}——日志输出者的名字
+                %msg——日志消息
+                %n——平台的换行符-->
+            <Pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level - [%X{requestId}] - %msg%n</Pattern>
+        </encoder>
+    </appender>
 
     <!-- 开发环境 -->
     <springProfile name="interview">
@@ -23,7 +37,7 @@
         <logger name="cyf.gradle.interview" level="debug"/>
 
         <root level="INFO">
-            <appender-ref ref="CONSOLE" />
+            <appender-ref ref="STDOUT" />
             <!--<appender-ref ref="FILE" />-->
         </root>
     </springProfile>
