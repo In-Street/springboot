@@ -52,7 +52,7 @@ public class AvoidDeadlockService {
         allocator.release(fromAccount,toAccount);
 
       /*
-       A转B , B转A 会发生死锁
+       A转B , B转A 会发生死锁 两种情况各用10个线程并发
       TimeUnit.MILLISECONDS.sleep(200);
         synchronized (fromAccount) {
             synchronized (toAccount) {
