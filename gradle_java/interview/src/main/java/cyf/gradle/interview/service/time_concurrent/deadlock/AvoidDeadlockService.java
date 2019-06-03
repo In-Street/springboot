@@ -22,17 +22,17 @@ public class AvoidDeadlockService {
 
     static {
         accountMap = Maps.newHashMapWithExpectedSize(2);
-        accountMap.put("A", new Account("A", 500));
-        accountMap.put("B", new Account("B", 500));
-        accountMap.put("C", new Account("C", 600));
+        accountMap.put("A", new Account(1,"A", 500));
+        accountMap.put("B", new Account(2,"B", 500));
+        accountMap.put("C", new Account(3,"C", 600));
     }
 
     /**
-     * 转账：
+     * 转账：所需所有资源统一申请发放,破坏死锁占有等待条件
      */
     public void transfer(String fromName, String toName, int money) throws InterruptedException {
 
-       //获取单例资源分配器
+        //获取单例资源分配器
         Allocator allocator = Instance.ALLOCATOR.allocator;
 
         Account fromAccount = accountMap.get(fromName);
@@ -49,7 +49,7 @@ public class AvoidDeadlockService {
         }
         log.info("{}余额：{},{}余额：{}", fromAccount.getName(), fromAccount.getBalance(), toAccount.getName(), toAccount.getBalance());
         //释放锁
-        allocator.release(fromAccount,toAccount);
+        allocator.release(fromAccount, toAccount);
 
       /*
        A转B , B转A 会发生死锁 两种情况各用10个线程并发
@@ -64,6 +64,29 @@ public class AvoidDeadlockService {
         log.info("{}余额：{},{}余额：{}", fromAccount.getName(), fromAccount.getBalance(), toAccount.getName(), toAccount.getBalance());
     }
 
+    /**
+     * 转账：资源排序申请，从小到大申请，破坏死锁循环等待条件
+     */
+    public void transferByResourceOrder(String fromName, String toName, int money) throws InterruptedException {
+        Account fromAccount = accountMap.get(fromName);
+        Account toAccount = accountMap.get(toName);
+
+        Account small = fromAccount;
+        Account big = toAccount;
+
+        if (fromAccount.getResourceId() > toAccount.getResourceId()) {
+            small = toAccount;
+            big = fromAccount;
+        }
+        TimeUnit.MILLISECONDS.sleep(200);
+        synchronized (small){
+            synchronized (big){
+                fromAccount.setBalance(fromAccount.getBalance() - money);
+                toAccount.setBalance(toAccount.getBalance() + money);
+            }
+        }
+        log.info("{}余额：{},{}余额：{}", fromAccount.getName(), fromAccount.getBalance(), toAccount.getName(), toAccount.getBalance());
+    }
 
     @Getter
     private enum Instance {

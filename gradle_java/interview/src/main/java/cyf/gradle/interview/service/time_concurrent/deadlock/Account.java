@@ -16,6 +16,10 @@ import lombok.experimental.FieldDefaults;
 @Setter
 public class Account {
 
+    /**
+     * 资源ID,用于获取锁时排序
+     */
+    Integer resourceId;
 
     String name;
     /**
@@ -26,7 +30,8 @@ public class Account {
     String password;
 
 
-    public Account(String name, Integer balance) {
+    public Account(Integer resourceId,String name, Integer balance) {
+        this.resourceId = resourceId;
         this.name = name;
         this.balance = balance;
     }

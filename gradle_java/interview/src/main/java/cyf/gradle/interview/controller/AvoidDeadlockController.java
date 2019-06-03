@@ -21,7 +21,8 @@ public class AvoidDeadlockController {
     @GetMapping
     @RequestMapping("/transfer")
     public String transfer(@RequestParam String from, @RequestParam String to, @RequestParam int money) throws InterruptedException {
-        avoidDeadlockService.transfer(from, to, money);
+        //avoidDeadlockService.transfer(from, to, money);
+        avoidDeadlockService.transferByResourceOrder(from, to, money);
         return "success";
     }
 }
