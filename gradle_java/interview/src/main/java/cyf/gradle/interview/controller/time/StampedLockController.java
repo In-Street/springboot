@@ -27,7 +27,7 @@ public class StampedLockController {
     }
 
     @PostMapping("/write/{newA}/{newB}")
-    public String write(@PathVariable Integer newA, @PathVariable Integer newB) {
+    public String write(@PathVariable Integer newA, @PathVariable Integer newB) throws InterruptedException {
         stampedLockService.write(newA, newB);
         return "success";
     }
