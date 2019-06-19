@@ -29,11 +29,15 @@ Cache-Control: no-cache
 GET {{url}}/order/handle/2
 Accept: */*
 Cache-Control: no-cache
-
 ###
 
 ######## --- time - 并发 --- ########
 GET {{url}}/avoidDeadlock/transfer?from=A&to=B&money=10
+Accept: */*
+Cache-Control: no-cache
+
+###
+GET {{url}}/cl/handler
 Accept: */*
 Cache-Control: no-cache
 

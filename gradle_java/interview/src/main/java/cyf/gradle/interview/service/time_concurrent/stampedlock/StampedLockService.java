@@ -26,7 +26,9 @@ public class StampedLockService {
 
 
         /**
-         * 乐观读：没有锁 ，效率高于 悲观读锁readLock();
+         * 乐观读：
+         * 1.没有锁 ，效率高于 悲观读锁readLock();
+         * 2.多线程读的时候，允许一个线程进行写; ReentrantReadWriteLock 多线程读时，所有写阻塞
          */
         long stamp = stampedLock.tryOptimisticRead();
         int x, y;
