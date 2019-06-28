@@ -1,4 +1,5 @@
 dependencies {
+    compile project(':dao')
     compile project(':util')
     compile project(':base')
 }

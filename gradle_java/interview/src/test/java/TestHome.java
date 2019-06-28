@@ -6,6 +6,7 @@ import cyf.gradle.interview.service.base.innerclass.Robot;
 import org.apache.commons.collections.CollectionUtils;
 import org.junit.Test;
 
+import java.nio.ByteBuffer;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @author Cheng Yufei
@@ -213,6 +215,69 @@ public class TestHome {
         statistics.getMax();
         statistics.getMin();
 
+
+    }
+
+    @Test
+    public void buffer() {
+        ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+        byteBuffer.get();
+
+    }
+
+    @Test
+    public void completableFuture() {
+
+        /*CompletableFuture<String> f1 = CompletableFuture.supplyAsync(() -> {
+            return "a";
+        });
+
+
+        CompletableFuture<String> f2 = CompletableFuture.supplyAsync(() -> {
+            return "b";
+        });
+
+        CompletableFuture<String> f3 = f1.thenCombine(f2, (a, b) -> {
+            return (a + b).toUpperCase();
+        });
+
+        System.out.println(f3.join());*/
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        CompletableFuture<Void> f1 = CompletableFuture.runAsync(() -> {
+        });
+
+        CompletableFuture<String> f2 = CompletableFuture.supplyAsync(() -> {
+            return "b";
+        });
+
+        CompletableFuture<String> f3 = f1.thenCombine(f2, (__, x) -> {
+            return x.toUpperCase();
+        });
+
+        System.out.println(f3.join());
+
+
+        CompletableFuture<Integer> exceptionally = CompletableFuture.supplyAsync(() -> {
+            return 7 / 0;
+        }).thenApply(r -> r * 10).exceptionally(e -> 0);
+
+        System.out.println(exceptionally.join());
+
+    }
+
+    @Test
+    public void classloader() {
+        ClassLoader c1 = IO.class.getClassLoader();
+        System.out.println(c1);
+
+        ClassLoader c1Parent = c1.getParent();
+        System.out.println(c1Parent);
+
+        ClassLoader parent = c1Parent.getParent();
+        System.out.println(parent);
 
     }
 

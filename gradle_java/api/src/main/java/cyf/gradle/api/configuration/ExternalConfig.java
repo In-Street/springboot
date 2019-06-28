@@ -3,7 +3,6 @@ package cyf.gradle.api.configuration;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Component;
  * @create 2019-05-10 14:33
  **/
 @Component
-@PropertySource(value = {"file:D:/external.properties"})
+@PropertySource(value = {"file:/Users/chengyufei/Downloads/external.properties"})
 @Getter
 @Setter
 public class ExternalConfig {

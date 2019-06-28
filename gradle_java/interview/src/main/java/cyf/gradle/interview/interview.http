@@ -16,7 +16,7 @@ Cache-Control: no-cache
 ######## --- review --- ########
 
 # 1 充值 2 消费
-GET {{url}}/concurrent/AtomicStampedReference/2
+GET {{url}}/concurrent/AtomicStampedReference/1
 Accept: */*
 Cache-Control: no-cache
 
@@ -36,3 +36,10 @@ Cache-Control: no-cache
 GET {{url}}/avoidDeadlock/transfer?from=A&to=B&money=10
 Accept: */*
 Cache-Control: no-cache
+
+### 事务传播模式
+GET {{url}}/transactional/required
+Accept: */*
+Cache-Control: no-cache
+
+###
