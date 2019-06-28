@@ -22,7 +22,7 @@ public class CyclicBarrierDemo {
                 //全部到齐后，进行后续任务操作
                 System.out.println(Thread.currentThread().getName());
                 System.out.println("7位法师已全部到来");
-                handle();
+                //handle();
             }
         });
         //等待全部法师到来

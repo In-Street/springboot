@@ -1,4 +1,4 @@
-package cyf.gradle.interview.controller;
+package cyf.gradle.interview.controller.time;
 
 import cyf.gradle.interview.service.time_concurrent.deadlock.AvoidDeadlockService;
 import org.springframework.beans.factory.annotation.Autowired;
