@@ -9,15 +9,7 @@ import org.junit.Test;
 import java.nio.ByteBuffer;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.IntSummaryStatistics;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -278,6 +270,34 @@ public class TestHome {
 
         ClassLoader parent = c1Parent.getParent();
         System.out.println(parent);
+
+    }
+
+    @Test
+    public void listiterator() {
+
+        /**
+         * ListIterator 从前向后、从后向前遍历，有add \set \ remove 操作
+         */
+        ArrayList<Integer> ints = Lists.newArrayList(1, 2, 3);
+        ListIterator<Integer> listIterator = ints.listIterator();
+        while (listIterator.hasNext()) {
+            System.out.println(listIterator.next());
+        }
+
+        while (listIterator.hasPrevious()) {
+            System.out.println(listIterator.previous());
+        }
+
+        /**
+         * Iterator 只能从前向后遍历，只有remove 操作
+         */
+        Iterator<Integer> iterator = ints.iterator();
+
+        String s = "abc";
+        StringBuilder stringBuilder = new StringBuilder(s);
+        stringBuilder.reverse();
+        System.out.println(stringBuilder.toString());
 
     }
 

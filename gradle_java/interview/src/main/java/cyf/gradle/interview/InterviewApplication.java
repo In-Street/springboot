@@ -19,6 +19,8 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 public class InterviewApplication {
 
     public static void main(String[] args) {
+        //SpringApplication.run(InterviewApplication.class, args);
+
         new SpringApplicationBuilder(InterviewApplication.class)
                 //类名重复bean的处理
                 .beanNameGenerator(new DefaultBeanNameGenerator())
