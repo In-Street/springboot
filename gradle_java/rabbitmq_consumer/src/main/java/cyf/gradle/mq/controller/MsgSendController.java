@@ -7,7 +7,11 @@ import cyf.gradle.util.FastJsonUtils;
 import cyf.gradle.util.LogUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.FastDateFormat;
+import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageDeliveryMode;
+import org.springframework.amqp.core.MessagePostProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,7 +39,21 @@ public class MsgSendController {
         String jsonString = FastJsonUtils.toJSONString(messageDto);
         String time = FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(new Date());
         LogUtil.debug(log, "发送正常消息：时间：{} , 消息体：{}  , threadlocal：{}", time, jsonString,Thread.currentThread().getName());
-        amqpTemplate.convertAndSend(Constants.COMMON_EXCHANGE, Constants.COMMON_ROUTING_KEY, jsonString);
+
+        /**
+         * 消息持久化：
+         *         1.queue 设置为durable（new Queue 时默认是true）
+         *         2.投递messages设置持久化 (发布消息默认持久)，确保在rabbitmq 服务挂掉后消息不会丢失
+         */
+        MessagePostProcessor messagePostProcessor = new MessagePostProcessor() {
+            @Override
+            public Message postProcessMessage(Message message) throws AmqpException {
+                message.getMessageProperties().setDeliveryMode(MessageDeliveryMode.PERSISTENT);
+                return message;
+            }
+        };
+
+        amqpTemplate.convertAndSend(Constants.COMMON_EXCHANGE, Constants.COMMON_ROUTING_KEY, jsonString,messagePostProcessor);
         return new Response();
     }
 

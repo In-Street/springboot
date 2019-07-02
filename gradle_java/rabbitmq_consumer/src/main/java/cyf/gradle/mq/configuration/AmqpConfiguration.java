@@ -95,5 +95,23 @@ public class AmqpConfiguration {
 
         amqpAdmin.declareQueue(generalQueue);
         amqpAdmin.declareBinding(generalBind);
+
+        /**
+         * 确保消息不丢失：【消息确认机制、消息持久化机制】
+         *
+         *    A:  默认情况下，mq投递消息给消费者后就会标记为删除
+         *          若消费者挂掉后，投递给消费者的正在执行或未执行的消息丢失。解决方案：mq支持消息确认机制确保消息不丢失：
+         *
+         *                1.配置文件设为：acknowledge-mode: manual 手动确认模式
+         *                2. 消费者执行完后：channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+         *
+         *               3.确认后，消费者通知mq ,消息已经接受、处理，rabbitmq 可以删除它了。若consumer挂掉，会将消息重新发送给另一个消费者。
+         *
+         *   B: rabbitmq server挂掉后，确保消息不丢失机制是 将消息持久化。
+         *
+         *          1.queue 设置为durable（new Queue 时默认是true）
+         *          2.投递messages设置持久化 (convertAndSend时设置MessagePostProcessor的投递模式：默认持久)，确保在rabbitmq 服务挂掉后消息不会丢失
+         *
+         */
     }
 }
