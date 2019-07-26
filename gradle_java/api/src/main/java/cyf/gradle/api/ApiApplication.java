@@ -28,7 +28,7 @@ import javax.servlet.MultipartConfigElement;
 import java.util.ArrayList;
 
 /**
- * boot入口
+ * boot入口sys
  */
 //@EnableCaching
 @SpringBootApplication(
@@ -54,7 +54,7 @@ import java.util.ArrayList;
  */
 @EnableEncrypt
 /**
- * 指定外部配置位置
+ * 指定外部配置位置git
  */
 //@PropertySource()
 public class ApiApplication {
