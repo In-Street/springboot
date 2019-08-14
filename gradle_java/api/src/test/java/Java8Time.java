@@ -1,14 +1,22 @@
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.junit.Test;
 
+import java.text.MessageFormat;
 import java.text.ParseException;
+import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.Month;
+import java.time.MonthDay;
+import java.time.OffsetDateTime;
 import java.time.Period;
+import java.time.YearMonth;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAccessor;
@@ -16,6 +24,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Cheng Yufei
@@ -147,5 +156,88 @@ public class Java8Time {
         }
         System.out.println(starList.get(index2));
     }
+
+    /**
+     * MonthDay: 检查与年份无关的周期性时间，【生日】
+     */
+    @Test
+    public void monthDay() {
+        LocalDate localDate = LocalDate.of(2019, 10, 1);
+        MonthDay monthDay = MonthDay.of(localDate.getMonth(), localDate.getDayOfMonth());
+
+        MonthDay now = MonthDay.now();
+        if (now.equals(monthDay)) {
+            System.out.println("今天是国庆");
+        }
+
+    }
+
+    /**
+     * YearMonth 与 MonthDay 对应;
+     * 获取年有多少天 【lengthOfYear()】/ 月有多少天 【lengthOfMonth()】 有效判断2月有28 还是29
+     */
+    @Test
+    public void yearMonth() {
+        YearMonth yearMonth = YearMonth.of(2019, Month.FEBRUARY);
+        YearMonth now = YearMonth.now();
+        //2019-08
+        System.out.println(now);
+
+        //2019-08-31
+        System.out.println(now.atEndOfMonth());
+        //365
+        System.out.println(now.lengthOfYear());
+        //28
+        System.out.println(yearMonth.lengthOfMonth());
+
+    }
+
+
+    @Test
+    public void clock() {
+        Clock clock = Clock.systemDefaultZone();
+        //SystemClock[Asia/Shanghai]
+        System.out.println(clock);
+        // 与 System.currentTimeMillis() 效果一样
+        System.out.println(clock.millis());
+    }
+
+    /**
+     * 时区 Id
+     * OffsetDateTime 类实际上组合了 LocalDateTime 类和 ZoneOffset 类。用来表示包含和格林威治或 UTC 时差的完整日期（年、月、日）和时间（时、分、秒、纳秒）信息
+     */
+    @Test
+    public void zone() {
+        //获取所有时区id
+        Set<String> zoneIds = ZoneOffset.getAvailableZoneIds();
+        ZoneId nyZoneId = ZoneId.of("America/New_York");
+        //ZoneId nyZoneId = ZoneId.of("America/Los_Angeles");
+
+        LocalDateTime now = LocalDateTime.now();
+
+        ZonedDateTime zonedDateTime = ZonedDateTime.of(now, nyZoneId);
+        System.out.println(zonedDateTime);
+        LocalDateTime nyLocalDateTime = LocalDateTime.now(nyZoneId);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss");
+
+        String msg = "纽约-北京相差：{0}小时";
+        String msgRes = MessageFormat.format(msg, ChronoUnit.HOURS.between(nyLocalDateTime, now));
+
+
+        ZoneOffset offset = ZoneOffset.of("-04:00");
+        OffsetDateTime of = OffsetDateTime.of(LocalDateTime.now(), offset);
+        System.out.println(of);
+    }
+
+    @Test
+    public void instant() {
+        Instant now = Instant.now();
+        //UTC 世界协调时间 ，本初子午线： 2019-08-14T10:09:52.273Z
+        System.out.println(now);
+        //CST 中国标准时间： Wed Aug 14 18:09:52 CST 2019
+        System.out.println(new Date());
+    }
+
 
 }
