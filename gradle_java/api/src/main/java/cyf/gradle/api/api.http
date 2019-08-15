@@ -107,4 +107,9 @@ GET {{url}}/config/refresh
 Accept: */*
 Cache-Control: no-cache
 
+###统一return处理
+GET {{url}}/jodd/return
+Accept: */*
+Cache-Control: no-cache
+
 ###
