@@ -16,4 +16,5 @@ include 'batch'
 include 'pay'
 include 'apollo'
 include 'admin'
+include 'sharding'
 

@@ -1,0 +1,17 @@
+###
+GET {{url}}/sharing/insert
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{
+"username":"读写分离：写_4",
+"pwd":"pwd"
+}
+
+###
+GET {{url}}/sharing/selectById/44
+Accept: */*
+Cache-Control: no-cache
+
+###

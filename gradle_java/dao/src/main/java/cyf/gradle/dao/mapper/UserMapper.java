@@ -5,7 +5,6 @@ import cyf.gradle.dao.model.UserExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-
 public interface UserMapper {
     long countByExample(UserExample example);
 

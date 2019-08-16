@@ -1,0 +1,10 @@
+dependencies {
+    compile project(':dao')
+    compile project(':util')
+    compile project(':base')
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'org.apache.shardingsphere', name: 'sharding-jdbc-spring-boot-starter', version: '4.0.0-RC1'
+    compile group: 'org.apache.shardingsphere', name: 'sharding-jdbc-spring-namespace', version: '4.0.0-RC1'
+
+}

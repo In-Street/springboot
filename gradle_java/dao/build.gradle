@@ -8,6 +8,9 @@ dependencies {
 
     compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.2.2'
 
+    compile group: 'org.apache.shardingsphere', name: 'sharding-jdbc-spring-boot-starter', version: '4.0.0-RC1'
+    compile group: 'com.alibaba', name: 'druid-spring-boot-starter', version: '1.1.10'
+
 
 }
 //bootRepackage.enabled = false
