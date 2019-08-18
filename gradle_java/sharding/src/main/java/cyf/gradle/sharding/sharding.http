@@ -5,12 +5,12 @@ Cache-Control: no-cache
 Content-Type: application/json
 
 {
-"username":"读写分离：写_4",
+"username":"读写分离：写_1",
 "pwd":"pwd"
 }
 
 ###
-GET {{url}}/sharing/selectById/44
+GET {{url}}/sharing/selectById/1
 Accept: */*
 Cache-Control: no-cache
 

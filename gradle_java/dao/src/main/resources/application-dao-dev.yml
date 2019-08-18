@@ -67,17 +67,17 @@ spring:
       master:
         type: com.alibaba.druid.pool.DruidDataSource
         driver-class-name: com.mysql.jdbc.Driver
-        url: jdbc:mysql://39.106.118.71/test?characterEncoding=utf-8
-        username: guest
-        password: guest@2018
+        url: jdbc:mysql://39.106.118.71/sharding?characterEncoding=utf-8
+        username:
+        password:
 
       #从数据源
       slave:
         type: com.alibaba.druid.pool.DruidDataSource
         driver-class-name: com.mysql.jdbc.Driver
-        url: jdbc:mysql://39.106.118.71/test_2?characterEncoding=utf-8
-        username: guest
-        password: guest@2018
+        url: jdbc:mysql://211.159.175.105/sharding?characterEncoding=utf-8
+        username:
+        password:
 
     masterslave:
       #负载均衡： 轮询 / random[随机]

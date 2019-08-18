@@ -3,7 +3,6 @@ package cyf.gradle.sharding.service;
 import cyf.gradle.dao.mapper.UserMapper;
 import cyf.gradle.dao.model.User;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shardingsphere.api.hint.HintManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +23,8 @@ public class SeparateService {
 
     public User getUserById(Integer id) {
 
-        HintManager.getInstance().setMasterRouteOnly();
+        //强制走主库查询
+        //HintManager.getInstance().setMasterRouteOnly();
 
         return userMapper.selectByPrimaryKey(id);
     }

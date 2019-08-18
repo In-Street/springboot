@@ -294,11 +294,14 @@ public class TestHome {
          */
         Iterator<Integer> iterator = ints.iterator();
 
-        String s = "abc";
-        StringBuilder stringBuilder = new StringBuilder(s);
-        stringBuilder.reverse();
-        System.out.println(stringBuilder.toString());
-
+        {
+            String s = "abc";
+            StringBuilder stringBuilder = new StringBuilder(s);
+            stringBuilder.reverse();
+            System.out.println(stringBuilder.toString());
+        }
     }
 
 }
+
+// service tool windows ； tab ; 选中输入一个括号或者引号
