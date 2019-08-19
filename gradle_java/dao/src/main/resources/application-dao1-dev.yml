@@ -1,0 +1,46 @@
+
+spring:
+  redis:
+    host: 39.106.118.71
+    password: 68A61C323A3452544C4AEF6296D8BD95A
+    port: 6380
+
+# 主从同步读写分离
+  shardingsphere:
+    datasource:
+      names: master,slave #数据源名称集合
+      #主数据源
+      master:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://39.106.118.71/sharding?characterEncoding=utf-8
+        username: slave
+        password: slave@2019
+
+      #从数据源
+      slave:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://211.159.175.105/sharding?characterEncoding=utf-8
+        username: slave
+        password: slave@2019
+
+    masterslave:
+      #负载均衡： 轮询 / random[随机]
+      load-balance-algorithm-type: round_robin
+      #最终数据源名称
+      name: dataSource
+      #主库数据源名称
+      master-data-source-name: master
+      #从库数据源名称列表，多个逗号分
+      slave-data-source-names: slave
+
+    #显示sql
+    props:
+      sql:
+        show: true
+
+#  mapper-locations: classpath:mapper/*.xml
+#  type-aliases-package: cyf.gradle.dao.model
+
+

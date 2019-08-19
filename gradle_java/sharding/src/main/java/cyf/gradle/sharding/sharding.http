@@ -5,12 +5,34 @@ Cache-Control: no-cache
 Content-Type: application/json
 
 {
-"username":"读写分离：写_1",
+"username":"读写分离：写_3",
 "pwd":"pwd"
 }
 
 ###
 GET {{url}}/sharing/selectById/1
+Accept: */*
+Cache-Control: no-cache
+
+###
+GET {{url}}/sharing/insertRecord
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{
+
+  "name":"水平拆分_5",
+  "content":"content_5"
+}
+
+###
+GET {{url}}/sharing/getRecordList?name=%25水%25
+Accept: */*
+Cache-Control: no-cache
+
+###
+GET {{url}}/sharing/selectRecordById/370263434266148864
 Accept: */*
 Cache-Control: no-cache
 
