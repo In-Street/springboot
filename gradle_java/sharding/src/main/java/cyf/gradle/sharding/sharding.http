@@ -22,8 +22,8 @@ Content-Type: application/json
 
 {
 
-  "name":"水平拆分_5",
-  "content":"content_5"
+  "name":"水平拆分_9",
+  "content":"content_9"
 }
 
 ###
@@ -32,7 +32,7 @@ Accept: */*
 Cache-Control: no-cache
 
 ###
-GET {{url}}/sharing/selectRecordById/370263434266148864
+GET {{url}}/sharing/selectRecordById/370271930797785088
 Accept: */*
 Cache-Control: no-cache
 

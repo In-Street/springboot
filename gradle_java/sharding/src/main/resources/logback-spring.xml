@@ -54,7 +54,7 @@
     <springProfile name="dev">
 
         <logger name="cyf.gradle.sharding" level="debug"/>
-        <logger name="cyf.gradle.dao" level="debug" />
+<!--        <logger name="cyf.gradle.dao" level="debug" />-->
         <!--<logger name="org.apache.ibatis.cache" level="info" />-->
         <!--<logger name="org.apache.ibatis.executor" level="debug" />-->
 

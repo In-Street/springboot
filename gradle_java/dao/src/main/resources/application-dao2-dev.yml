@@ -41,3 +41,8 @@ spring:
         ds0:
           master-data-source-name: master
           slave-data-source-names: slave
+
+    #显示sql
+    props:
+      sql:
+        show: true
