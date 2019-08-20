@@ -1,0 +1,71 @@
+spring:
+  redis:
+    host: 39.106.118.71
+    password: 68A61C323A3452544C4AEF6296D8BD95A
+    port: 6380
+
+  #  多库水平拆分 +  读写分离
+  shardingsphere:
+    datasource:
+      names: master0,slave0,master1,slave1
+      #主1数据源
+      master0:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://39.106.118.71/ds_0?characterEncoding=utf-8
+        username: slave
+        password: slave@2019
+      #从1
+      slave0:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://211.159.175.105/ds_0?characterEncoding=utf-8
+        username: slave
+        password: slave@2019
+
+        #主2数据源
+      master1:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://39.106.118.71/ds_1?characterEncoding=utf-8
+        username: slave
+        password: slave@2019
+          #从2
+      slave1:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://211.159.175.105/ds_1?characterEncoding=utf-8
+        username: slave
+        password: slave@2019
+
+    sharding:
+      #分库
+      default-database-strategy:
+        inline:
+          sharding-column: id
+          algorithm-expression: ds_$->{id%2}
+      #表水平拆分
+      tables:
+        # record : 逻辑表名，在xml中 所有操作不明确指定操作的表名，使用逻辑表名 [eg: insert into record xxx ,而不是 insert into record0/record1 xxx ]
+        record:
+          actual-data-nodes: ds_$->{0..1}.record$->{0..1}
+          table-strategy:
+            inline:
+              sharding-column: id
+              algorithm-expression: record$->{id.longValue() % 2}
+          key-generator:
+            column: id
+            #id:生成算法 SNOWFLAKE/UUID/LEAF_SEGMEN
+            type: SNOWFLAKE
+      master-slave-rules:
+        ds_0:
+          master-data-source-name: master0
+          slave-data-source-names: slave0
+        ds_1:
+          master-data-source-name: master1
+          slave-data-source-names: slave1
+
+    #显示sql
+    props:
+      sql:
+        show: true

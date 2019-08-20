@@ -8,7 +8,8 @@ spring:
     #dao-dev: 普通数据库操作
     #dao1-dev: 主从同步-纯读写分离
     #dao2-dev: 单库水平拆分 + 读写分离 【yml无属性提示，properties文件中编写有提示】
-    include: dao2-dev
+    #dao3-dev: 多库水平拆分 + 读写分离
+    include: dao3-dev
 
 
 
