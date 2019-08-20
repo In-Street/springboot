@@ -550,9 +550,9 @@ public class TestHome {
 
         Integer i5 = 0;
 
-        System.out.println("i3==i1      "+(i3==i1));
+        System.out.println("i3==i1      " + (i3 == i1));
 
-        System.out.println("i3 == i4+i5     "+(i3==i4+i5));
+        System.out.println("i3 == i4+i5     " + (i3 == i4 + i5));
 
         System.out.println("i1== i4+i5     " + (i1 == i4 + i5));
 
@@ -562,7 +562,7 @@ public class TestHome {
         //Double\Float 没有常量池
         Float d1 = 2.1f;
         Float d2 = 2.1f;
-        System.out.println(d1==d2);
+        System.out.println(d1 == d2);
 
     }
 }

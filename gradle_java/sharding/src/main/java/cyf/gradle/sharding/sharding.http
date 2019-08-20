@@ -22,17 +22,17 @@ Content-Type: application/json
 
 {
 
-  "name":"水平拆分_12",
-  "content":"content_12"
+  "name":"水平拆分_28",
+  "content":"content_28"
 }
 
 ###
-GET {{url}}/sharing/getRecordList?name=%25水%25
+GET {{url}}/sharing/getRecordList?name=%25_14%25
 Accept: */*
 Cache-Control: no-cache
 
 ###
-GET {{url}}/sharing/selectRecordById/370271930797785088
+GET {{url}}/sharing/selectRecordById/370519284457144321
 Accept: */*
 Cache-Control: no-cache
 

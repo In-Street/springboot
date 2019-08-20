@@ -43,16 +43,17 @@ spring:
       default-database-strategy:
         inline:
           sharding-column: id
+          #自定义分片算法：实现 PreciseShardingAlgorithm 接口
           algorithm-expression: ds_$->{id%2}
       #表水平拆分
       tables:
         # record : 逻辑表名，在xml中 所有操作不明确指定操作的表名，使用逻辑表名 [eg: insert into record xxx ,而不是 insert into record0/record1 xxx ]
         record:
-          actual-data-nodes: ds_$->{0..1}.record$->{0..1}
+          actual-data-nodes: ds_$->{0..1}.record$->{0..2}
           table-strategy:
             inline:
               sharding-column: id
-              algorithm-expression: record$->{id.longValue() % 2}
+              algorithm-expression: record$->{id.longValue() % 3}
           key-generator:
             column: id
             #id:生成算法 SNOWFLAKE/UUID/LEAF_SEGMEN
