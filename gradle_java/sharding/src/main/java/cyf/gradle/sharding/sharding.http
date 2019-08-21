@@ -21,9 +21,7 @@ Cache-Control: no-cache
 Content-Type: application/json
 
 {
-
-  "name":"水平拆分_28",
-  "content":"content_28"
+  "content":"G"
 }
 
 ###

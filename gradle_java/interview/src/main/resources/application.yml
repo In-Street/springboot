@@ -12,7 +12,7 @@ spring:
 ---
 spring:
   profiles:
-    include: interview,dao-dev
+    include: dao1-dev
 
 
 

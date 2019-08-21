@@ -1,9 +1,11 @@
+import cn.hutool.core.util.RandomUtil;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import cyf.gradle.interview.service.base.abstractandinterface.SonClass;
 import cyf.gradle.interview.service.base.innerclass.Robot;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.Test;
 
 import java.nio.ByteBuffer;

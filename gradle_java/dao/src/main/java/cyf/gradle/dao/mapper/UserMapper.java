@@ -2,9 +2,14 @@ package cyf.gradle.dao.mapper;
 
 import cyf.gradle.dao.model.User;
 import cyf.gradle.dao.model.UserExample;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.ResultType;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
+
+@Mapper
 public interface UserMapper {
     long countByExample(UserExample example);
 
@@ -29,4 +34,13 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+    /**
+     *  @ResultType 可返回自定义DTO，通过 select username as name 来对应dto中自定义的属性值
+     * @return
+     */
+    @Select("select * from user")
+    @ResultType(User.class)
+    List<User> getList();
+
 }

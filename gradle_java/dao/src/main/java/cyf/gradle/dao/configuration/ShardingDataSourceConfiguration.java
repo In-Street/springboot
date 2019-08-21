@@ -15,7 +15,7 @@ import javax.sql.DataSource;
  * @author Cheng Yufei
  * @create 2019-08-16 11:25
  **/
-@Configuration
+//@Configuration
 @MapperScan(basePackages ="cyf.gradle.dao.mapper",sqlSessionFactoryRef = "sqlSessionFactory")
 @Slf4j
 public class ShardingDataSourceConfiguration {
