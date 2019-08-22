@@ -4,7 +4,8 @@ dependencies {
     */
     compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.13'
 
-    compile group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '2.0.1'
+    //2.0.1 版本启动会报 【The alias 'Criterion' is already mapped to the value xxx】
+    compile group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '2.0.0'
 
     compile group: 'com.zaxxer', name: 'HikariCP', version: '3.3.0'
 

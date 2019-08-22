@@ -16,7 +16,7 @@ import javax.sql.DataSource;
  * @create 2019-08-16 11:25
  **/
 //@Configuration
-@MapperScan(basePackages ="cyf.gradle.dao.mapper",sqlSessionFactoryRef = "sqlSessionFactory")
+//@MapperScan(basePackages ="cyf.gradle.dao.mapper",sqlSessionFactoryRef = "sqlSessionFactory")
 @Slf4j
 public class ShardingDataSourceConfiguration {
 
@@ -27,7 +27,7 @@ public class ShardingDataSourceConfiguration {
     }
 */
 
-    @Bean(name = "sqlSessionFactory")
+    //@Bean(name = "sqlSessionFactory")
     public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
         SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
         sessionFactory.setDataSource(dataSource);

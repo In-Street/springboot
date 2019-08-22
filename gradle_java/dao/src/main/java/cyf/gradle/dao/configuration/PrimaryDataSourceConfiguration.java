@@ -24,10 +24,10 @@ import javax.sql.DataSource;
  *
  * @since JDK8
  */
-//@Configuration
+/*@Configuration
 //为了支持注解事务，增加了@EnableTransactionManagement注解，并且反回了一个PlatformTransactionManagerBean
 @EnableTransactionManagement
-@MapperScan(basePackages ="cyf.gradle.dao.mapper",sqlSessionFactoryRef = "primarySqlSessionFactory")
+@MapperScan(basePackages ="cyf.gradle.dao.mapper",sqlSessionFactoryRef = "primarySqlSessionFactory")*/
 @Slf4j
 public class PrimaryDataSourceConfiguration {
 

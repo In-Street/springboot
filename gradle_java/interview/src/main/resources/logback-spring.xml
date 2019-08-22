@@ -35,6 +35,7 @@
     <springProfile name="interview">
 
         <logger name="cyf.gradle.interview" level="debug"/>
+        <logger name="cyf.gradle.dao" level="debug"/>
 
         <root level="INFO">
             <appender-ref ref="STDOUT" />

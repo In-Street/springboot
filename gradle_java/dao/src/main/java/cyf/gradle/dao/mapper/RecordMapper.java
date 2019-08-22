@@ -4,6 +4,7 @@ import cyf.gradle.dao.model.Record;
 import cyf.gradle.dao.model.RecordExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 public interface RecordMapper {
     long countByExample(RecordExample example);
@@ -44,4 +45,8 @@ public interface RecordMapper {
     int updateByPrimaryKeySelective(Record record);
 
     int updateByPrimaryKey(Record record);
+
+    @Select("select * from record")
+    List<Record> getRecordList();
+
 }

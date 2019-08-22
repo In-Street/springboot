@@ -12,7 +12,7 @@ spring:
 ---
 spring:
   profiles:
-    include: dao1-dev
+    include: dao3-dev
 
 
 

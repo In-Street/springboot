@@ -40,7 +40,8 @@ spring:
       sql:
         show: true
 
-#  mapper-locations: classpath:mapper/*.xml
-#  type-aliases-package: cyf.gradle.dao.model
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: cyf.gradle.dao.model
 
 

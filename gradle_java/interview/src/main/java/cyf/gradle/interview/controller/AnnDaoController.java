@@ -1,9 +1,11 @@
 package cyf.gradle.interview.controller;
 
-import cyf.gradle.dao.model.Region;
+import cyf.gradle.dao.model.Record;
 import cyf.gradle.dao.model.User;
 import cyf.gradle.interview.service.annotationdao.AnnDaoService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,5 +26,16 @@ public class AnnDaoController {
     @GetMapping("/getList")
     public List<User> getList() {
         return annDaoService.getList();
+    }
+
+    @PostMapping("/insertRecord")
+    public String insertUser(@RequestBody Record record) {
+         annDaoService.insertRecord(record);
+        return "success";
+    }
+
+    @GetMapping("/getRecordList")
+    public List<Record> getRecordList() {
+        return annDaoService.getRecoordList();
     }
 }
