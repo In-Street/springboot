@@ -45,6 +45,6 @@ public class AnnDaoService {
     @Transactional(rollbackFor = Exception.class)
     public void insertRecord(Record record) {
         recordMapper.insertSelective(record);
-        int i = 1 / 0;
+        //int i = 1 / 0;
     }
 }

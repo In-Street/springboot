@@ -6,8 +6,6 @@ import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
@@ -16,7 +14,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
  * ClassCastException:
  * 两种解决方法：
  *  1. 如下 beforeBodyWrite 方法中处理。
- *  2. MessageConvertConfig 中自定义 HttpMessageConverters
+ *  2. 启动类中自定义 HttpMessageConverters
  *
  *
  * @author Cheng Yufei
