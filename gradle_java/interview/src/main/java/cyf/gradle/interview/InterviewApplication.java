@@ -1,6 +1,7 @@
 package cyf.gradle.interview;
 
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import org.http.liar.annotation.EnableApiClients;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.support.DefaultBeanNameGenerator;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,6 +26,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  * 2. 不使用xml中的sql操作，不需要在 @Configuration 类中创建datasource 和 扫描mapper、xml路径
  */
 @MapperScan(basePackages = "cyf.gradle.dao.mapper")
+@EnableApiClients
 public class InterviewApplication {
 
     public static void main(String[] args) {

@@ -72,3 +72,7 @@ GET {{url}}/cookies
 Accept: application/json
 
 ###
+GET {{url}}/httpapai/getList?id=370536372127137793
+Accept: application/json
+
+###
