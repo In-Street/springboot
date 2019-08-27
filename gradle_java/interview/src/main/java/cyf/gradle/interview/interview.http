@@ -64,3 +64,11 @@ Content-Type: application/json
 }
 
 ###
+GET {{url}}/cookies/set/passport/123
+Accept: application/json
+
+###
+GET {{url}}/cookies
+Accept: application/json
+
+###

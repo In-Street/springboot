@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Field;
+import java.util.Enumeration;
 
 /**
  * 过滤器配置类
@@ -43,7 +44,7 @@ public class AppFilterConfiguration {
      *  跨域 编码 header参数
      * @return commentFilterRegistration
      */
-  /*  @Bean
+    @Bean
     public FilterRegistrationBean commentFilterRegistration() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(new OncePerRequestFilter() {
@@ -100,7 +101,7 @@ public class AppFilterConfiguration {
         registration.setOrder(1);
         registration.setName("commentFilterRegistration");
         return registration;
-    }*/
+    }
 
     /**
      * 刚开始启动项目不运行 doFilterInternal() 方法，直接到 registration.addUrlPatterns ，访问controller 时 执行
