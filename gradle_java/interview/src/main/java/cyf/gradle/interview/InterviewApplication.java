@@ -1,5 +1,6 @@
 package cyf.gradle.interview;
 
+import cn.anony.boot.annotation.EnableSms;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import org.http.liar.annotation.EnableApiClients;
 import org.mybatis.spring.annotation.MapperScan;
@@ -27,6 +28,8 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  */
 @MapperScan(basePackages = "cyf.gradle.dao.mapper")
 @EnableApiClients
+//使用自定义starter
+@EnableSms
 public class InterviewApplication {
 
     public static void main(String[] args) {

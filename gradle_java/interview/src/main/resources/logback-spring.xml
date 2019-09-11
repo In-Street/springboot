@@ -32,7 +32,7 @@
     </appender>
 
     <!-- 开发环境 -->
-    <springProfile name="interview">
+    <springProfile name="dev">
 
         <logger name="cyf.gradle.interview" level="debug"/>
         <logger name="cyf.gradle.dao" level="debug"/>

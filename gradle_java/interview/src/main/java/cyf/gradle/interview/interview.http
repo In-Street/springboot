@@ -76,3 +76,7 @@ GET {{url}}/httpapai/getList?id=370536372127137793
 Accept: application/json
 
 ###
+###
+GET {{url}}/starter/sender
+Accept: */*
+Cache-Control: no-cache

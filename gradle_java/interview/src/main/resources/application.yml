@@ -3,7 +3,7 @@ server:
 
 spring:
   application.name: interview
-  profiles.active: interview
+  profiles.active: dev
 #app.id: SampleApp
 #apollo.meta: http://211.159.175.105:8080
 
@@ -15,7 +15,12 @@ spring:
     include: dao3-dev
 
 
-
+sms:
+  #starter SmsAutoConfigure 中 配置havingValue="true"，此处必须为true,若为false,则 SmsSender不会加载
+  enable: true
+  ali:
+    secret: 123
+    key-string: ABC
 
 
 
