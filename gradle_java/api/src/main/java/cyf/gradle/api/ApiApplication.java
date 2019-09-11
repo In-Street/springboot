@@ -11,6 +11,7 @@ import com.alibaba.csp.sentinel.slots.block.flow.FlowSlot;
 import com.cxytiandi.encrypt.springboot.annotation.EnableEncrypt;
 import com.google.common.collect.Lists;
 import io.micrometer.core.instrument.MeterRegistry;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.support.DefaultBeanNameGenerator;
 import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
@@ -57,6 +58,7 @@ import java.util.ArrayList;
  * 指定外部配置位置
  */
 //@PropertySource()
+@MapperScan(basePackages = "cyf.gradle.dao.mapper")
 public class ApiApplication {
 
     public static void main(String[] args) {

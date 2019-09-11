@@ -64,7 +64,7 @@ management:
 
 ---
 spring.profiles: dev
-spring.profiles.include: dao-dev
+spring.profiles.include: dao1-dev
 
 ---
 spring.profiles: prod

@@ -31,9 +31,9 @@ import javax.sql.DataSource;
 @Slf4j
 public class PrimaryDataSourceConfiguration {
 
-    @Bean(name="primaryDataSource",destroyMethod = "close")
+   /* @Bean(name="primaryDataSource",destroyMethod = "close")
     @ConfigurationProperties(prefix="hikari.datasource.primary")
-    @Primary
+    @Primary*/
     //设置 @Configuration 中@Bean 的加载顺序 或者通过参数调用的方式决定谁先加载
 //    @Order(value = )
     public DataSource primaryDataSource() {
@@ -41,15 +41,15 @@ public class PrimaryDataSourceConfiguration {
         return new HikariDataSource();
     }
 
-    @Bean(name = "primaryTransactionManager")
-    @Primary
+  /*  @Bean(name = "primaryTransactionManager")
+    @Primary*/
     public PlatformTransactionManager primaryTransactionManager() {
         log.info("-------------------- primaryTransactionManager init ---------------------");
         return new DataSourceTransactionManager(primaryDataSource());
     }
 
-    @Bean(name = "primarySqlSessionFactory")
-    @Primary
+   /* @Bean(name = "primarySqlSessionFactory")
+    @Primary*/
     public SqlSessionFactory primarySqlSessionFactory(@Qualifier("primaryDataSource") DataSource primaryDataSource) throws Exception {
         SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
         sessionFactory.setDataSource(primaryDataSource);
@@ -60,8 +60,8 @@ public class PrimaryDataSourceConfiguration {
         return sessionFactory.getObject();
     }
 
-    @Bean(name="primarySqlSessionTemplate")
-    @Primary
+   /* @Bean(name="primarySqlSessionTemplate")
+    @Primary*/
     public SqlSessionTemplate sqlSessionTemplate(@Qualifier("primarySqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
         log.info("-------------------- primarySqlSessionTemplate init ---------------------");
         return new SqlSessionTemplate(sqlSessionFactory);
