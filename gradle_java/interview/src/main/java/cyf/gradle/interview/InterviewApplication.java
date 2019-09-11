@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.retry.annotation.EnableRetry;
 
 /**
  * boot入口
@@ -30,6 +31,8 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @EnableApiClients
 //使用自定义starter
 @EnableSms
+//spring重试机制
+@EnableRetry
 public class InterviewApplication {
 
     public static void main(String[] args) {

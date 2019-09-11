@@ -80,3 +80,19 @@ Accept: application/json
 GET {{url}}/starter/sender
 Accept: */*
 Cache-Control: no-cache
+
+###
+GET {{url}}/retry/retry
+Accept: */*
+Cache-Control: no-cache
+
+###
+GET {{url}}/input/original?name=taylor
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{
+  "id": 1,
+  "city": "北京"
+}
