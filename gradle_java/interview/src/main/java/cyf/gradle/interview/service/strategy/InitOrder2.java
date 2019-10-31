@@ -1,6 +1,6 @@
 package cyf.gradle.interview.service.strategy;
 
-import cn.hutool.core.lang.ClassScaner;
+import cn.hutool.core.lang.ClassScanner;
 import com.google.common.collect.Maps;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
@@ -21,7 +21,7 @@ public class InitOrder2 implements BeanFactoryPostProcessor {
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
 
         HashMap<OrderType, Class> map = Maps.newHashMapWithExpectedSize(3);
-        ClassScaner.scanPackageByAnnotation("cyf.gradle.interview.service.strategy.impl", Type.class)
+        ClassScanner.scanPackageByAnnotation("cyf.gradle.interview.service.strategy.impl", Type.class)
                 .stream().forEach(cla -> {
             Type annotation = cla.getAnnotation(Type.class);
             map.put(annotation.value(), cla);
