@@ -1,6 +1,6 @@
 package cyf.gradle.interview.service.strategy;
 
-import cn.hutool.core.lang.ClassScaner;
+import cn.hutool.core.lang.ClassScanner;
 import com.google.common.collect.Maps;
 import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.BeansException;
@@ -35,7 +35,7 @@ public class InitOrder implements BeanPostProcessor {
         if (map.size() == orderTypes.length) {
             return bean;
         }
-        ClassScaner.scanPackageByAnnotation("cyf.gradle.interview.service.strategy.impl", Type.class)
+        ClassScanner.scanPackageByAnnotation("cyf.gradle.interview.service.strategy.impl", Type.class)
                 .stream().forEach(cla -> {
             Type annotation = cla.getAnnotation(Type.class);
             map.put(annotation.value(), cla);
