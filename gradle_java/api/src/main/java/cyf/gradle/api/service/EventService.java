@@ -26,8 +26,8 @@ public class EventService<T> {
     }
 
     public T post(T t) {
-//        eventBus.post(t);
-        asyncEventBus.post(t);
+        eventBus.post(t);
+        //asyncEventBus.post(t);
         return t;
     }
 }

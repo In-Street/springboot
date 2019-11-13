@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
+import static com.netflix.hystrix.contrib.javanica.annotation.HystrixException.RUNTIME_EXCEPTION;
+
 /**
  * @author Cheng Yufei
  * @create 2018-08-04 上午9:54
@@ -97,6 +99,7 @@ public class CommandUserForAnnotation {
     @HystrixCommand(fallbackMethod = "fallback",
             commandProperties = {
                     @HystrixProperty(name = "execution.isolation.strategy", value = "THREAD"),
+                    @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000")
             },
             threadPoolKey = "syn_handle",
             threadPoolProperties = {
@@ -105,15 +108,23 @@ public class CommandUserForAnnotation {
                     @HystrixProperty(name = "keepAliveTimeMinutes", value = "5"),
                     @HystrixProperty(name = "queueSizeRejectionThreshold", value = "50")
             })
-    public String handle(String userName, ThreadLocal threadLocal) throws Exception {
+    public String handle(String userName, ThreadLocal threadLocal){
         log.debug("username: {} ---Thread:{} --- ThreadLocal：{}", userName, Thread.currentThread().getName(), threadLocal.get());
+        try {
+            Thread.sleep(2000);
+            //TimeUnit.MILLISECONDS.sleep(3000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         //抛出异常走降级方法
-//        throw new Exception("");
+        //int i = 1 / 0;
+
         return "run - username: " + userName;
     }
 
     public String fallback(String userName, ThreadLocal threadLocal) {
-        return "---------用户模块降级处理：" + userName + " ---------";
+        return "---------handle降级处理：" + userName + " ---------";
     }
 
     @HystrixCommand(threadPoolKey = "asyn_handle",
@@ -123,14 +134,15 @@ public class CommandUserForAnnotation {
                     @HystrixProperty(name = "keepAliveTimeMinutes", value = "5"),
                     @HystrixProperty(name = "queueSizeRejectionThreshold", value = "50")
             })
-    public Future<String> async(String userName){
+    public Future<String> async(String userName) {
 
         return new AsyncResult<String>() {
             @Override
             public String invoke() {
                 try {
+                    //int i = 1 / 0;
                     TimeUnit.MILLISECONDS.sleep(500);
-                } catch (InterruptedException e) {
+                } catch (RuntimeException | InterruptedException e) {
                     e.printStackTrace();
                 }
                 log.debug("异步:{}, --- Thread:{}", userName, Thread.currentThread().getName());

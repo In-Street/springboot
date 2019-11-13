@@ -8,6 +8,7 @@ import com.alibaba.csp.sentinel.slots.block.degrade.DegradeRuleManager;
 import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
 import com.alibaba.csp.sentinel.slots.block.flow.FlowRuleManager;
 import com.alibaba.csp.sentinel.slots.block.flow.FlowSlot;
+import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.cxytiandi.encrypt.springboot.annotation.EnableEncrypt;
 import com.google.common.collect.Lists;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -23,6 +24,7 @@ import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 import javax.servlet.MultipartConfigElement;
@@ -79,6 +81,11 @@ public class ApiApplication {
         //设置上传文件时临时路径
 //        factory.setLocation();
         return factory.createMultipartConfig();
+    }
+
+    @Bean
+    public HttpMessageConverter messageConverter() {
+        return new FastJsonHttpMessageConverter();
     }
 
     /**

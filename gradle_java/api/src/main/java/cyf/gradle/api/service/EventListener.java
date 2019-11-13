@@ -3,6 +3,7 @@ package cyf.gradle.api.service;
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import cyf.gradle.dao.model.Kerr2;
+import cyf.gradle.dao.model.Region;
 import cyf.gradle.dao.model.User;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -68,4 +69,36 @@ public class EventListener<T, K> {
         }
         return k;
     }
+
+//---------------------------------参数类型有继承关系,post子类后，子类和父类的 Subscribe 方法都会处理这条消息---------------------------------
+
+    @Subscribe
+    public Kerr2 handleKer2(Kerr2 kerr2) {
+        kerr2.setTitle("北京市");
+        log.info(">>>>kerr2 消息处理");
+        return kerr2;
+    }
+
+   /* @Subscribe
+    public Region handleRegion(Region region) {
+        region.name("上海市");
+        log.info(">>>>Region 消息处理");
+        return region;
+    }*/
+
+//--------------------------------- 异常处理   ---------------------------------
+
+    /**
+     * eventbus 默认不会对异常处理，只是打印异常信息，异常语句之后的代码不执行，之前的代码设置还有效，然后return ， name属性的设置仍有效
+     * @param region
+     * @return
+     */
+    //@Subscribe
+    public Region handleRegionException(Region region) {
+        region.name("北京市");
+        int i = 1 / 0;
+        log.info(">>>>Region 消息处理");
+        return region;
+    }
+
 }

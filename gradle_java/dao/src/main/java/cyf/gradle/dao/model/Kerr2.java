@@ -18,7 +18,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Kerr2 implements Serializable {
+public class Kerr2 extends Region implements Serializable {
     private Integer id;
 
     private String title;

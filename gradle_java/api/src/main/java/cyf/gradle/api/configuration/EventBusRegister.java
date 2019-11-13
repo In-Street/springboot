@@ -40,8 +40,8 @@ public class EventBusRegister implements BeanPostProcessor {
         if (isEventListener) {
             Consumer<Annotation> consumerAnno = a -> {
                 if (Objects.equals(a.annotationType(), Subscribe.class)) {
-//                    eventBus.register(bean);
-                    asyncEventBus.register(bean);
+                    eventBus.register(bean);
+                    //asyncEventBus.register(bean);
                 }
             };
             Method[] methods = bean.getClass().getMethods();

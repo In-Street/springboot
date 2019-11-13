@@ -64,15 +64,16 @@ public class CommandController {
      * @return
      * @throws Exception
      */
-    @GetMapping("/user")
+    @GetMapping(value = "/user",produces = "application/json;charset=UTF-8")
     public String get_2(@RequestParam String username, @RequestParam String orderName) throws Exception {
         threadLocal = new ThreadLocal();
         threadLocal.set("i am threadLocal");
         log.debug("ThreadLocal:" + threadLocal.get());
-        commandUserForAnnotation.async(username);
+        //commandUserForAnnotation.async(username);
                /*String run = commandUserForAnnotation.run(username, threadLocal);
              commandUserForAnnotation.async(orderName, threadLocal);
-        commandUserForAnnotation.sync(orderName, threadLocal);*/
+        */
+        //String handle = commandUserForAnnotation.sync(orderName, threadLocal);
         String handle = commandUserForAnnotation.handle(username, threadLocal);
         return handle;
     }
