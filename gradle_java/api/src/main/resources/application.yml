@@ -68,7 +68,7 @@ spring.profiles.include: dao1-dev
 
 ---
 spring.profiles: prod
-spring.profiles.include: dao-prod
+spring.profiles.include: dao1-dev
 #---
 #spring.profiles: test
 #spring.profiles.include: dao-test,wechat-test,search-test
