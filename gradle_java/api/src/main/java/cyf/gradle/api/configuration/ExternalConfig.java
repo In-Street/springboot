@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  **/
 @Component
 //@PropertySource(value = {"file:D:/YUFEI/work/private/external.properties"})
-@PropertySource(value = {"/data/project/external.properties"})
+@PropertySource(value = {"file:/data/project/external.properties"})
 @Getter
 @Setter
 public class ExternalConfig {
