@@ -1,5 +1,6 @@
 import com.google.common.collect.Lists;
 import jodd.buffer.FastCharBuffer;
+import jodd.http.HttpRequest;
 import jodd.template.StringTemplateParser;
 import jodd.util.Wildcard;
 import org.junit.Test;

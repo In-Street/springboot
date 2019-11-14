@@ -11,6 +11,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Map;
+import java.util.stream.Stream;
 
 /**
  * @author Cheng Yufei
@@ -25,13 +27,25 @@ public class RequestInputStreamController {
 
     @GetMapping("/original")
     public String setInput(HttpServletRequest request) throws IOException {
+
+        Map<String, String[]> parameterMap = request.getParameterMap();
+        System.out.println("------controller: parameter start");
+        parameterMap.forEach((k, v) -> {
+            System.out.println(k);
+            Stream.of(v).forEach(v2 -> System.out.println(v2));
+        });
+        System.out.println("------controller: parameter end");
+
+
+
         InputStream inputStream = request.getInputStream();
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String s;
+        System.out.println("------controller: InputStream start");
         while((s = bufferedReader.readLine()) != null) {
-            System.out.println(">>>>>,controller中读取requestInputStream"+s);
+            System.out.println(s);
         }
-
+        System.out.println("------controller: InputStream end");
         inputService.originalRequest(request);
         return "success";
 

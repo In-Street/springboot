@@ -16,10 +16,10 @@ import java.io.IOException;
  * @author Cheng Yufei
  * @create 2019-09-08 1:52 下午
  **/
-@Configuration
+//@Configuration
 public class FilterConfig {
 
-    @Bean
+    //@Bean
     public FilterRegistrationBean requestInputStream() {
         FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<>();
         OncePerRequestFilter oncePerRequestFilter = new OncePerRequestFilter() {

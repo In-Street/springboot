@@ -223,6 +223,7 @@ public class Java8Time {
 
         String msg = "纽约-北京相差：{0}小时";
         String msgRes = MessageFormat.format(msg, ChronoUnit.HOURS.between(nyLocalDateTime, now));
+        System.out.println(msgRes);
 
 
         ZoneOffset offset = ZoneOffset.of("-04:00");
