@@ -185,3 +185,56 @@
             Lists.partition
 
        ```   
+       
+### 配置类依据外部文件进行属性的动态刷新
+
+1. 属性值对应类 [eg: ExternalConfig]
+
+    ```
+       1.类注解:
+             @PropertySource(value = {"file:D:/YUFEI/work/private/external.properties"})
+   
+       2. 成员变量:
+            @Value("${appp.core}")
+            Object core;
+   
+   ```  
+   
+2. api刷新机制:
+
+    ```
+    简单版: RefreshConfigController / refresh
+   
+        1. PropertiesLoaderUtils 加载外部文件: [属性有中文,注意编码]
+            
+            Properties properties = new Properties();
+            PropertiesLoaderUtils.fillProperties(properties, new EncodedResource(new FileUrlResource("D:/YUFEI/work/private/external.properties"),"utf-8"));
+   
+        2. 获取spring中属性对应类的bean,反射获取成员变量的@Value注解的key , 依据key 获取 properties 中新值进行设置
+   
+            ExternalConfig bean = context.getBean(ExternalConfig.class);
+            
+                    Stream.of(bean.getClass().getDeclaredFields()).forEach(field -> {
+            
+                        String value = field.getDeclaredAnnotation(Value.class).value();
+                        String key = StringUtils.removeAll(value, "[${}]");
+                        Object newValue = properties.get(key);
+                        try {
+                            field.setAccessible(true);
+                            field.set(bean, newValue);
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+            
+                        }
+                    });
+   
+   
+   
+    
+    复杂版: RefreshConfigController / configRefresh
+   
+         1. @Autowired
+            private AbstractEnvironment environment;
+   
+           environment.getPropertySources(); 找到 有 external.properties 配置的 propertySource.getSource() ,进行清空后 将 PropertiesLoaderUtils.fillProperties读取的 properties put进去,然后反射取值设置属性.
+   ```        
