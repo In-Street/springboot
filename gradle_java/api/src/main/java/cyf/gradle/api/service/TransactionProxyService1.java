@@ -5,7 +5,6 @@ import cyf.gradle.dao.mapper.UserMapper;
 import cyf.gradle.dao.model.Kerr2;
 import cyf.gradle.dao.model.User;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;

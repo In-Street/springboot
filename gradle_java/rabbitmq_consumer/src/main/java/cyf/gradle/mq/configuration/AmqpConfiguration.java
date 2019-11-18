@@ -8,6 +8,8 @@ import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Exchange;
 import org.springframework.amqp.core.ExchangeBuilder;
 import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.HashMap;
@@ -113,5 +115,11 @@ public class AmqpConfiguration {
          *          2.投递messages设置持久化 (convertAndSend时设置MessagePostProcessor的投递模式：默认持久)，确保在rabbitmq 服务挂掉后消息不会丢失
          *
          */
+
+
+        /**
+         * CachingConnectionFactory 指定链接源
+         */
+        //RabbitAdmin firstRabbitAdmin = new RabbitAdmin(new CachingConnectionFactory());
     }
 }

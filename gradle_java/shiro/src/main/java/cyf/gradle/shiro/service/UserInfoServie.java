@@ -3,10 +3,8 @@ package cyf.gradle.shiro.service;
 import cyf.gradle.dao.mapper.*;
 import cyf.gradle.dao.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
