@@ -104,7 +104,9 @@ public class GuavaCache {
 
         log.info("<=================初始化 AsyncRefresh LoadingCache<String, String>=================>");
         LoadingCache<String, String> cache_Refresh = CacheBuilder.newBuilder()
-                .maximumSize(100)
+                //指缓存的key的个数而不是大小【如 size \ length 等】；
+                //eg:现存 1，2，3 三个，当缓存4 时，会删除1
+                .maximumSize(3)
                 .refreshAfterWrite(1, TimeUnit.MINUTES)
                 .recordStats()
                 .build(new CacheLoader<String, String>() {

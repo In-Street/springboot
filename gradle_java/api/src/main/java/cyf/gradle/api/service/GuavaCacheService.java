@@ -14,6 +14,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -52,6 +53,11 @@ public class GuavaCacheService {
         CacheStats stats = refreshLoadingCache.stats();*/
 
         String refresh = asyncRefreshLoadingCache.get(key);
+
+        //获取所有的缓存键值对
+        ConcurrentMap<String, String> map = asyncRefreshLoadingCache.asMap();
+        map.forEach((k,v)-> System.out.println(k+"----"+v));
+
         CacheStats stats = asyncRefreshLoadingCache.stats();
         long hitCount = stats.hitCount();
         double hitRate = stats.hitRate();
