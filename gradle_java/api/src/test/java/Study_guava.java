@@ -570,7 +570,7 @@ public class Study_guava {
 
     /**
      * 实体类属性及值 转 Map：
-     *
+     * <p>
      * 1. 反射
      * 2。Maps.filterKeys + Maps.filterValues  或者 直接用 Maps.filterEntries
      */
@@ -616,7 +616,7 @@ public class Study_guava {
         //Map<String, String> filterKeys = Maps.filterKeys(filterValues, Predicates.not(Predicates.in(Lists.newArrayList("buyBranchList", "sellBranchList"))));
 
         //{stockCode=code, stockName=name, buySum=sum}
-        Map<String, String> filterKeys = Maps.filterKeys(filterValues, k->!StringUtils.equalsAny(k, "buyBranchList", "sellBranchList"));
+        Map<String, String> filterKeys = Maps.filterKeys(filterValues, k -> !StringUtils.equalsAny(k, "buyBranchList", "sellBranchList"));
         System.out.println(filterKeys);
 
         //{stockCode=code, stockName=name, buySum=sum}
@@ -626,6 +626,34 @@ public class Study_guava {
         Map<String, String> filterEntries = Maps.filterEntries(split, entry -> (!StringUtils.equalsAny(entry.getKey(), "buyBranchList", "sellBranchList")) &&
                 (!StringUtils.equals("null", entry.getValue())));
 
+    }
+
+    @Test
+    public void charMatcher() {
+        String s = "a,b,c, 不,d, e在不";
+        String removeFrom = CharMatcher.whitespace().removeFrom(s);
+        System.out.println(removeFrom);
+
+        //b-p-r:连续匹配只会替换一个
+        System.out.println(CharMatcher.anyOf("eko").collapseFrom("bookkeeper", '-'));
+        //b------p-r
+        System.out.println(CharMatcher.anyOf("eko").replaceFrom("bookkeeper", '-'));
+
+        //*******不*****在不: 不符合match的
+        System.out.println(CharMatcher.noneOf("在不").replaceFrom(s,"*"));
+
+        //*******不*****在不: negate,将match规则取反
+        System.out.println(CharMatcher.anyOf("在不").negate().replaceFrom(s,"*"));
+
+        //a,b,c, 不,d, e : 删除首尾
+        System.out.println(CharMatcher.anyOf("在不").trimFrom(s));
+
+        //删除首
+        System.out.println(CharMatcher.anyOf("在不").trimLeadingFrom(s));
+        //删除尾
+        System.out.println(CharMatcher.anyOf("在不").trimTrailingFrom(s));
+        //包含个数
+        System.out.println(CharMatcher.anyOf("在不").countIn(s));
     }
 
 
