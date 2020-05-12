@@ -1,6 +1,5 @@
 buildscript {
     ext {
-        lombok="1.18.8"
         springBootVersion = '2.0.0.RELEASE'
 
     }
@@ -58,7 +57,9 @@ subprojects {
     }
 
     dependencies {
-        compileOnly "org.projectlombok:lombok:${lombok}"
+        //2句引入lombok，否则编译不通过
+        compileOnly 'org.projectlombok:lombok:1.18.10'
+        annotationProcessor 'org.projectlombok:lombok:1.18.10'
 
         compile "org.springframework.boot:spring-boot-starter-aop"
         compile "org.springframework.boot:spring-boot-starter-web"
