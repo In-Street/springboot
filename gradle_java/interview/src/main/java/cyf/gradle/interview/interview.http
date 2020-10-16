@@ -96,3 +96,14 @@ Content-Type: application/json
   "id": 1,
   "city": "北京"
 }
+
+###
+GET {{url}}/time/timestamp?fromRequestParamTime=2020-11-16 12:46:53&fromRequestParamInt=1122
+Accept: application/json
+Cache-Control: no-cache
+Content-Type: application/json
+
+{
+
+ "fromRequestBodyTime": "2020-10-16 11:46:53"
+}
