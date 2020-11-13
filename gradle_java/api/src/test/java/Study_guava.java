@@ -15,6 +15,7 @@ import cyf.gradle.api.Enums.LikeDto;
 import cyf.gradle.api.Enums.PushType;
 import cyf.gradle.api.Enums.RemoveMatchReason;
 import cyf.gradle.api.Enums.UserTest;
+import cyf.gradle.base.dto.LHBDetailDto;
 import cyf.gradle.base.enums.PraiseEnum;
 import cyf.gradle.base.model.Response;
 import cyf.gradle.util.EmojiRegexUtil;
@@ -25,10 +26,12 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -45,6 +48,8 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
+ * 67A5D1
+ *
  * @author Cheng Yufei
  * @create 2018-05-18 18:49
  **/
@@ -257,24 +262,37 @@ public class Study_guava {
         System.out.println("Multiset -- " + a);
 
         //Multimap:同一个键值可存储多个value
-        HashMultimap<Object, Object> multimap = HashMultimap.create();
-        multimap.put("A", "程");
-        multimap.put("A", "宇");
-        multimap.put("A", "飞");
-        Set<Object> set1 = multimap.get("A");
+        HashMultimap<Object, Object> setMultimap = HashMultimap.create();
+        setMultimap.put("A", "程");
+        setMultimap.put("A", "宇");
+        setMultimap.put("A", "飞");
+        setMultimap.put("A", "飞");
+        Set<Object> set1 = setMultimap.get("A");
         System.out.println("HashMultimap -- " + set1);
+
+        //ArrayListMultimap 同key可以存储相同的value，而HashMultimap会覆盖
+        ArrayListMultimap<Object, Object> listMultimap = ArrayListMultimap.create();
+        listMultimap.put("B", "在");
+        listMultimap.put("B", "家");
+        listMultimap.put("B", "在");
+        List<Object> b = listMultimap.get("B");
+        System.out.println("--ArrayListMultimap:" + b);
+
+
         //键值可以是 ""、null
         Map<String, Integer> map = Maps.newHashMap();
         map.put("B", 1);
         map.put("", null);
         map.put(null, 2);
 
-        //BiMap: 键值与value值都不可重复
+        //BiMap: 键值与value值都不可重复;可通过key获取value，也可通过value获取key；相同key，不同value会覆盖
         HashBiMap<Object, Object> hashBiMap = HashBiMap.create();
         hashBiMap.put("A", 1);
         hashBiMap.put("A", 2);
         hashBiMap.put("B", 3);
-//      hashBiMap.putIfAbsent("C", 2);
+        //相同value：IllegalArgumentException
+        //hashBiMap.put("C", 3);
+        System.out.println(">>BiMap:" + hashBiMap.get("A") + ">inverse<" + hashBiMap.inverse().get(3));
 
         //双键Map
         HashBasedTable<String, String, Object> basedTable = HashBasedTable.create();
@@ -547,6 +565,95 @@ public class Study_guava {
         com.google.common.base.Function<Integer, String> function = i -> String.valueOf(i + "A");
         ImmutableMap<Integer, String> immutableMap = Maps.toMap(ints, function);
         System.out.println(immutableMap);
+
+    }
+
+    /**
+     * 实体类属性及值 转 Map：
+     * <p>
+     * 1. 反射
+     * 2。Maps.filterKeys + Maps.filterValues  或者 直接用 Maps.filterEntries
+     */
+    @Test
+    public void files2Map() {
+        LHBDetailDto dto = LHBDetailDto.builder().build();
+        dto.setStockCode("code");
+        dto.setStockName("name");
+        dto.setBuySum("sum");
+        List<LHBDetailDto.BranchInfo> buyBranchList = Lists.newArrayList(LHBDetailDto.builder().build().new BranchInfo("branch", "", "svalue", "net"));
+        dto.setBuyBranchList(buyBranchList);
+        HashMap<String, String> map = new HashMap<>();
+        Class<? extends LHBDetailDto> dtoClass = dto.getClass();
+        Field[] fields = dtoClass.getDeclaredFields();
+        Stream.of(fields).forEach(f -> {
+            f.setAccessible(true);
+            Object value = null;
+            try {
+                value = f.get(dto);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            if (Objects.isNull(value) || "serialVersionUID".equals(f.getName()) || StringUtils.equalsAny(f.getName(), "buyBranchList", "sellBranchList")) {
+                return;
+            }
+            map.put(f.getName(), String.valueOf(value));
+        });
+        //{stockCode=code, stockName=name, buySum=sum}
+        System.out.println(map);
+
+
+        String dtoString = dto.toString();
+        String remove1 = StringUtils.remove(dtoString, "LHBDetailDto");
+        String remove2 = StringUtils.removeAll(remove1, "[()]");
+
+
+        Map<String, String> split = Splitter.on(",").omitEmptyStrings().trimResults().withKeyValueSeparator("=").split(remove2);
+
+        //{stockCode=code, stockName=name, buySum=sum, buyBranchList=[com.jrj.tougu.information.biz.model.$BranchInfo@4157f54e]}
+        Map<String, String> filterValues = Maps.filterValues(split, Predicates.not(Predicates.equalTo("null")));
+
+        //{stockCode=code, stockName=name, buySum=sum}
+        //Map<String, String> filterKeys = Maps.filterKeys(filterValues, Predicates.not(Predicates.in(Lists.newArrayList("buyBranchList", "sellBranchList"))));
+
+        //{stockCode=code, stockName=name, buySum=sum}
+        Map<String, String> filterKeys = Maps.filterKeys(filterValues, k -> !StringUtils.equalsAny(k, "buyBranchList", "sellBranchList"));
+        System.out.println(filterKeys);
+
+        //{stockCode=code, stockName=name, buySum=sum}
+        Map<String, String> filterKeys2 = Maps.filterKeys(filterValues, Predicates.and(Predicates.not(Predicates.equalTo("buyBranchList")), Predicates.not(Predicates.equalTo("sellBranchList"))));
+
+        //{stockCode=code, stockName=name, buySum=sum}
+        Map<String, String> filterEntries = Maps.filterEntries(split, entry -> (!StringUtils.equalsAny(entry.getKey(), "buyBranchList", "sellBranchList")) &&
+                (!StringUtils.equals("null", entry.getValue())));
+
+    }
+
+    @Test
+    public void charMatcher() {
+        String s = "a,b,c, 不,d, e在不";
+        String removeFrom = CharMatcher.whitespace().removeFrom(s);
+        System.out.println(removeFrom);
+
+        //b-p-r:连续匹配只会替换一个
+        System.out.println(CharMatcher.anyOf("eko").collapseFrom("bookkeeper", '-'));
+        //b------p-r
+        System.out.println(CharMatcher.anyOf("eko").replaceFrom("bookkeeper", '-'));
+
+        //*******不*****在不: 不符合match的
+        System.out.println(CharMatcher.noneOf("在不").replaceFrom(s,"*"));
+
+        //*******不*****在不: negate,将match规则取反
+        System.out.println(CharMatcher.anyOf("在不").negate().replaceFrom(s,"*"));
+
+        //a,b,c, 不,d, e : 删除首尾
+        System.out.println(CharMatcher.anyOf("在不").trimFrom(s));
+
+        //删除首
+        System.out.println(CharMatcher.anyOf("在不").trimLeadingFrom(s));
+        //删除尾
+        System.out.println(CharMatcher.anyOf("在不").trimTrailingFrom(s));
+        //包含个数
+        System.out.println(CharMatcher.anyOf("在不").countIn(s));
     }
 
 
