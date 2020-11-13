@@ -6,13 +6,12 @@ buildscript {
     }
     repositories {
         mavenLocal()
-       /* maven { url 'http://repo.spring.io/snapshot' }
-        maven { url 'http://repo.spring.io/milestone' }*/
-
-         maven { url "http://repo1.maven.org/maven2/" }
-         maven { url "http://repo.spring.io/release/" }
-        maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
-        maven{ url 'https://raw.githubusercontent.com/liuyueyi/maven-repository/master/repository'}
+        maven{ url 'https://maven.aliyun.com/repository/public'}
+        maven{ url 'https://maven.aliyun.com/repository/spring/'}
+        maven{ url 'https://maven.aliyun.com/repository/central'}
+        maven { url "http://repo1.maven.org/maven2/" }
+        maven { url "http://repo.spring.io/release/" }
+//        maven{ url 'https://raw.githubusercontent.com/liuyueyi/maven-repository/master/repository'}
     }
     dependencies {
 
@@ -42,11 +41,11 @@ subprojects {
         mavenLocal()
        /* maven { url 'http://repo.spring.io/snapshot' }
         maven { url 'http://repo.spring.io/milestone' }*/
-        maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+        maven{ url 'https://maven.aliyun.com/repository/central'}
         maven { url "http://repo1.maven.org/maven2/" }
         maven { url "http://repo.spring.io/release/" }
-        maven{ url 'https://raw.githubusercontent.com/liuyueyi/maven-repository/master/repository'}
-        maven{ url 'https://jitpack.io'}
+//        maven{ url 'https://raw.githubusercontent.com/liuyueyi/maven-repository/master/repository'}
+//        maven{ url 'https://jitpack.io'}
     }
 
 
